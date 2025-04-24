@@ -2,15 +2,11 @@ package com.desarrollo.controllers;
 
 import com.desarrollo.SceneID;
 import com.desarrollo.SceneManager;
-import com.desarrollo.interfaces.Observer;
-import com.desarrollo.model.Model;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
-public class Vista1Controller implements Observer {
+
+public class Vista1Controller {
 
    
     @FXML
