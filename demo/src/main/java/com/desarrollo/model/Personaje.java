@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 import com.desarrollo.interfaces.Observer;
 
-public class Personaje {
-    private static Personaje instance;
+public abstract class Personaje {
     private Personaje personaje;
     private ArrayList<Observer> observers;
 
@@ -36,13 +35,6 @@ public class Personaje {
         this.observers= new ArrayList<>();
     }
 
-    public static Personaje getInstance() {
-        if (instance == null) {
-            instance = new Personaje();
-        }
-        return instance;
-    }
-
     public Personaje getPersonaje() {
         return personaje;
     }
@@ -57,11 +49,6 @@ public class Personaje {
 
     public void notifyObservers() {
         observers.forEach(Observer::onChange);
-    }
-
-    public void setPersonaje(int salud, int fuerza, int defensa, int velocidad, int posicionX, int posicionY) {
-        this.personaje = new Personaje(salud, fuerza, defensa, velocidad, posicionX, posicionY );
-        notifyObservers();
     }
 
     public int getSalud() {
