@@ -6,41 +6,45 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 
 
 public class Vista1Controller {
+    @FXML
+    private Pane pane;
 
     @FXML
-    private Pane fondo;
+    private ImageView fondo1;
    
     @FXML
-    private Button inicio;
+    private Button iniciar;
 
 
     @FXML
     public void initialize() {
-        // Cargar la imagen
-        Image imagen = new Image(getClass().getResource("/imagenes/fondo1.jpg").toExternalForm());
+        // Cargar la imagen directamente
+        Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/fondo1.jpg").toExternalForm());
+    
+        // Establecer la imagen al ImageView
+        fondo1.setImage(image);
 
-        // Configurar la imagen de fondo
-        BackgroundImage bgImage = new BackgroundImage(
-            imagen,
-            BackgroundRepeat.NO_REPEAT,
-            BackgroundRepeat.NO_REPEAT,
-            BackgroundPosition.DEFAULT,
-            new BackgroundSize(100, 100, true, true, true, false)
-        );
+        // Ajustar el ImageView al tamaño del Pane
+        fondo1.fitWidthProperty().bind(pane.widthProperty());
+        fondo1.fitHeightProperty().bind(pane.heightProperty());
 
-        fondo.setBackground(new Background(bgImage));
+        // Configurar posición y tamaño del botón
+        iniciar.setPrefWidth(132.0);
+        iniciar.setPrefHeight(25.0);
+
+        // Posición relativa del botón (calculada como porcentaje)
+        double posXRelativa = 53.0 / 600.0; // 53px / ancho total
+        double posYRelativa = 230.0 / 400.0; // 230px / alto total
         
+        iniciar.layoutXProperty().bind(pane.widthProperty().multiply(posXRelativa));
+        iniciar.layoutYProperty().bind(pane.heightProperty().multiply(posYRelativa));
 
-        inicio.setOnAction(event -> {
+
+        iniciar.setOnAction(event -> {
             SceneManager.getInstance().loadScene(SceneID.SECONDARY);
         });
     }
