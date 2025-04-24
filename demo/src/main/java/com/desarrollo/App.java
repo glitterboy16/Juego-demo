@@ -17,8 +17,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         SceneManager sm = SceneManager.getInstance();
         sm.init(stage);
-        sm.setScene(SceneID.MAIN, "formulario1", 600, 440);
-        sm.setScene(SceneID.SECONDARY, "formulario2", 600, 440);
+        sm.setScene(SceneID.SECONDARY, "Vista2", 600, 440);
         sm.loadScene(SceneID.MAIN);   
     }
 
