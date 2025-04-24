@@ -5,6 +5,6 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.desarrollo.controllers.Formulario2Controller">
    <children>
-      <Button fx:id="inicio" layoutX="274.0" layoutY="313.0" mnemonicParsing="false" text="Inicio" />
+      <Button fx:id="inicio" layoutX="238.0" layoutY="314.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="148.0" text="Iniciar" />
    </children>
 </Pane>

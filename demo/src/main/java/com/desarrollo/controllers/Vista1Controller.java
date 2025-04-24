@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class Formulario2Controller implements Observer {
+public class Vista1Controller implements Observer {
 
    
     @FXML
