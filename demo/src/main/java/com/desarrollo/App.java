@@ -17,9 +17,13 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         SceneManager sm = SceneManager.getInstance();
         sm.init(stage);
-        sm.setScene(SceneID.SECONDARY, "Vista2", 310, 470);
-        sm.loadScene(SceneID.SECONDARY);   
+        sm.setScene(SceneID.SECONDARY, "Vista2", 310, 450);
+        sm.loadScene(SceneID.SECONDARY); 
+        
+
     }
+
+    
 
     public static void main(String[] args) {
         launch();

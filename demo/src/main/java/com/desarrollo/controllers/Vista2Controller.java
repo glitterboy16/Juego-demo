@@ -4,6 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+
+
+
 
 public class Vista2Controller {
 
@@ -43,6 +47,9 @@ public class Vista2Controller {
     @FXML
     private Button boton;
 
+    @FXML
+    private ImageView imagenfondo;
+
 
     @FXML
 private void initialize() {
@@ -52,4 +59,8 @@ private void initialize() {
     defensa.setPromptText("Escribe la defensa del personaje");
     fuerza.setPromptText("Escribe la fuerza del personaje");       
     }
+
+
+   
+
 }

@@ -3,7 +3,6 @@ package com.desarrollo.model;
 public class Enemigo extends Personaje{
 
     private int percepcion;
-    private static Enemigo instance;
     private Enemigo enemigo;
     
     public Enemigo(int percepcion, Enemigo enemigo) {

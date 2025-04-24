@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="306.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.desarrollo.controllers.Vista2Controller">
@@ -23,5 +24,6 @@
       <TextField fx:id="defensa" layoutX="63.0" layoutY="256.0" prefHeight="25.0" prefWidth="183.0" />
       <Label fx:id="fuerzaprota" contentDisplay="CENTER" layoutX="45.0" layoutY="297.0" prefHeight="17.0" prefWidth="216.0" text="Fuerza:" textOverrun="CENTER_ELLIPSIS" />
       <TextField fx:id="fuerza" layoutX="63.0" layoutY="322.0" prefHeight="25.0" prefWidth="183.0" />
+      <ImageView fx:id="imagenfondo" fitHeight="520.0" fitWidth="531.0" layoutX="-121.0" layoutY="-43.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </Pane>
