@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
 
 
 
@@ -14,7 +14,13 @@ import javafx.scene.layout.Pane;
 public class Vista2Controller {
 
     @FXML
-    private Pane panel;
+    private AnchorPane panel;
+
+    @FXML
+    private ImageView imagenfondo;
+
+    @FXML
+    private Label info;
     
     @FXML
     private Label nomprota;
@@ -35,7 +41,10 @@ public class Vista2Controller {
     private TextField velocidad;
 
     @FXML
-    private Label etiqueta;
+    private Label fuerzaprota;
+    
+    @FXML
+    private TextField fuerza;
 
     @FXML
     private Label defensaprota;
@@ -44,25 +53,18 @@ public class Vista2Controller {
     private TextField defensa;
 
     @FXML
-    private Label fuerzaprota;
-    
-    @FXML
-    private TextField fuerza;
-
-    @FXML
     private Button boton;
 
+    
     @FXML
-    private ImageView imagenfondo;
+    private void initialize() {
+        
 
-
-    @FXML
-private void initialize() {
     // Cargar la imagen directamente
-    Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/imagenvista2.jpg").toExternalForm());
+        Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/imagenvista2.jpg").toExternalForm());
     
     // Establecer la imagen al ImageView
-    imagenfondo.setImage(image);
+        imagenfondo.setImage(image);
 
     
 
