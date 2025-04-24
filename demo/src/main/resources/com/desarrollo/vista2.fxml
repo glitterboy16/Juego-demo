@@ -3,21 +3,25 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.Pane?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="306.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.desarrollo.controllers.Vista2Controller">
    <children>
-      <TextField fx:id="nombre" layoutX="62.0" layoutY="91.0" prefHeight="25.0" prefWidth="183.0" />
-      <TextField fx:id="salud" layoutX="62.0" layoutY="155.0" prefHeight="25.0" prefWidth="183.0" />
-      <TextField fx:id="velocidad" layoutX="63.0" layoutY="223.0" prefHeight="25.0" prefWidth="183.0" />
-      <Label fx:id="etiqueta" contentDisplay="CENTER" layoutX="95.0" layoutY="29.0" prefHeight="17.0" prefWidth="118.0" text="CREA TU PERSONAJE" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
-      <Button fx:id="boton" layoutX="105.0" layoutY="408.0" mnemonicParsing="false" text="Empezar Juego" />
-      <Label fx:id="saludprota" contentDisplay="CENTER" layoutX="46.0" layoutY="127.0" prefHeight="17.0" prefWidth="216.0" text="Salud:" textOverrun="CENTER_ELLIPSIS" />
-      <Label fx:id="velocidadprota" contentDisplay="CENTER" layoutX="45.0" layoutY="192.0" prefHeight="17.0" prefWidth="216.0" text="Velocidad:" textOverrun="CENTER_ELLIPSIS" />
-      <Label fx:id="nomprota" contentDisplay="CENTER" layoutX="45.0" layoutY="61.0" prefHeight="17.0" prefWidth="216.0" text="Nombre:" textOverrun="CENTER_ELLIPSIS" />
-      <Label fx:id="defensaprota" contentDisplay="CENTER" layoutX="45.0" layoutY="260.0" prefHeight="17.0" prefWidth="216.0" text="Defensa:" textOverrun="CENTER_ELLIPSIS" />
-      <TextField fx:id="defensa" layoutX="63.0" layoutY="290.0" prefHeight="25.0" prefWidth="183.0" />
-      <Label fx:id="fuerzaprota" contentDisplay="CENTER" layoutX="45.0" layoutY="331.0" prefHeight="17.0" prefWidth="216.0" text="Fuerza:" textOverrun="CENTER_ELLIPSIS" />
-      <TextField fx:id="fuerza" layoutX="63.0" layoutY="360.0" prefHeight="25.0" prefWidth="183.0" />
+      <TextField fx:id="nombre" layoutX="62.0" layoutY="67.0" prefHeight="25.0" prefWidth="183.0" />
+      <TextField fx:id="salud" layoutX="61.0" layoutY="129.0" prefHeight="25.0" prefWidth="183.0" />
+      <TextField fx:id="velocidad" layoutX="62.0" layoutY="192.0" prefHeight="25.0" prefWidth="183.0" />
+      <Label fx:id="etiqueta" contentDisplay="CENTER" layoutX="94.0" layoutY="14.0" prefHeight="17.0" prefWidth="118.0" text="CREA TU PERSONAJE" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+         <effect>
+            <Blend />
+         </effect></Label>
+      <Button fx:id="boton" layoutX="104.0" layoutY="370.0" mnemonicParsing="false" text="Empezar Juego" />
+      <Label fx:id="saludprota" contentDisplay="CENTER" layoutX="45.0" layoutY="105.0" prefHeight="17.0" prefWidth="216.0" text="Salud:" textOverrun="CENTER_ELLIPSIS" />
+      <Label fx:id="velocidadprota" contentDisplay="CENTER" layoutX="45.0" layoutY="166.0" prefHeight="17.0" prefWidth="216.0" text="Velocidad:" textOverrun="CENTER_ELLIPSIS" />
+      <Label fx:id="nomprota" contentDisplay="CENTER" layoutX="45.0" layoutY="43.0" prefHeight="17.0" prefWidth="216.0" text="Nombre:" textOverrun="CENTER_ELLIPSIS" />
+      <Label fx:id="defensaprota" contentDisplay="CENTER" layoutX="45.0" layoutY="230.0" prefHeight="17.0" prefWidth="216.0" text="Defensa:" textOverrun="CENTER_ELLIPSIS" />
+      <TextField fx:id="defensa" layoutX="63.0" layoutY="256.0" prefHeight="25.0" prefWidth="183.0" />
+      <Label fx:id="fuerzaprota" contentDisplay="CENTER" layoutX="45.0" layoutY="297.0" prefHeight="17.0" prefWidth="216.0" text="Fuerza:" textOverrun="CENTER_ELLIPSIS" />
+      <TextField fx:id="fuerza" layoutX="63.0" layoutY="322.0" prefHeight="25.0" prefWidth="183.0" />
    </children>
 </Pane>
