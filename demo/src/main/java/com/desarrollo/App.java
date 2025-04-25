@@ -20,9 +20,7 @@ public class App extends Application {
         sm.setScene(SceneID.MAIN, "vista1", 600, 440);
         sm.loadScene(SceneID.MAIN);   
         sm.setScene(SceneID.SECONDARY, "Vista2", 700, 530);
-        sm.loadScene(SceneID.SECONDARY); 
         
-
     }
 
     
