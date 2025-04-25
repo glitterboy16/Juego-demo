@@ -36,7 +36,7 @@ public class Vista1Controller {
         iniciar.setPrefWidth(132.0);
         iniciar.setPrefHeight(25.0);
 
-        // Posición relativa del botón (calculada como porcentaje)
+        // Posición relativa del botón 
         double posXRelativa = 53.0 / 600.0; // 53px / ancho total
         double posYRelativa = 230.0 / 400.0; // 230px / alto total
         
@@ -48,4 +48,4 @@ public class Vista1Controller {
             SceneManager.getInstance().loadScene(SceneID.SECONDARY);
         });
     }
-}
+}  
