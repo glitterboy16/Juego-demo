@@ -4,13 +4,24 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
 
 
 
 public class Vista2Controller {
 
+    @FXML
+    private AnchorPane panel;
+
+    @FXML
+    private ImageView imagenfondo;
+
+    @FXML
+    private Label info;
+    
     @FXML
     private Label nomprota;
 
@@ -30,7 +41,10 @@ public class Vista2Controller {
     private TextField velocidad;
 
     @FXML
-    private Label etiqueta;
+    private Label fuerzaprota;
+    
+    @FXML
+    private TextField fuerza;
 
     @FXML
     private Label defensaprota;
@@ -39,28 +53,24 @@ public class Vista2Controller {
     private TextField defensa;
 
     @FXML
-    private Label fuerzaprota;
-    
-    @FXML
-    private TextField fuerza;
-
-    @FXML
     private Button boton;
 
+    
     @FXML
-    private ImageView imagenfondo;
+    private void initialize() {
+        
+
+    // Cargar la imagen directamente
+        Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/imagenvista2.jpg").toExternalForm());
+    
+    // Establecer la imagen al ImageView
+        imagenfondo.setImage(image);
+
+    
 
 
-    @FXML
-private void initialize() {
-    nombre.setPromptText("Escribe el nombre del personaje");
-    salud.setPromptText("Escribe la salud del personaje");
-    velocidad.setPromptText("Escribe la velocidad del personaje");
-    defensa.setPromptText("Escribe la defensa del personaje");
-    fuerza.setPromptText("Escribe la fuerza del personaje");       
-    }
+    
+}
 
-
-   
-
+    
 }
