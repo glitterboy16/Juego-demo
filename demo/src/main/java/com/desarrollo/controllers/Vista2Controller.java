@@ -1,5 +1,8 @@
 package com.desarrollo.controllers;
 
+import com.desarrollo.SceneID;
+import com.desarrollo.SceneManager;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -59,26 +62,19 @@ public class Vista2Controller {
     @FXML
     private void initialize() {
         
-
-    // Cargar la imagen directamente
         Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/imagenvista2.jpg").toExternalForm());
-    
-    // Establecer la imagen al ImageView
         imagenfondo.setImage(image);
+        imagenfondo.fitWidthProperty().bind(panel.widthProperty());
+        imagenfondo.fitHeightProperty().bind(panel.heightProperty());
+        imagenfondo.setPreserveRatio(false);
 
-    // Enlazar el tamaño del fondo al AnchorPane
-    imagenfondo.fitWidthProperty().bind(panel.widthProperty());
-    imagenfondo.fitHeightProperty().bind(panel.heightProperty());
-    imagenfondo.setPreserveRatio(false); // o true si prefieres mantener proporción
-
-    // Fijar el botón abajo a la derecha (20px de margen)
-    panel.widthProperty().addListener((obs, oldWidth, newWidth) -> {
-        boton.setLayoutX(newWidth.doubleValue() - boton.getWidth() - 20);
-    });
-
-    panel.heightProperty().addListener((obs, oldHeight, newHeight) -> {
-        boton.setLayoutY(newHeight.doubleValue() - boton.getHeight() - 20);
-    });
+        // Ajustar el ImageView al tamaño del Pane
+        imagenfondo.fitWidthProperty().bind(panel.widthProperty());
+        imagenfondo.fitHeightProperty().bind(panel.heightProperty());
+    
+        boton.setOnAction(event -> {
+            SceneManager.getInstance().loadScene(SceneID.VISTAGAMEOVER);
+        });
 
     } 
 }

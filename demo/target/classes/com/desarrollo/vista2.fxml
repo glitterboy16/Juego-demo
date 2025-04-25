@@ -49,9 +49,10 @@
             <Font size="14.0" />
          </font></Label>
       <TextField fx:id="fuerza" layoutX="118.0" layoutY="306.0" prefHeight="26.0" prefWidth="198.0" promptText="Indique la defensa del personaje" />
-      <Button fx:id="boton" layoutX="508.0" layoutY="456.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="163.0" text="Empezar el juego">
+      <Button fx:id="boton" mnemonicParsing="false" prefHeight="26.0" prefWidth="163.0" text="Empezar el juego" AnchorPane.rightAnchor="30.0" AnchorPane.bottomAnchor="30.0">
          <font>
             <Font name="Consolas Bold" size="12.0" />
-         </font></Button>
+         </font>
+      </Button>
    </children>
 </AnchorPane>
