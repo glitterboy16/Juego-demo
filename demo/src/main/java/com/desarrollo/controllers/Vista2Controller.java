@@ -66,17 +66,19 @@ public class Vista2Controller {
     // Establecer la imagen al ImageView
         imagenfondo.setImage(image);
 
-        // Ajustar el ImageView al tamaño del Pane
-        imagenfondo.fitWidthProperty().bind(panel.widthProperty());
-        imagenfondo.fitHeightProperty().bind(panel.heightProperty());
+    // Enlazar el tamaño del fondo al AnchorPane
+    imagenfondo.fitWidthProperty().bind(panel.widthProperty());
+    imagenfondo.fitHeightProperty().bind(panel.heightProperty());
+    imagenfondo.setPreserveRatio(false); // o true si prefieres mantener proporción
 
-        
+    // Fijar el botón abajo a la derecha (20px de margen)
+    panel.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+        boton.setLayoutX(newWidth.doubleValue() - boton.getWidth() - 20);
+    });
 
-    
+    panel.heightProperty().addListener((obs, oldHeight, newHeight) -> {
+        boton.setLayoutY(newHeight.doubleValue() - boton.getHeight() - 20);
+    });
 
-
-    
-}
-
-    
+    } 
 }

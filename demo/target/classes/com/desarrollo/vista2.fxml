@@ -16,24 +16,42 @@
             <Image url="@imagenes/imagenvista2.jpg" />
          </image>
       </ImageView>
-      <Label fx:id="info" layoutX="36.0" layoutY="14.0" prefHeight="20.0" prefWidth="141.0" text="CREA TU PERSONAJE" textFill="WHITE">
+      <Label fx:id="info" layoutX="238.0" layoutY="33.0" prefHeight="26.0" prefWidth="198.0" text="CREA TU PERSONAJE" textFill="WHITE">
          <effect>
             <Blend />
          </effect>
          <font>
-            <Font size="14.0" />
+            <Font name="Consolas Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="36.0" layoutY="43.0" text="Nombre:" textFill="WHITE" />
-      <TextField fx:id="salud" layoutX="36.0" layoutY="61.0" prefHeight="26.0" prefWidth="198.0" promptText="Indique el nombre del personaje" />
-      <Label fx:id="saludprota" layoutX="36.0" layoutY="95.0" prefHeight="18.0" prefWidth="58.0" text="Salud:" textFill="WHITE" />
-      <TextField fx:id="defensa" layoutX="36.0" layoutY="113.0" prefHeight="26.0" prefWidth="198.0" promptText="Indique la salud del personaje" />
-      <Label fx:id="velocidadprota" layoutX="36.0" layoutY="152.0" prefHeight="18.0" prefWidth="58.0" text="Velocidad:" textFill="WHITE" />
-      <TextField fx:id="velocidad" layoutX="36.0" layoutY="170.0" prefHeight="26.0" prefWidth="198.0" promptText="Indique la velocidad del personaje" />
-      <Label fx:id="fuerzaprota" layoutX="36.0" layoutY="208.0" prefHeight="18.0" prefWidth="58.0" text="Fuerza:" textFill="WHITE" />
-      <TextField fx:id="nombre" layoutX="35.0" layoutY="226.0" prefHeight="26.0" prefWidth="198.0" promptText="Indique la fuerza del personaje" />
-      <Label fx:id="defensaprota" layoutX="36.0" layoutY="265.0" prefHeight="18.0" prefWidth="58.0" text="Defensa:" textFill="WHITE" />
-      <TextField fx:id="fuerza" layoutX="35.0" layoutY="283.0" prefHeight="26.0" prefWidth="198.0" promptText="Indique la defensa del personaje" />
-      <Button fx:id="boton" layoutX="548.0" layoutY="456.0" mnemonicParsing="false" text="Empezar el juego" />
+      <Label layoutX="41.0" layoutY="89.0" text="Nombre:" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <TextField fx:id="salud" layoutX="118.0" layoutY="87.0" prefHeight="26.0" prefWidth="198.0" promptText="Indique el nombre del personaje" />
+      <Label fx:id="saludprota" layoutX="41.0" layoutY="198.0" prefHeight="18.0" prefWidth="58.0" text="Salud:" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <TextField fx:id="defensa" layoutX="118.0" layoutY="195.0" prefHeight="26.0" prefWidth="198.0" promptText="Indique la salud del personaje" />
+      <Label fx:id="velocidadprota" layoutX="41.0" layoutY="142.0" prefHeight="20.0" prefWidth="69.0" text="Velocidad:" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <TextField fx:id="velocidad" layoutX="118.0" layoutY="139.0" prefHeight="26.0" prefWidth="198.0" promptText="Indique la velocidad del personaje" />
+      <Label fx:id="fuerzaprota" layoutX="41.0" layoutY="255.0" prefHeight="18.0" prefWidth="58.0" text="Fuerza:" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <TextField fx:id="nombre" layoutX="118.0" layoutY="252.0" prefHeight="26.0" prefWidth="198.0" promptText="Indique la fuerza del personaje" />
+      <Label fx:id="defensaprota" layoutX="41.0" layoutY="309.0" prefHeight="18.0" prefWidth="58.0" text="Defensa:" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <TextField fx:id="fuerza" layoutX="118.0" layoutY="306.0" prefHeight="26.0" prefWidth="198.0" promptText="Indique la defensa del personaje" />
+      <Button fx:id="boton" layoutX="508.0" layoutY="456.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="163.0" text="Empezar el juego">
+         <font>
+            <Font name="Consolas Bold" size="12.0" />
+         </font></Button>
    </children>
 </AnchorPane>
