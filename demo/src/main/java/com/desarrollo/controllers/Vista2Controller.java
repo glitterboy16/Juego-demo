@@ -66,6 +66,12 @@ public class Vista2Controller {
     // Establecer la imagen al ImageView
         imagenfondo.setImage(image);
 
+        // Ajustar el ImageView al tamaño del Pane
+        imagenfondo.fitWidthProperty().bind(panel.widthProperty());
+        imagenfondo.fitHeightProperty().bind(panel.heightProperty());
+
+        
+
     
 
 

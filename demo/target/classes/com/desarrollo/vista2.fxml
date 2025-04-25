@@ -9,10 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="panel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="panel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.desarrollo.controllers.Vista2Controller">
    <children>
-      <ImageView fx:id="imagenfondo" fitHeight="640.0" fitWidth="700.0" layoutY="-11.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imagenfondo" fitHeight="640.0" fitWidth="700.0" layoutY="-11.0" pickOnBounds="true" preserveRatio="false">
          <image>
             <Image url="@imagenes/imagenvista2.jpg" />
          </image>
