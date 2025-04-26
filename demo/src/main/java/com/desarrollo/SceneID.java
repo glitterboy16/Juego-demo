@@ -1,5 +1,5 @@
 package com.desarrollo;
 
 public enum SceneID {
-    MAIN, SECONDARY
+    MAIN, SECONDARY, VISTAGAMEOVER
 }
