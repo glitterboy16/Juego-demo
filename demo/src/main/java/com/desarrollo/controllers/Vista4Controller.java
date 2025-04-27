@@ -44,7 +44,7 @@ public class Vista4Controller {
         botonno.setOnAction(event ->{
             SceneManager.getInstance().loadScene(SceneID.VISTAGANADOR);
         });
-
+  
     }
 }
 

@@ -14,8 +14,8 @@ public class Vista5Controller {
 
     @FXML
     public void initialize() {
-        // Cargar imagen de fondo
-        Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/imagenvista4.jpg").toExternalForm());
+        // Cargar la imagen directamente
+        Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/vista5.jpg").toExternalForm());
         imagenfondo.setImage(image);
         imagenfondo.fitWidthProperty().bind(panel.widthProperty());
         imagenfondo.fitHeightProperty().bind(panel.heightProperty());

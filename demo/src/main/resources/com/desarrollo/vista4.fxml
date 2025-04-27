@@ -13,20 +13,30 @@
          <image>
             <Image url="@imagenes/imagenvista4.jpg" />
          </image></ImageView>
-      <Button fx:id="botonsi" layoutX="127.0" layoutY="373.0" mnemonicParsing="false" text="Sí">
+      <!-- Botones centrados horizontalmente -->
+      <Button fx:id="botonsi" mnemonicParsing="false" text="Sí"> 
+         <AnchorPane.leftAnchor>200.0</AnchorPane.leftAnchor>
+         <AnchorPane.bottomAnchor>53.0</AnchorPane.bottomAnchor>
          <font>
             <Font name="Consolas" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="botonno" alignment="BOTTOM_RIGHT" layoutX="251.0" layoutY="373.0" mnemonicParsing="false" text="No">
-         <font>
-            <Font name="Consolas" size="13.0" />
-         </font>
+      
+      <Button fx:id="botonno" mnemonicParsing="false" text="No">
+          <AnchorPane.rightAnchor>200.0</AnchorPane.rightAnchor>
+          <AnchorPane.bottomAnchor>53.0</AnchorPane.bottomAnchor>
+          <font>
+              <Font name="Consolas" size="13.0" />
+          </font>
       </Button>
-      <Label fx:id="info" alignment="TOP_CENTER" layoutX="58.0" layoutY="340.0" prefHeight="18.0" prefWidth="283.0" text="¿Quieres comenzar una partida nueva?" textFill="WHITE">
-         <font>
-            <Font name="Consolas Bold" size="14.0" />
-         </font>
+
+      <!-- Label centrado horizontalmente -->
+      <Label fx:id="info" alignment="CENTER" layoutX="200.0" layoutY="318.0" prefHeight="18.0" prefWidth="283.0"
+          text="¿Quieres comenzar una partida nueva?" textFill="WHITE"
+          AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="58.0" AnchorPane.bottomAnchor="82.0">
+          <font>
+              <Font name="Consolas Bold" size="14.0" />
+          </font>
       </Label>
    </children>
 </AnchorPane>
