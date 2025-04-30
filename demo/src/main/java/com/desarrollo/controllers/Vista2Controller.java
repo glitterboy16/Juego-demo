@@ -2,6 +2,7 @@ package com.desarrollo.controllers;
 
 import com.desarrollo.SceneID;
 import com.desarrollo.SceneManager;
+import com.desarrollo.model.DatosJugador;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -58,6 +59,9 @@ public class Vista2Controller {
     @FXML
     private Button boton;
 
+    @FXML
+    private Button boton2;
+
     
     @FXML
     private void initialize() {
@@ -72,9 +76,22 @@ public class Vista2Controller {
         imagenfondo.fitWidthProperty().bind(panel.widthProperty());
         imagenfondo.fitHeightProperty().bind(panel.heightProperty());
     
-        boton.setOnAction(event -> {
-            SceneManager.getInstance().loadScene(SceneID.VISTAGAMEOVER);
+        boton2.setOnAction(event -> {
+        
+        String nombrePronta = nombre.getText();
+        int saludProta = Integer.parseInt(salud.getText());
+        int fuerzaProta = Integer.parseInt(fuerza.getText());
+        int defensaProta = Integer.parseInt(defensa.getText());
+        int velocidadProta = Integer.parseInt(velocidad.getText());
+
+        DatosJugador.getInstance().crearProtagonista(saludProta, fuerzaProta, defensaProta, velocidadProta, nombrePronta);
+
+        SceneManager.getInstance().loadScene(SceneID.TABLERO);
         });
+
+        boton.setOnAction(event -> {
+            SceneManager.getInstance().loadScene(SceneID.TABLERO);
+            });
 
     } 
 }

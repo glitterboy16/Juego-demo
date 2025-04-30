@@ -21,6 +21,8 @@ public class App extends Application {
         sm.loadScene(SceneID.MAIN);   
         sm.setScene(SceneID.SECONDARY, "Vista2", 700, 530);
         sm.setScene(SceneID.VISTAGAMEOVER, "Vista4", 700, 530);
+        sm.setScene(SceneID.TABLERO, "Tablero", 830, 590);
+
         
     }
 
