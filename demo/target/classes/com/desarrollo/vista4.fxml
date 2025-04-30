@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="panel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.desarrollo.controllers.Vista4Controller">
@@ -13,30 +16,38 @@
          <image>
             <Image url="@imagenes/imagenvista4.jpg" />
          </image></ImageView>
-      <!-- Botones centrados horizontalmente -->
-      <Button fx:id="botonsi" mnemonicParsing="false" text="Sí"> 
-         <AnchorPane.leftAnchor>200.0</AnchorPane.leftAnchor>
-         <AnchorPane.bottomAnchor>53.0</AnchorPane.bottomAnchor>
-         <font>
-            <Font name="Consolas" size="13.0" />
-         </font>
-      </Button>
+      <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
       
-      <Button fx:id="botonno" mnemonicParsing="false" text="No">
-          <AnchorPane.rightAnchor>200.0</AnchorPane.rightAnchor>
-          <AnchorPane.bottomAnchor>53.0</AnchorPane.bottomAnchor>
-          <font>
-              <Font name="Consolas" size="13.0" />
-          </font>
-      </Button>
-
-      <!-- Label centrado horizontalmente -->
-      <Label fx:id="info" alignment="CENTER" layoutX="200.0" layoutY="318.0" prefHeight="18.0" prefWidth="283.0"
-          text="¿Quieres comenzar una partida nueva?" textFill="WHITE"
-          AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="58.0" AnchorPane.bottomAnchor="82.0">
-          <font>
-              <Font name="Consolas Bold" size="14.0" />
-          </font>
-      </Label>
+            <!-- Label centrado horizontalmente -->
+            <Label fx:id="info" alignment="CENTER" prefHeight="18.0" prefWidth="283.0" text="¿Quieres comenzar una partida nueva?" textFill="WHITE">
+                <font>
+                    <Font name="Consolas Bold" size="14.0" />
+                </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+               <children>
+                  <!-- Botones centrados horizontalmente -->
+                  <Button fx:id="botonsi" mnemonicParsing="false" text="Sí">
+                     <font>
+                        <Font name="Consolas" size="13.0" />
+                     </font>
+                  </Button>
+                  
+                              <Button fx:id="botonno" mnemonicParsing="false" text="No">
+                      <font>
+                          <Font name="Consolas" size="13.0" />
+                      </font>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

@@ -20,6 +20,7 @@ public class App extends Application {
         sm.setScene(SceneID.MAIN, "vista1", 600, 440);
         sm.loadScene(SceneID.MAIN);   
         sm.setScene(SceneID.SECONDARY, "vista2", 700, 530);
+        sm.setScene(SceneID.TABLERO, "vista3", 700, 530);
         sm.setScene(SceneID.VISTAGAMEOVER, "vista4", 700, 530);
         sm.setScene(SceneID.VISTAGANADOR, "vista5", 700, 530);
 

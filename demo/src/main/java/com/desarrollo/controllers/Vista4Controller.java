@@ -34,7 +34,7 @@ public class Vista4Controller {
         imagenfondo.setImage(image);
         imagenfondo.fitWidthProperty().bind(panel.widthProperty());
         imagenfondo.fitHeightProperty().bind(panel.heightProperty());
-        imagenfondo.setPreserveRatio(false);
+        imagenfondo.setPreserveRatio(false); 
 
         // Acción del botón "Sí"
         botonsi.setOnAction(event -> {
