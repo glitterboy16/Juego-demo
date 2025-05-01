@@ -73,7 +73,7 @@ public class Vista2Controller {
         imagenfondo.fitHeightProperty().bind(panel.heightProperty());
     
         boton.setOnAction(event -> {
-            SceneManager.getInstance().loadScene(SceneID.VISTAGAMEOVER);
+            SceneManager.getInstance().loadScene(SceneID.TABLERO);
         });
 
     } 
