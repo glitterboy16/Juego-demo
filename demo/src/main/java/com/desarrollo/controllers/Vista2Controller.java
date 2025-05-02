@@ -91,7 +91,7 @@ public class Vista2Controller {
 
         boton.setOnAction(event -> {
             SceneManager.getInstance().loadScene(SceneID.TABLERO);
-            });
+        });
 
     } 
 }

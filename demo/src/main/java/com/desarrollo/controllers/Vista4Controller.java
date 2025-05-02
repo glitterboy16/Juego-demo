@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 public class Vista4Controller {
-    
+
     @FXML
     private AnchorPane panel;
 
@@ -28,19 +28,25 @@ public class Vista4Controller {
     private Button botonno;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
+        // Cargar imagen de fondo
         Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/imagenvista4.jpg").toExternalForm());
         imagenfondo.setImage(image);
         imagenfondo.fitWidthProperty().bind(panel.widthProperty());
         imagenfondo.fitHeightProperty().bind(panel.heightProperty());
-        imagenfondo.setPreserveRatio(false);
+        imagenfondo.setPreserveRatio(false); 
 
-        // Ajustar el ImageView al tamaño del Pane
-        imagenfondo.fitWidthProperty().bind(panel.widthProperty());
-        imagenfondo.fitHeightProperty().bind(panel.heightProperty());
-
+        // Acción del botón "Sí"
         botonsi.setOnAction(event -> {
             SceneManager.getInstance().loadScene(SceneID.SECONDARY);
         });
+
+        botonno.setOnAction(event ->{
+            SceneManager.getInstance().loadScene(SceneID.VISTAGANADOR);
+        });
+  
     }
 }
+
+
+
