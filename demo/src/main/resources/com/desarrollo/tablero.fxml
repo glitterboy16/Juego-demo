@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.desarrollo.controllers.TableroController" />
+<AnchorPane fx:id="panelPrincipal" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.desarrollo.controllers.TableroController">
+   <ImageView fx:id="imagenfondo" fitHeight="600.0" fitWidth="906.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@imagenes/fondos/Fondo_Provicional.png" />
+      </image>
+   </ImageView>
+   <AnchorPane prefHeight="600.0" prefWidth="900.0">
+      <children>
+           <!-- Panel del Tablero -->
+           <AnchorPane fx:id="tableroPanel" layoutX="37.0" layoutY="31.0" prefHeight="515.0" prefWidth="558.0" />
+      
+                       <!-- VBox para datos de los personajes -->
+           <VBox fx:id="datosPersonajesVBox" layoutX="621.0" layoutY="31.0" prefHeight="515.0" prefWidth="250.0" style="-fx-background-color: #eeeeee;">
+            <children>
+               <ImageView fx:id="imagenfondoVbox" fitHeight="515.0" fitWidth="264.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@imagenes/fondos/Fondo_Vbox.png" />
+                  </image>
+               </ImageView>
+            </children></VBox>
+      </children>
+   </AnchorPane>
+</AnchorPane>

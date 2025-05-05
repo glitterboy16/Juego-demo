@@ -17,12 +17,12 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         SceneManager sm = SceneManager.getInstance();
         sm.init(stage);
-        sm.setScene(SceneID.MAIN, "vista1", 600, 440);
+        sm.setScene(SceneID.MAIN, "vista1", 900, 600);
         sm.loadScene(SceneID.MAIN);   
-        sm.setScene(SceneID.SECONDARY, "vista2", 700, 530);
-        sm.setScene(SceneID.TABLERO, "tablero", 700, 530);
-        sm.setScene(SceneID.VISTAGAMEOVER, "vista4", 700, 530);
-        sm.setScene(SceneID.VISTAGANADOR, "vista5", 700, 530);
+        sm.setScene(SceneID.SECONDARY, "vista2", 900, 600);
+        sm.setScene(SceneID.TABLERO, "tablero", 900, 600);
+        sm.setScene(SceneID.VISTAGAMEOVER, "vista4", 900, 600);
+        sm.setScene(SceneID.VISTAGANADOR, "vista5", 900, 600);
 
     }
 

@@ -3,6 +3,7 @@ package com.desarrollo.controllers;
 import com.desarrollo.SceneID;
 import com.desarrollo.SceneManager;
 import com.desarrollo.model.Protagonista;
+import com.desarrollo.model.Proveedor;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -136,6 +137,7 @@ public class Vista2Controller implements Initializable {
             int defensaProta = defensa.getValue();
 
             protagonista = new Protagonista(nombreProta, saludProta, fuerzaProta, defensaProta, velocidadProta, "/com/desarrollo/imagenes/personaje_abajo.png");
+            Proveedor.getInstance().setProtagonista(protagonista);
 
             System.out.println("Información del personaje guardada correctamente.");
         } catch (Exception e) {
