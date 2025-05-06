@@ -4,6 +4,9 @@ import com.desarrollo.interfaces.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
+
 public class Protagonista {
     private String nombre;
     private int salud;
@@ -11,6 +14,7 @@ public class Protagonista {
     private int defensa;
     private int velocidad;
     private List<Observer> observers = new ArrayList<>();
+    private String imagenRutaPronta; 
 
     public Protagonista() {
         // Constructor por defecto
@@ -22,6 +26,11 @@ public class Protagonista {
         this.fuerza = fuerza;
         this.defensa = defensa;
         this.velocidad = velocidad;
+        this.imagenRutaPronta = "src/main/resources/com/desarrollo/imagenes/protagonista.png"; // Ruta de la imagen por defecto
+    }
+
+    public String getImagenRutaPronta() {
+        return imagenRutaPronta;
     }
 
     // Getters

@@ -29,6 +29,9 @@ public class TableroController implements Observer {
     @FXML
     private AnchorPane tableroPanel;
 
+    @FXML
+    private ImageView tableroPanel2;
+
     // Datos y Estadísticas de personajes
     @FXML
     private StackPane datosStackPane;
@@ -48,6 +51,13 @@ public class TableroController implements Observer {
     @FXML
     private Label Pvelocidad;
 
+    private int protaX;
+
+    private int protaY;
+
+    @FXML
+    private ImageView imagenProta;
+
     // Protagonista
     private Protagonista protagonista; // No inicializar aquí
 
@@ -55,6 +65,11 @@ public class TableroController implements Observer {
     private final int COLUMNAS = 15;
     private char[][] mapa = new char[FILAS][COLUMNAS];
     private GridPane tablero;
+
+    private final int FILAS2 = 15;
+    private final int COLUMNAS2 = 15;
+    private char[][] mapa2 = new char[FILAS2][COLUMNAS2];
+    private GridPane tablero2;
 
     @FXML
     public void initialize() {
@@ -95,11 +110,39 @@ public class TableroController implements Observer {
             actualizarTablero(suelo, pared);
             tableroPanel.getChildren().add(tablero);
 
+            // Crear un tablero visual sin imágenes para el StackPane
+            tablero2 = new GridPane();
+            tablero2.setHgap(0);
+            tablero2.setVgap(0);
+            tablero2.setPickOnBounds(false); // Deja pasar los eventos
+
+            for (int fila = 0; fila < FILAS2; fila++) {
+                for (int col = 0; col < COLUMNAS2; col++) {
+                AnchorPane celda = new AnchorPane();
+                celda.setPrefSize(35, 35);
+                char tipo = mapa2[fila][col];
+                if (tipo == 'P' || tipo == 'S') {
+                tablero2.add(celda, col, fila);
+            }
+
+            AnchorPane.setTopAnchor(tablero2, 0.0);
+            AnchorPane.setBottomAnchor(tablero2, 0.0);
+            AnchorPane.setLeftAnchor(tablero2, 0.0);
+            AnchorPane.setRightAnchor(tablero2, 0.0);
+
+
+
+
+    }
+}
+
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
+    
 
     private void cargarMapaDesdeArchivo() throws IOException {
         String ruta = "demo/ficheros/tablero.txt";
@@ -124,11 +167,11 @@ public class TableroController implements Observer {
     @Override
     public void onChange() {
         if (protagonista != null) {
-            Pnombre.setText("Nombre: " + protagonista.getNombre());
-            Psalud.setText("Salud: " + protagonista.getSalud());
-            Pfuerza.setText("Fuerza: " + protagonista.getFuerza());
-            Pdefensa.setText("Defensa: " + protagonista.getDefensa());
-            Pvelocidad.setText("Velocidad: " + protagonista.getVelocidad());
+            Pnombre.setText(protagonista.getNombre());
+            Psalud.setText("" + protagonista.getSalud());
+            Pfuerza.setText("" + protagonista.getFuerza());
+            Pdefensa.setText("" + protagonista.getDefensa());
+            Pvelocidad.setText("" + protagonista.getVelocidad());
         } else {
             Pnombre.setText("Nombre: N/A");
             Psalud.setText("Salud: 0");
@@ -158,7 +201,9 @@ public class TableroController implements Observer {
         }
     }
 
+
     public void recibirDatosProtagonista(String nombre, int salud, int fuerza, int defensa, int velocidad, String rutaImagen, int posicionY, int posicionX) {
+
         // Crear el objeto Protagonista con los datos recibidos
         protagonista = new Protagonista(nombre, salud, fuerza, defensa, velocidad);
 
@@ -171,9 +216,15 @@ public class TableroController implements Observer {
         // Mostrar la imagen del protagonista en el tablero
         Image imagenProtagonista = new Image(getClass().getResource(rutaImagen).toExternalForm());
         ImageView imagenProta = new ImageView(imagenProtagonista);
-        imagenProta.setFitWidth(50);
-        imagenProta.setFitHeight(50);
-        tablero.add(imagenProta, posicionX, posicionY);
-        imagenProta.setTranslateX(posicionX * 35); // Ajustar la posición gráfica
+        imagenProta.setFitWidth(35);
+        imagenProta.setFitHeight(35);
+
+        protaX = posicionX;
+        protaY = posicionY;
+        
+        tablero2.add(imagenProta, protaX, protaY);
+        
+
+        /*imagenProta.setTranslateX(posicionX * 35); // Ajustar la posición gráfica*/
     }
 }

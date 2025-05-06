@@ -15,8 +15,16 @@
    </ImageView>
    <AnchorPane prefHeight="600.0" prefWidth="900.0">
       <children>
-           <!-- Panel del Tablero -->
-           <AnchorPane fx:id="tableroPanel" layoutX="37.0" layoutY="31.0" prefHeight="515.0" prefWidth="558.0" />
+         <StackPane layoutX="46.0" layoutY="38.0" prefHeight="502.0" prefWidth="554.0">
+            <children>
+                 <!-- Panel del Tablero -->
+                 <AnchorPane fx:id="tableroPanel" opacity="0.5" prefHeight="370.0" prefWidth="455.0">
+                  <children>
+                     <AnchorPane fx:id="tablaroPanel2" prefHeight="502.0" prefWidth="554.0" />
+                  </children>
+               </AnchorPane>
+            </children>
+         </StackPane>
          <StackPane fx:id="datosStackPane" layoutX="635.0" layoutY="31.0" prefHeight="150.0" prefWidth="200.0">
             <children>
                <ImageView fx:id="imagenfondoStackPane" fitHeight="520.0" fitWidth="236.0" pickOnBounds="true" preserveRatio="true">
