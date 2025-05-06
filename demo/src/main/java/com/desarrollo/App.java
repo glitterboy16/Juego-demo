@@ -16,7 +16,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         SceneManager sm = SceneManager.getInstance();
-        sm.init(stage);
+        sm.init(stage, "styles");
         sm.setScene(SceneID.MAIN, "vista1", 900, 600);
         sm.loadScene(SceneID.MAIN);   
         sm.setScene(SceneID.SECONDARY, "vista2", 900, 600);

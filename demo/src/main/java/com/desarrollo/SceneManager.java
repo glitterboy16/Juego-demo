@@ -1,6 +1,7 @@
 package com.desarrollo;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,7 @@ public class SceneManager {
     private static SceneManager instance;
 
     private Stage stage; // La ventana principal de la aplicación
+    private URL styles;
     private HashMap<SceneID, Scene> scenes; // Mapa para almacenar las escenas según su identificador
 
    
@@ -31,6 +33,12 @@ public class SceneManager {
 
     
     @SuppressWarnings("exports")
+    public void init(Stage stage, String styles){
+        this.stage = stage;
+        this.styles = App.class.getResource("Styles/" + styles + ".css");
+    }
+
+    @SuppressWarnings("exports")
     public void init(Stage stage){
         this.stage = stage;
     }
@@ -42,6 +50,8 @@ public class SceneManager {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, width, height); // Crea la escena con el tamaño especificado
+            // Vincular el archivo CSS a la escena
+            if (styles!=null) scene.getStylesheets().add(styles.toExternalForm()); // Añade la hoja de estilo
             scene.setUserData(fxmlLoader);
             scenes.put(sceneID, scene); // Almacena la escena en el mapa con el identificador correspondiente
         } catch (IOException e) {
