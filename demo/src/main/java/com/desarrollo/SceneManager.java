@@ -42,6 +42,7 @@ public class SceneManager {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, width, height); // Crea la escena con el tamaño especificado
+            scene.setUserData(fxmlLoader);
             scenes.put(sceneID, scene); // Almacena la escena en el mapa con el identificador correspondiente
         } catch (IOException e) {
             e.printStackTrace(); // En caso de error al cargar el FXML
@@ -59,5 +60,16 @@ public class SceneManager {
             stage.setScene(scenes.get(sceneID)); // Establece la escena en la ventana principal
             stage.show(); // Muestra la ventana con la nueva escena
         } 
+    }
+
+
+    // obtener el controlador de una escena y registrarlo como observador
+    public Object getController(SceneID sceneID) {
+        if (scenes.containsKey(sceneID)) {
+            Scene scene = scenes.get(sceneID);
+            FXMLLoader loader = (FXMLLoader) scene.getUserData(); // Recuperar el loader
+            return loader.getController();
+        }
+        return null;
     }
 } 

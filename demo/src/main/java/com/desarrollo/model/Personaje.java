@@ -15,6 +15,10 @@ public abstract class Personaje {
     private int posicionX;
     private int posicionY;
 
+    public Personaje() {
+        this.observers = new ArrayList<>();
+    }
+
 
     public Personaje(int salud, int fuerza, int defensa, int velocidad, int posicionX, int posicionY) {
         this.salud = salud;
@@ -25,7 +29,7 @@ public abstract class Personaje {
         this.posicionY = posicionY;
     }
 
-    public Personaje(){
+    /*public Personaje(){
         this.salud = 100;
         this.fuerza = 100;
         this.defensa = 50;
@@ -33,7 +37,7 @@ public abstract class Personaje {
         this.posicionX = 0;
         this.posicionY = 0;
         this.observers= new ArrayList<>();
-    }
+    }*/
 
     public Personaje getPersonaje() {
         return personaje;

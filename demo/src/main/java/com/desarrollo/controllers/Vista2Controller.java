@@ -2,19 +2,24 @@ package com.desarrollo.controllers;
 
 import com.desarrollo.SceneID;
 import com.desarrollo.SceneManager;
+import com.desarrollo.model.Protagonista;
+import com.desarrollo.model.Proveedor;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 
-
-
-public class Vista2Controller {
+public class Vista2Controller implements Initializable {
 
     @FXML
     private AnchorPane panel;
@@ -23,58 +28,142 @@ public class Vista2Controller {
     private ImageView imagenfondo;
 
     @FXML
-    private Label info;
-    
-    @FXML
-    private Label nomprota;
-
-    @FXML
     private TextField nombre;
 
-    @FXML 
-    private Label saludprota;
+    @FXML
+    private Spinner<Integer> salud;
 
     @FXML
-    private TextField salud;
+    private Spinner<Integer> velocidad;
 
     @FXML
-    private Label velocidadprota;
+    private Spinner<Integer> fuerza;
 
     @FXML
-    private TextField velocidad;
+    private Spinner<Integer> defensa;
 
     @FXML
-    private Label fuerzaprota;
-    
-    @FXML
-    private TextField fuerza;
+    private Button botonGuardar;
 
     @FXML
-    private Label defensaprota;
+    private Button botonContinuar;
 
     @FXML
-    private TextField defensa;
+    private Label puntosRestantesLabel;
 
-    @FXML
-    private Button boton;
+    private final int MAX_PUNTOS = 100;
 
-    
-    @FXML
-    private void initialize() {
-        
+    private Protagonista protagonista;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
         Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/imagenvista2.jpg").toExternalForm());
         imagenfondo.setImage(image);
         imagenfondo.fitWidthProperty().bind(panel.widthProperty());
         imagenfondo.fitHeightProperty().bind(panel.heightProperty());
         imagenfondo.setPreserveRatio(false);
 
-        // Ajustar el ImageView al tamaño del Pane
-        imagenfondo.fitWidthProperty().bind(panel.widthProperty());
-        imagenfondo.fitHeightProperty().bind(panel.heightProperty());
-    
-        boton.setOnAction(event -> {
-            SceneManager.getInstance().loadScene(SceneID.TABLERO);
-        });
+        inicializarSpinners();
+        actualizarLabel();
+        addListeners();
 
-    } 
+        botonGuardar.setOnAction(event -> guardarInformacionPersonaje());
+
+        botonContinuar.setOnAction(event -> {
+            if (protagonista != null) {
+                SceneManager.getInstance().loadScene(SceneID.TABLERO);
+            } else {
+                System.out.println("Primero debes guardar la información del personaje.");
+            }
+        });
+    }
+
+    private void inicializarSpinners() {
+        configurarSpinner(salud);
+        configurarSpinner(velocidad);
+        configurarSpinner(fuerza);
+        configurarSpinner(defensa);
+    }
+
+    private void configurarSpinner(Spinner<Integer> spinner) {
+        spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, MAX_PUNTOS, 0));
+        spinner.setEditable(true);
+    }
+
+    private void addListeners() {
+        addListener(salud);
+        addListener(velocidad);
+        addListener(fuerza);
+        addListener(defensa);
+    }
+
+    private void addListener(Spinner<Integer> spinner) {
+        spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
+            int total = getTotalPuntos();
+            if (total > MAX_PUNTOS) {
+                spinner.getValueFactory().setValue(oldValue);
+            }
+            actualizarLabel();
+        });
+    }
+
+    private int getTotalPuntos() {
+        return salud.getValue() + velocidad.getValue() + fuerza.getValue() + defensa.getValue();
+    }
+
+    private void actualizarLabel() {
+        int puntosRestantes = MAX_PUNTOS - getTotalPuntos();
+        if (puntosRestantesLabel != null) {
+            puntosRestantesLabel.setText("Puntos restantes: " + puntosRestantes);
+        }
+    }
+
+    private void guardarInformacionPersonaje() {
+        try {
+            if (nombre.getText().isEmpty()) {
+                System.out.println("Por favor, introduce un nombre para el personaje.");
+                return;
+            }
+    
+            if (getTotalPuntos() < MAX_PUNTOS) {
+                System.out.println("Debes distribuir exactamente " + MAX_PUNTOS + " puntos antes de continuar.");
+                return;
+            }
+    
+            // Crear el objeto Protagonista y asignarlo al campo (para el botón Continuar)
+            protagonista = new Protagonista(
+                nombre.getText(),
+                salud.getValue(),
+                fuerza.getValue(),
+                defensa.getValue(),
+                velocidad.getValue()
+            );
+    
+            // Obtener el controlador del tablero
+            TableroController tableroController = (TableroController) SceneManager.getInstance().getController(SceneID.TABLERO);
+    
+            // Enviar los datos al TableroController
+            tableroController.recibirDatosProtagonista(
+                nombre.getText(),
+                salud.getValue(),
+                fuerza.getValue(),
+                defensa.getValue(),
+                velocidad.getValue(),
+                "/com/desarrollo/imagenes/personaje_abajo.png",
+                0,
+                0
+            );
+    
+            // Eliminar la escena secundaria
+            SceneManager.getInstance().removeScene(SceneID.SECONDARY);
+    
+            System.out.println("Información del personaje guardada correctamente.");
+        } catch (Exception e) {
+            System.out.println("Ocurrió un error al guardar la información del personaje: " + e.getMessage());
+        }
+    }
+    public Protagonista getProtagonista() {
+        return protagonista;
+    }
 }
