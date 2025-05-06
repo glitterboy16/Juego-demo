@@ -5,8 +5,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import com.desarrollo.model.Protagonista;
 import com.desarrollo.interfaces.Observer;
+import com.desarrollo.model.Protagonista;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -222,7 +223,16 @@ public class TableroController implements Observer {
         protaX = posicionX;
         protaY = posicionY;
         
-        tablero2.add(imagenProta, protaX, protaY);
+        // Coloca la imagen en la misma posición (0, 0)
+        AnchorPane.setLeftAnchor(imagenProta, 0.0);  // Cambia la posición en X
+        AnchorPane.setTopAnchor(imagenProta, 0.0);   // Cambia la posición en Y
+
+        // Agregar la nueva imagen al AnchorPane
+        tableroPanel.getChildren().add(imagenProta);
+
+
+        // Mover la nueva imagen al frente
+        imagenProta.toFront();  // Asegura que la imagen esté encima de las demás
         
 
         /*imagenProta.setTranslateX(posicionX * 35); // Ajustar la posición gráfica*/
