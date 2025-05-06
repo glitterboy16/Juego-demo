@@ -57,6 +57,7 @@ public class Vista2Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/imagenvista2.jpg").toExternalForm());
         imagenfondo.setImage(image);
         imagenfondo.fitWidthProperty().bind(panel.widthProperty());
@@ -124,27 +125,44 @@ public class Vista2Controller implements Initializable {
                 System.out.println("Por favor, introduce un nombre para el personaje.");
                 return;
             }
-
+    
             if (getTotalPuntos() < MAX_PUNTOS) {
                 System.out.println("Debes distribuir exactamente " + MAX_PUNTOS + " puntos antes de continuar.");
                 return;
             }
-
-            String nombreProta = nombre.getText();
-            int saludProta = salud.getValue();
-            int velocidadProta = velocidad.getValue();
-            int fuerzaProta = fuerza.getValue();
-            int defensaProta = defensa.getValue();
-
-            protagonista = new Protagonista(nombreProta, saludProta, fuerzaProta, defensaProta, velocidadProta, "/com/desarrollo/imagenes/personaje_abajo.png");
-            Proveedor.getInstance().setProtagonista(protagonista);
-
+    
+            // Crear el objeto Protagonista y asignarlo al campo (para el botón Continuar)
+            protagonista = new Protagonista(
+                nombre.getText(),
+                salud.getValue(),
+                fuerza.getValue(),
+                defensa.getValue(),
+                velocidad.getValue()
+            );
+    
+            // Obtener el controlador del tablero
+            TableroController tableroController = (TableroController) SceneManager.getInstance().getController(SceneID.TABLERO);
+    
+            // Enviar los datos al TableroController
+            tableroController.recibirDatosProtagonista(
+                nombre.getText(),
+                salud.getValue(),
+                fuerza.getValue(),
+                defensa.getValue(),
+                velocidad.getValue(),
+                "/com/desarrollo/imagenes/personaje_abajo.png",
+                0,
+                0
+            );
+    
+            // Eliminar la escena secundaria
+            SceneManager.getInstance().removeScene(SceneID.SECONDARY);
+    
             System.out.println("Información del personaje guardada correctamente.");
         } catch (Exception e) {
             System.out.println("Ocurrió un error al guardar la información del personaje: " + e.getMessage());
         }
     }
-
     public Protagonista getProtagonista() {
         return protagonista;
     }

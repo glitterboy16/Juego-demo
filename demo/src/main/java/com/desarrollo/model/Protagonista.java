@@ -1,31 +1,88 @@
 package com.desarrollo.model;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import com.desarrollo.interfaces.Observer;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Protagonista extends Personaje {
-
-    private ImageView imagen; // Representación del personaje con una imagen
+public class Protagonista {
+    private String nombre;
+    private int salud;
+    private int fuerza;
+    private int defensa;
+    private int velocidad;
+    private List<Observer> observers = new ArrayList<>();
 
     public Protagonista() {
-        super(30, 30, 30, 10, 0, 0); // Llama al constructor de la clase padre
-        this.imagen = new ImageView(new Image(getClass().getResource("/com/desarrollo/imagenes/personaje_abajo.png").toExternalForm()));
+        // Constructor por defecto
     }
 
-    public Protagonista(String nombre, int salud, int fuerza, int defensa, int velocidad, String rutaImagen) {
-        super(salud, fuerza, defensa, velocidad, 0, 0); // Llama al constructor de la clase padre
-        this.imagen = new ImageView(new Image(getClass().getResource("/com/desarrollo/imagenes/personaje_abajo.png").toExternalForm()));
+    public Protagonista(String nombre, int salud, int fuerza, int defensa, int velocidad) {
+        this.nombre = nombre;
+        this.salud = salud;
+        this.fuerza = fuerza;
+        this.defensa = defensa;
+        this.velocidad = velocidad;
     }
 
-    public ImageView getImagen() {
-        return imagen;
+    // Getters
+    public String getNombre() {
+        return nombre;
     }
 
-    public void mover(int nuevaX, int nuevaY) {
-        setPosicionX(nuevaX); // Actualiza la posición en la clase padre
-        setPosicionY(nuevaY);
-        imagen.setTranslateX(nuevaX * 32); // Ajusta la posición gráfica
-        imagen.setTranslateY(nuevaY * 32);
-        notifyObservers(); // Notifica a los observadores del cambio
+    public int getSalud() {
+        return salud;
+    }
+
+    public int getFuerza() {
+        return fuerza;
+    }
+
+    public int getDefensa() {
+        return defensa;
+    }
+
+    public int getVelocidad() {
+        return velocidad;
+    }
+
+    // Setters
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+        notifyObservers();
+    }
+
+    public void setSalud(int salud) {
+        this.salud = salud;
+        notifyObservers();
+    }
+
+    public void setFuerza(int fuerza) {
+        this.fuerza = fuerza;
+        notifyObservers();
+    }
+
+    public void setDefensa(int defensa) {
+        this.defensa = defensa;
+        notifyObservers();
+    }
+
+    public void setVelocidad(int velocidad) {
+        this.velocidad = velocidad;
+        notifyObservers();
+    }
+
+    // Observer pattern
+    public void suscribe(Observer observer) {
+        observers.add(observer);
+    }
+
+    public void unsuscribe(Observer observer) {
+        observers.remove(observer);
+    }
+
+    private void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.onChange();
+        }
     }
 }

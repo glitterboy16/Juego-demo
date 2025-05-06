@@ -5,14 +5,17 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import com.desarrollo.model.Protagonista;
+import com.desarrollo.interfaces.Observer;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.StackPane;
 
-public class TableroController {
+public class TableroController implements Observer {
 
     @FXML
     private AnchorPane panelPrincipal;
@@ -21,13 +24,32 @@ public class TableroController {
     private ImageView imagenfondo;
 
     @FXML
-    private ImageView imagenfondoVbox;
+    private ImageView imagenfondoStackPane;
 
     @FXML
     private AnchorPane tableroPanel;
 
+    // Datos y Estadísticas de personajes
     @FXML
-    private VBox datosPersonajesVBox;
+    private StackPane datosStackPane;
+
+    @FXML
+    private Label Pnombre;
+
+    @FXML
+    private Label Psalud;
+
+    @FXML
+    private Label Pfuerza;
+
+    @FXML
+    private Label Pdefensa;
+
+    @FXML
+    private Label Pvelocidad;
+
+    // Protagonista
+    private Protagonista protagonista; // No inicializar aquí
 
     private final int FILAS = 15;
     private final int COLUMNAS = 15;
@@ -36,17 +58,21 @@ public class TableroController {
 
     @FXML
     public void initialize() {
-        Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/fondos/Fondo_Provicional.png").toExternalForm());
+        // No inicializar Protagonista aquí
+        // Actualizar etiquetas iniciales para evitar null
+        onChange();
+
+        Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/fondos/Fondo_Tablero.png").toExternalForm());
         imagenfondo.setImage(image);
         imagenfondo.fitWidthProperty().bind(panelPrincipal.widthProperty());
         imagenfondo.fitHeightProperty().bind(panelPrincipal.heightProperty());
         imagenfondo.setPreserveRatio(false);
 
         Image image2 = new Image(getClass().getResource("/com/desarrollo/imagenes/fondos/Fondo_Vbox.png").toExternalForm());
-        imagenfondoVbox.setImage(image2);
-        imagenfondoVbox.fitWidthProperty().bind(datosPersonajesVBox.widthProperty());
-        imagenfondoVbox.fitHeightProperty().bind(datosPersonajesVBox.heightProperty());
-        imagenfondoVbox.setPreserveRatio(false);
+        imagenfondoStackPane.setImage(image2);
+        imagenfondoStackPane.fitWidthProperty().bind(datosStackPane.widthProperty());
+        imagenfondoStackPane.fitHeightProperty().bind(datosStackPane.heightProperty());
+        imagenfondoStackPane.setPreserveRatio(false);
 
         try {
             cargarMapaDesdeArchivo();
@@ -76,7 +102,7 @@ public class TableroController {
     }
 
     private void cargarMapaDesdeArchivo() throws IOException {
-        String ruta = "ficheros/tablero.txt";
+        String ruta = "demo/ficheros/tablero.txt";
         System.out.println("Ruta del archivo: " + new File(ruta).getAbsolutePath());
 
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
@@ -95,13 +121,29 @@ public class TableroController {
         }
     }
 
+    @Override
+    public void onChange() {
+        if (protagonista != null) {
+            Pnombre.setText("Nombre: " + protagonista.getNombre());
+            Psalud.setText("Salud: " + protagonista.getSalud());
+            Pfuerza.setText("Fuerza: " + protagonista.getFuerza());
+            Pdefensa.setText("Defensa: " + protagonista.getDefensa());
+            Pvelocidad.setText("Velocidad: " + protagonista.getVelocidad());
+        } else {
+            Pnombre.setText("Nombre: N/A");
+            Psalud.setText("Salud: 0");
+            Pfuerza.setText("Fuerza: 0");
+            Pdefensa.setText("Defensa: 0");
+            Pvelocidad.setText("Velocidad: 0");
+        }
+    }
+
     private void actualizarTablero(Image suelo, Image pared) {
         tablero.getChildren().clear();
 
-// Establece tamaño fijo por celda
-double anchoCelda = 35;
-double altoCelda = 35;
-
+        // Establece tamaño fijo por celda
+        double anchoCelda = 35;
+        double altoCelda = 35;
 
         for (int fila = 0; fila < FILAS; fila++) {
             for (int col = 0; col < COLUMNAS; col++) {
@@ -114,5 +156,24 @@ double altoCelda = 35;
                 tablero.add(celda, col, fila);
             }
         }
+    }
+
+    public void recibirDatosProtagonista(String nombre, int salud, int fuerza, int defensa, int velocidad, String rutaImagen, int posicionY, int posicionX) {
+        // Crear el objeto Protagonista con los datos recibidos
+        protagonista = new Protagonista(nombre, salud, fuerza, defensa, velocidad);
+
+        // Suscribir este controlador como observador
+        protagonista.suscribe(this);
+
+        // Actualizar las etiquetas
+        onChange();
+
+        // Mostrar la imagen del protagonista en el tablero
+        Image imagenProtagonista = new Image(getClass().getResource(rutaImagen).toExternalForm());
+        ImageView imagenProta = new ImageView(imagenProtagonista);
+        imagenProta.setFitWidth(50);
+        imagenProta.setFitHeight(50);
+        tablero.add(imagenProta, posicionX, posicionY);
+        imagenProta.setTranslateX(posicionX * 35); // Ajustar la posición gráfica
     }
 }
