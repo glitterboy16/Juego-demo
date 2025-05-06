@@ -49,14 +49,9 @@
       <Label fx:id="defensaprota" layoutX="41.0" layoutY="309.0" prefHeight="18.0" prefWidth="58.0" text="Defensa:" textFill="WHITE">
          <font>
             <Font size="14.0" />
-         </font>
-      </Label>
-      <Button fx:id="botonContinuar" mnemonicParsing="false" prefHeight="26.0" prefWidth="163.0" text="Empezar el juego" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0">
-         <font>
-            <Font name="Consolas Bold" size="12.0" />
-         </font>
-      </Button>
-      <Button fx:id="botonGuardar" layoutX="135.0" layoutY="376.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="163.0" text="Aceptar">
+         </font></Label>
+      <TextField fx:id="fuerza" layoutX="118.0" layoutY="306.0" prefHeight="26.0" prefWidth="198.0" promptText="Indique la defensa del personaje" />
+      <Button fx:id="boton" mnemonicParsing="false" prefHeight="26.0" prefWidth="163.0" text="Empezar el juego" AnchorPane.rightAnchor="30.0" AnchorPane.bottomAnchor="30.0">
          <font>
             <Font name="Consolas Bold" size="12.0" />
          </font>

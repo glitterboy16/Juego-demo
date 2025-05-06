@@ -2,7 +2,7 @@ package com.desarrollo.controllers;
 
 import com.desarrollo.SceneID;
 import com.desarrollo.SceneManager;
-import com.desarrollo.model.Protagonista;
+import com.desarrollo.model.DatosJugador;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,100 +50,42 @@ public class Vista2Controller implements Initializable {
     @FXML
     private Label puntosRestantesLabel;
 
-    private final int MAX_PUNTOS = 100;
+    @FXML
+    private Button boton;
 
-    private Protagonista protagonista;
+    @FXML
+    private Button boton2;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    
+    @FXML
+    private void initialize() {
+        
         Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/imagenvista2.jpg").toExternalForm());
         imagenfondo.setImage(image);
         imagenfondo.fitWidthProperty().bind(panel.widthProperty());
         imagenfondo.fitHeightProperty().bind(panel.heightProperty());
         imagenfondo.setPreserveRatio(false);
 
-        inicializarSpinners();
-        actualizarLabel();
-        addListeners();
+        // Ajustar el ImageView al tamaño del Pane
+        imagenfondo.fitWidthProperty().bind(panel.widthProperty());
+        imagenfondo.fitHeightProperty().bind(panel.heightProperty());
+    
+        boton2.setOnAction(event -> {
+        
+        String nombrePronta = nombre.getText();
+        int saludProta = Integer.parseInt(salud.getText());
+        int fuerzaProta = Integer.parseInt(fuerza.getText());
+        int defensaProta = Integer.parseInt(defensa.getText());
+        int velocidadProta = Integer.parseInt(velocidad.getText());
 
-        botonGuardar.setOnAction(event -> guardarInformacionPersonaje());
+        DatosJugador.getInstance().crearProtagonista(saludProta, fuerzaProta, defensaProta, velocidadProta, nombrePronta);
 
-        botonContinuar.setOnAction(event -> {
-            if (protagonista != null) {
-                SceneManager.getInstance().loadScene(SceneID.TABLERO);
-            } else {
-                System.out.println("Primero debes guardar la información del personaje.");
-            }
+        SceneManager.getInstance().loadScene(SceneID.TABLERO);
         });
-    }
 
-    private void inicializarSpinners() {
-        configurarSpinner(salud);
-        configurarSpinner(velocidad);
-        configurarSpinner(fuerza);
-        configurarSpinner(defensa);
-    }
-
-    private void configurarSpinner(Spinner<Integer> spinner) {
-        spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, MAX_PUNTOS, 0));
-        spinner.setEditable(true);
-    }
-
-    private void addListeners() {
-        addListener(salud);
-        addListener(velocidad);
-        addListener(fuerza);
-        addListener(defensa);
-    }
-
-    private void addListener(Spinner<Integer> spinner) {
-        spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
-            int total = getTotalPuntos();
-            if (total > MAX_PUNTOS) {
-                spinner.getValueFactory().setValue(oldValue);
-            }
-            actualizarLabel();
+        boton.setOnAction(event -> {
+            SceneManager.getInstance().loadScene(SceneID.TABLERO);
         });
-    }
 
-    private int getTotalPuntos() {
-        return salud.getValue() + velocidad.getValue() + fuerza.getValue() + defensa.getValue();
-    }
-
-    private void actualizarLabel() {
-        int puntosRestantes = MAX_PUNTOS - getTotalPuntos();
-        if (puntosRestantesLabel != null) {
-            puntosRestantesLabel.setText("Puntos restantes: " + puntosRestantes);
-        }
-    }
-
-    private void guardarInformacionPersonaje() {
-        try {
-            if (nombre.getText().isEmpty()) {
-                System.out.println("Por favor, introduce un nombre para el personaje.");
-                return;
-            }
-
-            if (getTotalPuntos() < MAX_PUNTOS) {
-                System.out.println("Debes distribuir exactamente " + MAX_PUNTOS + " puntos antes de continuar.");
-                return;
-            }
-
-            String nombreProta = nombre.getText();
-            int saludProta = salud.getValue();
-            int velocidadProta = velocidad.getValue();
-            int fuerzaProta = fuerza.getValue();
-            int defensaProta = defensa.getValue();
-
-            protagonista = new Protagonista(nombreProta, saludProta, fuerzaProta, defensaProta, velocidadProta, "/com/desarrollo/imagenes/personaje_abajo.png");
-
-            System.out.println("Información del personaje guardada correctamente.");
-        } catch (Exception e) {
-            System.out.println("Ocurrió un error al guardar la información del personaje: " + e.getMessage());
-        }
-    }
-
-    public Protagonista getProtagonista() {
-        return protagonista;
-    }
+    } 
 }

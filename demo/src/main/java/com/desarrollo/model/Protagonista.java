@@ -1,31 +1,74 @@
 package com.desarrollo.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.desarrollo.interfaces.Observer;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Protagonista extends Personaje {
+public class Protagonista {
 
-    private ImageView imagen; // Representación del personaje con una imagen
+    private int salud, fuerza, defensa, velocidad;
+    private int posicionX, posicionY;
+    private ImageView imagenPersonaje;
+    private List<Observer> observers = new ArrayList<>(); // 🧠 Observadores que se enteran de cambios
 
-    public Protagonista() {
-        super(30, 30, 30, 10, 0, 0); // Llama al constructor de la clase padre
-        this.imagen = new ImageView(new Image(getClass().getResource("/com/desarrollo/imagenes/personaje_abajo.png").toExternalForm()));
+    public Protagonista(int salud, int fuerza, int defensa, int velocidad) {
+        this.salud = salud;
+        this.fuerza = fuerza;
+        this.defensa = defensa;
+        this.velocidad = velocidad;
+        this.posicionX = 0;
+        this.posicionY = 0;
+        this.imagenPersonaje = new ImageView(new Image(getClass().getResourceAsStream("/com/desarrollo/imagenes/protagonista.png"))); // Ajusta la ruta
+        this.imagenPersonaje.setFitWidth(32); // o el tamaño que quieras
+        this.imagenPersonaje.setFitHeight(32);
     }
 
-    public Protagonista(String nombre, int salud, int fuerza, int defensa, int velocidad, String rutaImagen) {
-        super(salud, fuerza, defensa, velocidad, 0, 0); // Llama al constructor de la clase padre
-        this.imagen = new ImageView(new Image(getClass().getResource("/com/desarrollo/imagenes/personaje_abajo.png").toExternalForm()));
+    // 🔥 Métodos para Observer
+    public void addObserver(Observer observer) {
+        observers.add(observer);
     }
 
-    public ImageView getImagen() {
-        return imagen;
+    private void notificarObservers() {
+        for (Observer o : observers) {
+            o.onChange();
+        }
     }
 
-    public void mover(int nuevaX, int nuevaY) {
-        setPosicionX(nuevaX); // Actualiza la posición en la clase padre
-        setPosicionY(nuevaY);
-        imagen.setTranslateX(nuevaX * 32); // Ajusta la posición gráfica
-        imagen.setTranslateY(nuevaY * 32);
-        notifyObservers(); // Notifica a los observadores del cambio
+
+    public void moverDerecha() {
+        posicionX++;
+        notificarObservers();
+    }
+
+    public void moverIzquierda() {
+        posicionX--;
+        notificarObservers();
+    }
+
+    public void moverArriba() {
+        posicionY--;
+        notificarObservers();
+    }
+
+    public void moverAbajo() {
+        posicionY++;
+        notificarObservers();
+    }
+
+    // Getters
+    public int getPosicionX() {
+        return posicionX;
+    }
+
+    public int getPosicionY() {
+        return posicionY;
+    }
+
+    public ImageView getImagenPersonaje() {
+        return imagenPersonaje;
     }
 }
