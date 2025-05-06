@@ -51,6 +51,13 @@ public class TableroController implements Observer {
     @FXML
     private Label Pvelocidad;
 
+    private int protaX;
+
+    private int protaY;
+
+    @FXML
+    private ImageView imagenProta;
+
     // Protagonista
     private Protagonista protagonista; // No inicializar aquí
 
@@ -194,7 +201,9 @@ public class TableroController implements Observer {
         }
     }
 
+
     public void recibirDatosProtagonista(String nombre, int salud, int fuerza, int defensa, int velocidad, String rutaImagen, int posicionY, int posicionX) {
+
         // Crear el objeto Protagonista con los datos recibidos
         protagonista = new Protagonista(nombre, salud, fuerza, defensa, velocidad);
 
@@ -207,9 +216,15 @@ public class TableroController implements Observer {
         // Mostrar la imagen del protagonista en el tablero
         Image imagenProtagonista = new Image(getClass().getResource(rutaImagen).toExternalForm());
         ImageView imagenProta = new ImageView(imagenProtagonista);
-        imagenProta.setFitWidth(50);
-        imagenProta.setFitHeight(50);
-        tablero.add(imagenProta, posicionX, posicionY);
-        imagenProta.setTranslateX(posicionX * 35); // Ajustar la posición gráfica
+        imagenProta.setFitWidth(35);
+        imagenProta.setFitHeight(35);
+
+        protaX = posicionX;
+        protaY = posicionY;
+        
+        tablero2.add(imagenProta, protaX, protaY);
+        
+
+        /*imagenProta.setTranslateX(posicionX * 35); // Ajustar la posición gráfica*/
     }
 }
