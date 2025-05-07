@@ -16,8 +16,7 @@ public class Protagonista {
     private List<Observer> observers = new ArrayList<>();
     private String imagenRutaPronta; 
 
-    private final int LIMITE_X = 14; // límite máximo en X (0 a 14)
-    private final int LIMITE_Y = 14; // límite máximo en Y (0 a 14)
+   
     
     public Protagonista() {
         // Constructor por defecto
@@ -94,45 +93,34 @@ public class Protagonista {
     }
 
     public void setPosicionX(int posicionX) {
-        if (posicionX >= 0 && posicionX <= LIMITE_X) {
-            this.posicionX = posicionX;
-            notifyObservers();
-        }
+        this.posicionX = posicionX;  // Ya no es necesario verificar límites aquí
+        notifyObservers();  // Notificar a los observadores cuando la posición cambia
     }
-
+    
     public void setPosicionY(int posicionY) {
-        if (posicionY >= 0 && posicionY <= LIMITE_Y) {
-            this.posicionY = posicionY;
-            notifyObservers();
-        }
+        this.posicionY = posicionY;  // Ya no es necesario verificar límites aquí
+        notifyObservers();  // Notificar a los observadores cuando la posición cambia
     }
+    
 
     public void moverArriba() {
-        if (posicionY > 0) {
-            posicionY--;
-            notifyObservers();
-        }
+        posicionY--;
+        notifyObservers();
     }
 
     public void moverAbajo() {
-        if (posicionY < LIMITE_Y) {
-            posicionY++;
-            notifyObservers();
-        }
+        posicionY++;
+        notifyObservers();
     }
 
     public void moverIzquierda() {
-        if (posicionX > 0) {
-            posicionX--;
-            notifyObservers();
-        }
+        posicionX--;
+        notifyObservers();
     }
 
     public void moverDerecha() {
-        if (posicionX < LIMITE_X) {
-            posicionX++;
-            notifyObservers();
-        }
+        posicionX++;
+        notifyObservers();
     }
 
     // Observer pattern
