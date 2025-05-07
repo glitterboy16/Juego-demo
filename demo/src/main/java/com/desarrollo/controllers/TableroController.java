@@ -8,7 +8,9 @@ import java.io.IOException;
 import com.desarrollo.interfaces.Observer;
 import com.desarrollo.model.Protagonista;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -206,7 +208,7 @@ public class TableroController implements Observer {
     public void recibirDatosProtagonista(String nombre, int salud, int fuerza, int defensa, int velocidad, String rutaImagen, int posicionY, int posicionX) {
 
         // Crear el objeto Protagonista con los datos recibidos
-        protagonista = new Protagonista(nombre, salud, fuerza, defensa, velocidad);
+        protagonista = new Protagonista(nombre, salud, fuerza, defensa, velocidad, posicionX, posicionY);
 
         // Suscribir este controlador como observador
         protagonista.suscribe(this);
@@ -224,8 +226,8 @@ public class TableroController implements Observer {
         protaY = posicionY;
         
         // Coloca la imagen en la misma posición (0, 0)
-        AnchorPane.setLeftAnchor(imagenProta, 0.0);  // Cambia la posición en X
-        AnchorPane.setTopAnchor(imagenProta, 0.0);   // Cambia la posición en Y
+        AnchorPane.setLeftAnchor(imagenProta, posicionX * 35.0);  // Cambia la posición en X
+        AnchorPane.setTopAnchor(imagenProta, posicionY * 35.0);   // Cambia la posición en Y
 
         // Agregar la nueva imagen al AnchorPane
         tableroPanel.getChildren().add(imagenProta);
@@ -233,8 +235,40 @@ public class TableroController implements Observer {
 
         // Mover la nueva imagen al frente
         imagenProta.toFront();  // Asegura que la imagen esté encima de las demás
-        
+        tableroPanel.requestFocus();
 
         /*imagenProta.setTranslateX(posicionX * 35); // Ajustar la posición gráfica*/
+    
+        Platform.runLater(() -> {
+            Scene scene = tableroPanel.getScene();
+        scene.setOnKeyPressed(event -> {
+            System.out.println("Tecla presionada: " + event.getCode());
+            if (protagonista != null) {
+                switch (event.getCode()) {
+                    case W:
+                        protagonista.moverArriba();
+                        break;
+                    case S:
+                        protagonista.moverAbajo();
+                        break;
+                    case A:
+                        protagonista.moverIzquierda();
+                        break;
+                    case D:
+                        protagonista.moverDerecha();
+                        break;
+                    default:
+                        break;
+                }
+                // Actualizar posición gráfica
+                AnchorPane.setLeftAnchor(imagenProta, protagonista.getPosicionX() * 35.0);
+                AnchorPane.setTopAnchor(imagenProta, protagonista.getPosicionY() * 35.0);
+            }
+        });
+        
+        tableroPanel.requestFocus();
+    });
     }
+    
+
 }
