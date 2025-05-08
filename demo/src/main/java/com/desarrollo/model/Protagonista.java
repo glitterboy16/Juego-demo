@@ -33,6 +33,11 @@ public class Protagonista {
         this.posicionX = posicionX;
         this.posicionY = posicionY;
         this.mapa = mapa;
+
+        // Verificación de la celda en la posición inicial
+    char celdaInicio = mapa.getCelda(posicionX, posicionY);
+    System.out.println("Posición inicial del protagonista: (" + posicionX + ", " + posicionY + ")");
+    System.out.println("Celda en la posición inicial: " + celdaInicio);  // Debe ser 'S' si es transitable
     }
 
     public String getImagenRutaPronta() {
@@ -105,34 +110,61 @@ public class Protagonista {
     }
     
 
+    // Método para mover hacia arriba
     public void moverArriba() {
-        if (this.posicionY > 0) {
-            this.posicionY--;  // Mover arriba
-            notifyObservers();  // Actualizar la vista
+        int nuevaPosX = this.posicionX;
+        int nuevaPosY = this.posicionY - 1; // Movimiento hacia arriba
+        System.out.println("Intentando mover a: (" + nuevaPosX + ", " + nuevaPosY + ")");
+        char celdaDestino = mapa.getCelda(nuevaPosX, nuevaPosY);
+        System.out.println("Celda destino: " + celdaDestino);
+    
+        if (nuevaPosY >= 0 && mapa.esCeldaTransitable(nuevaPosX, nuevaPosY)) {
+            this.posicionY = nuevaPosY; // Si es transitable, actualiza la posición
+            notifyObservers();  // Notificar a los observadores
+            System.out.println("Movido a: (" + nuevaPosX + ", " + nuevaPosY + ")");
+        } else {
+            System.out.println("Movimiento no permitido.");
         }
     }
 
     public void moverAbajo() {
-        if (this.posicionY < mapa.getFilas() - 1) {
-            this.posicionY++;  // Mover abajo
-            notifyObservers();  // Actualizar la vista
+        int nuevaPosX = this.posicionX;
+        int nuevaPosY = this.posicionY + 1; // Movimiento hacia abajo
+    
+        // Verifica si la nueva posición está dentro del mapa y si la celda es transitable
+        if (nuevaPosY < mapa.getNumeroDeFilas() && mapa.esCeldaTransitable(nuevaPosX, nuevaPosY)) {
+            this.posicionY = nuevaPosY; // Actualiza la posición si es transitable
+            notifyObservers();  // Notificar a los observadores (si es necesario)
+        } else {
+            System.out.println("Movimiento no permitido hacia abajo.");
         }
     }
 
     public void moverIzquierda() {
-        if (this.posicionX > 0) {
-            this.posicionX--;  // Mover a la izquierda
-            notifyObservers();  // Actualizar la vista
+        int nuevaPosX = this.posicionX - 1; // Movimiento hacia la izquierda
+        int nuevaPosY = this.posicionY;
+    
+        // Verifica si la nueva posición está dentro del mapa y si la celda es transitable
+        if (nuevaPosX >= 0 && mapa.esCeldaTransitable(nuevaPosX, nuevaPosY)) {
+            this.posicionX = nuevaPosX; // Actualiza la posición si es transitable
+            notifyObservers();  // Notificar a los observadores (si es necesario)
+        } else {
+            System.out.println("Movimiento no permitido hacia la izquierda.");
         }
     }
 
     public void moverDerecha() {
-        if (this.posicionX < mapa.getColumnas() - 1) {
-            this.posicionX++;  // Mover a la derecha
-            notifyObservers();  // Actualizar la vista
+        int nuevaPosX = this.posicionX + 1; // Movimiento hacia la derecha
+        int nuevaPosY = this.posicionY;
+    
+        // Verifica si la nueva posición está dentro del mapa y si la celda es transitable
+        if (nuevaPosX < mapa.getNumeroDeColumnas() && mapa.esCeldaTransitable(nuevaPosX, nuevaPosY)) {
+            this.posicionX = nuevaPosX; // Actualiza la posición si es transitable
+            notifyObservers();  // Notificar a los observadores (si es necesario)
+        } else {
+            System.out.println("Movimiento no permitido hacia la derecha.");
         }
     }
-
     // Observer pattern
     public void suscribe(Observer observer) {
         observers.add(observer);

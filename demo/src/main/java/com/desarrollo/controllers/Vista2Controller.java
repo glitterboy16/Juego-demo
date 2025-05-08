@@ -147,8 +147,8 @@ public class Vista2Controller implements Initializable {
                     fuerza.getValue(),
                     defensa.getValue(),
                     velocidad.getValue(),
-                    0,
-                    0,
+                    1,
+                    1,
                     this.mapa
                 );
     
@@ -161,8 +161,8 @@ public class Vista2Controller implements Initializable {
                     defensa.getValue(),
                     velocidad.getValue(),
                     "/com/desarrollo/imagenes/personaje_abajo.png",  // Ruta de la imagen del personaje
-                    0,
-                    0
+                    1,
+                    1
                 );
     
                 // Eliminar la escena secundaria

@@ -144,12 +144,12 @@ public class TableroController implements Observer {
         tablero.getChildren().clear();
         double tam = 35;
 
-        for (int fila = 0; fila < mapa.getFilas(); fila++) {
-            for (int col = 0; col < mapa.getColumnas(); col++) {
+        for (int fila = 0; fila < mapa.getNumeroDeFilas(); fila++) {
+            for (int col = 0; col < mapa.getNumeroDeColumnas(); col++) {
                 ImageView celda = new ImageView();
                 celda.setFitWidth(tam);
                 celda.setFitHeight(tam);
-                char tipo = mapa.getTipoCelda(fila, col);
+                char tipo = mapa.getCelda(fila, col);
                 if (tipo == 'S') celda.setImage(suelo);
                 else if (tipo == 'P') celda.setImage(pared);
                 tablero.add(celda, col, fila);

@@ -21,7 +21,7 @@ public class Mapa {
     public Mapa() throws IOException {
         this("demo/ficheros/tablero.txt");  // Llama al constructor que recibe la ruta
     }
-    
+
     public void cargarDesdeArchivo(String ruta) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
             String linea;
@@ -37,22 +37,46 @@ public class Mapa {
                 fila++;
             }
         }
+        // Imprimir el mapa cargado
+        System.out.println("Mapa cargado:");
+        for (int i = 0; i < FILAS; i++) {
+            for (int j = 0; j < COLUMNAS; j++) {
+                System.out.print(mapa[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+    
+
+    // Método para obtener el número de filas
+    public int getNumeroDeFilas() {
+        return mapa.length;
     }
 
-    public char getTipoCelda(int fila, int columna) {
-        return mapa[fila][columna];
+    // Método para obtener el número de columnas
+    public int getNumeroDeColumnas() {
+        return mapa[0].length;
     }
 
-    public int getFilas() {
-        return FILAS;
+    // Método para obtener el valor de la celda en (x, y)
+    public char getCelda(int x, int y) {
+        if (x < 0 || x >= mapa.length || y < 0 || y >= mapa[0].length) {
+            return 'X';  // Si las coordenadas están fuera de los límites, consideramos que es un obstáculo
+        }
+        return mapa[x][y];
     }
+    
 
-    public int getColumnas() {
-        return COLUMNAS;
+    public boolean esCeldaTransitable(int x, int y) {
+        // Verifica si las coordenadas están dentro de los límites
+        if (x >= 0 && x < mapa.length && y >= 0 && y < mapa[0].length) {
+            // Verifica si la celda es transitable ('S')
+            return mapa[x][y] == 'S';
+        }
+        return false; // Si fuera fuera de los límites, no es transitable
     }
-
-    public boolean esCeldaTransitable(int fila, int columna) {
-        return mapa[fila][columna] == 'S'; // Ejemplo: solo 'S' es transitable
-    }
+    
+    
+    
 }
 
