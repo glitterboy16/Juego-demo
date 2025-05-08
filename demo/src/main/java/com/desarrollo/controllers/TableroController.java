@@ -1,6 +1,7 @@
 package com.desarrollo.controllers;
 
 import com.desarrollo.interfaces.Observer;
+import com.desarrollo.model.Enemigo;
 import com.desarrollo.model.Mapa;
 import com.desarrollo.model.Protagonista;
 
@@ -55,6 +56,12 @@ public class TableroController implements Observer {
 
     @FXML
     private ImageView imagenProta;
+
+    private Enemigo enemigo;
+
+    @FXML
+    private ImageView imagenEnemigo;
+
 
     // Protagonista
     private Protagonista protagonista;
@@ -191,7 +198,29 @@ public void recibirDatosProtagonista(String nombre, int salud, int fuerza, int d
         });
         tableroPanel.requestFocus();
     });
+    agregarEnemigo(13, 1, "/com/desarrollo/imagenes/Enemigo1_abajo.png", 10);
+    agregarEnemigo(1, 13, "/com/desarrollo/imagenes/Enemigo2_abajo.png", 10);
+    agregarEnemigo(7, 6, "/com/desarrollo/imagenes/Enemigo3_abajo.png", 10);
+    agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10);
+
 }
+
+public void agregarEnemigo(int x, int y, String rutaImagen, int percepcion) {
+    enemigo = new Enemigo(percepcion, null); // Enemigo simple sin enlace
+    Image imagen = new Image(getClass().getResource(rutaImagen).toExternalForm());
+    
+    imagenEnemigo = new ImageView(imagen);
+    imagenEnemigo.setFitWidth(35);
+    imagenEnemigo.setFitHeight(35);
+
+    // Posicionar al enemigo
+    AnchorPane.setLeftAnchor(imagenEnemigo, x * 35.0);
+    AnchorPane.setTopAnchor(imagenEnemigo, y * 35.0);
+
+    tableroPanel.getChildren().add(imagenEnemigo);
+    imagenEnemigo.toFront();  // Asegúrate de que se vea sobre el fondo
+}
+
 
 
     @Override
