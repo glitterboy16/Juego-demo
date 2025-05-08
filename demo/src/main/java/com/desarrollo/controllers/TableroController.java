@@ -1,11 +1,7 @@
 package com.desarrollo.controllers;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-
 import com.desarrollo.interfaces.Observer;
+import com.desarrollo.model.Mapa;
 import com.desarrollo.model.Protagonista;
 
 import javafx.application.Platform;
@@ -55,29 +51,18 @@ public class TableroController implements Observer {
     private Label Pvelocidad;
 
     private int protaX;
-
     private int protaY;
 
     @FXML
     private ImageView imagenProta;
 
     // Protagonista
-    private Protagonista protagonista; // No inicializar aquí
-
-    private final int FILAS = 15;
-    private final int COLUMNAS = 15;
-    private char[][] mapa = new char[FILAS][COLUMNAS];
+    private Protagonista protagonista;
+    private Mapa mapa;
     private GridPane tablero;
-
-    private final int FILAS2 = 15;
-    private final int COLUMNAS2 = 15;
-    private char[][] mapa2 = new char[FILAS2][COLUMNAS2];
-    private GridPane tablero2;
 
     @FXML
     public void initialize() {
-        // No inicializar Protagonista aquí
-        // Actualizar etiquetas iniciales para evitar null
         onChange();
 
         Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/fondos/Fondo_Tablero.png").toExternalForm());
@@ -93,7 +78,8 @@ public class TableroController implements Observer {
         imagenfondoStackPane.setPreserveRatio(false);
 
         try {
-            cargarMapaDesdeArchivo();
+            mapa = new Mapa();
+            mapa.cargarDesdeArchivo("demo/ficheros/tablero.txt");
 
             tablero = new GridPane();
             tablero.setHgap(0);
@@ -113,59 +99,100 @@ public class TableroController implements Observer {
             actualizarTablero(suelo, pared);
             tableroPanel.getChildren().add(tablero);
 
-            // Crear un tablero visual sin imágenes para el StackPane
-            tablero2 = new GridPane();
-            tablero2.setHgap(0);
-            tablero2.setVgap(0);
-            tablero2.setPickOnBounds(false); // Deja pasar los eventos
+            // Asegúrate de que el tableroPanel tenga el foco para capturar los eventos de teclado
+            tableroPanel.setFocusTraversable(true);
+            tableroPanel.requestFocus(); // Esto garantiza que el tablero capture las teclas
 
-            for (int fila = 0; fila < FILAS2; fila++) {
-                for (int col = 0; col < COLUMNAS2; col++) {
-                AnchorPane celda = new AnchorPane();
-                celda.setPrefSize(35, 35);
-                char tipo = mapa2[fila][col];
-                if (tipo == 'P' || tipo == 'S') {
-                tablero2.add(celda, col, fila);
-            }
-
-            AnchorPane.setTopAnchor(tablero2, 0.0);
-            AnchorPane.setBottomAnchor(tablero2, 0.0);
-            AnchorPane.setLeftAnchor(tablero2, 0.0);
-            AnchorPane.setRightAnchor(tablero2, 0.0);
-
-
-
-
+            // Manejo de teclas
+            Platform.runLater(() -> {
+                Scene scene = tableroPanel.getScene();  // Obtén la escena del tablero
+                if (scene != null) {  // Verificar si la escena está cargada correctamente
+                    scene.setOnKeyPressed(event -> {  // Aquí se capturan los eventos de teclas
+                        switch (event.getCode()) {
+                            case W:
+                                protagonista.moverArriba();
+                                break;
+                            case S:
+                                protagonista.moverAbajo();
+                                break;
+                            case A:
+                                protagonista.moverIzquierda();
+                                break;
+                            case D:
+                                protagonista.moverDerecha();
+                                break;
+                            default:
+                                break;
+                        }
+                        // Después de mover al protagonista, actualizamos su posición en la interfaz
+                        actualizarPosicionPersonaje();
+                    });
+                    tableroPanel.requestFocus();  // Asegurarse de que el tablero tenga el foco para detectar teclas
+                } else {
+                    System.err.println("La escena no se ha cargado correctamente.");
+                }
+            });
+    
+        } catch (Exception e) {
+            // Manejo de excepciones para detectar errores durante la inicialización o el manejo de eventos
+            e.printStackTrace();
+            System.err.println("Error al recibir los datos del protagonista: " + e.getMessage());
+        }
     }
+
+    private void actualizarTablero(Image suelo, Image pared) {
+        tablero.getChildren().clear();
+        double tam = 35;
+
+        for (int fila = 0; fila < mapa.getFilas(); fila++) {
+            for (int col = 0; col < mapa.getColumnas(); col++) {
+                ImageView celda = new ImageView();
+                celda.setFitWidth(tam);
+                celda.setFitHeight(tam);
+                char tipo = mapa.getTipoCelda(fila, col);
+                if (tipo == 'S') celda.setImage(suelo);
+                else if (tipo == 'P') celda.setImage(pared);
+                tablero.add(celda, col, fila);
+            }
+        }
+    }
+
+    @FXML
+public void recibirDatosProtagonista(String nombre, int salud, int fuerza, int defensa, int velocidad, String rutaImagen, int y, int x) {
+    protagonista = new Protagonista(nombre, salud, fuerza, defensa, velocidad, x, y, mapa);
+    protagonista.suscribe(this);
+    onChange();
+
+    // Crear la imagen del protagonista
+    Image imagenProtagonista = new Image(getClass().getResource(rutaImagen).toExternalForm());
+    imagenProta = new ImageView(imagenProtagonista);  // Inicializar la variable imagenProta
+    imagenProta.setFitWidth(35);
+    imagenProta.setFitHeight(35);
+
+    // Añadir la imagen al tablero
+    AnchorPane.setLeftAnchor(imagenProta, x * 35.0);
+    AnchorPane.setTopAnchor(imagenProta, y * 35.0);
+    tableroPanel.getChildren().add(imagenProta);
+    imagenProta.toFront();  // Asegurarse de que la imagen esté en la capa superior
+
+    // Capturar eventos de teclas para mover al protagonista
+    Platform.runLater(() -> {
+        Scene scene = tableroPanel.getScene();
+        scene.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case W: protagonista.moverArriba(); break;
+                case S: protagonista.moverAbajo(); break;
+                case A: protagonista.moverIzquierda(); break;
+                case D: protagonista.moverDerecha(); break;
+                default: break;
+            }
+            // Actualizar la posición del protagonista en el tablero
+            actualizarPosicionPersonaje();
+        });
+        tableroPanel.requestFocus();
+    });
 }
 
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    
-
-    private void cargarMapaDesdeArchivo() throws IOException {
-        String ruta = "demo/ficheros/tablero.txt";
-        System.out.println("Ruta del archivo: " + new File(ruta).getAbsolutePath());
-
-        try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
-            String linea;
-            int fila = 0;
-            while ((linea = br.readLine()) != null && fila < FILAS) {
-                String lineaSinEspacios = linea.replaceAll("\\s+", "");
-                if (lineaSinEspacios.length() < COLUMNAS) {
-                    throw new IOException("La línea " + (fila + 1) + " tiene menos de " + COLUMNAS + " caracteres.");
-                }
-                for (int col = 0; col < COLUMNAS; col++) {
-                    mapa[fila][col] = lineaSinEspacios.charAt(col);
-                }
-                fila++;
-            }
-        }
-    }
 
     @Override
     public void onChange() {
@@ -177,98 +204,18 @@ public class TableroController implements Observer {
             Pvelocidad.setText("" + protagonista.getVelocidad());
         } else {
             Pnombre.setText("Nombre: N/A");
-            Psalud.setText("Salud: 0");
-            Pfuerza.setText("Fuerza: 0");
-            Pdefensa.setText("Defensa: 0");
-            Pvelocidad.setText("Velocidad: 0");
+            Psalud.setText("0");
+            Pfuerza.setText("0");
+            Pdefensa.setText("0");
+            Pvelocidad.setText("0");
         }
     }
 
-    private void actualizarTablero(Image suelo, Image pared) {
-        tablero.getChildren().clear();
-
-        // Establece tamaño fijo por celda
-        double anchoCelda = 35;
-        double altoCelda = 35;
-
-        for (int fila = 0; fila < FILAS; fila++) {
-            for (int col = 0; col < COLUMNAS; col++) {
-                ImageView celda = new ImageView();
-                celda.setFitWidth(anchoCelda);
-                celda.setFitHeight(altoCelda);
-                char tipo = mapa[fila][col];
-                if (tipo == 'S') celda.setImage(suelo);
-                else if (tipo == 'P') celda.setImage(pared);
-                tablero.add(celda, col, fila);
-            }
+    private void actualizarPosicionPersonaje() {
+        // Asegurarse de que la posición se actualiza después de cada movimiento
+        if (protagonista != null) {
+            AnchorPane.setLeftAnchor(imagenProta, protagonista.getPosicionX() * 35.0);
+            AnchorPane.setTopAnchor(imagenProta, protagonista.getPosicionY() * 35.0);
         }
     }
-
-
-    public void recibirDatosProtagonista(String nombre, int salud, int fuerza, int defensa, int velocidad, String rutaImagen, int posicionY, int posicionX) {
-
-        // Crear el objeto Protagonista con los datos recibidos
-        protagonista = new Protagonista(nombre, salud, fuerza, defensa, velocidad, posicionX, posicionY);
-
-        // Suscribir este controlador como observador
-        protagonista.suscribe(this);
-
-        // Actualizar las etiquetas
-        onChange();
-
-        // Mostrar la imagen del protagonista en el tablero
-        Image imagenProtagonista = new Image(getClass().getResource(rutaImagen).toExternalForm());
-        ImageView imagenProta = new ImageView(imagenProtagonista);
-        imagenProta.setFitWidth(35);
-        imagenProta.setFitHeight(35);
-
-        protaX = posicionX;
-        protaY = posicionY;
-        
-        // Coloca la imagen en la misma posición (0, 0)
-        AnchorPane.setLeftAnchor(imagenProta, posicionX * 35.0);  // Cambia la posición en X
-        AnchorPane.setTopAnchor(imagenProta, posicionY * 35.0);   // Cambia la posición en Y
-
-        // Agregar la nueva imagen al AnchorPane
-        tableroPanel.getChildren().add(imagenProta);
-
-
-        // Mover la nueva imagen al frente
-        imagenProta.toFront();  // Asegura que la imagen esté encima de las demás
-        tableroPanel.requestFocus();
-
-        /*imagenProta.setTranslateX(posicionX * 35); // Ajustar la posición gráfica*/
-    
-        Platform.runLater(() -> {
-            Scene scene = tableroPanel.getScene();
-        scene.setOnKeyPressed(event -> {
-            System.out.println("Tecla presionada: " + event.getCode());
-            if (protagonista != null) {
-                switch (event.getCode()) {
-                    case W:
-                        protagonista.moverArriba();
-                        break;
-                    case S:
-                        protagonista.moverAbajo();
-                        break;
-                    case A:
-                        protagonista.moverIzquierda();
-                        break;
-                    case D:
-                        protagonista.moverDerecha();
-                        break;
-                    default:
-                        break;
-                }
-                // Actualizar posición gráfica
-                AnchorPane.setLeftAnchor(imagenProta, protagonista.getPosicionX() * 35.0);
-                AnchorPane.setTopAnchor(imagenProta, protagonista.getPosicionY() * 35.0);
-            }
-        });
-        
-        tableroPanel.requestFocus();
-    });
-    }
-    
-
 }

@@ -13,6 +13,8 @@ public class Protagonista {
     private int velocidad;
     private int posicionX;
     private int posicionY;
+
+    private Mapa mapa;
     private List<Observer> observers = new ArrayList<>();
     private String imagenRutaPronta; 
 
@@ -22,7 +24,7 @@ public class Protagonista {
         // Constructor por defecto
     }
 
-    public Protagonista(String nombre, int salud, int fuerza, int defensa, int velocidad, int posicionX, int posicionY) {
+    public Protagonista(String nombre, int salud, int fuerza, int defensa, int velocidad, int posicionX, int posicionY, Mapa mapa) {
         this.nombre = nombre;
         this.salud = salud;
         this.fuerza = fuerza;
@@ -30,7 +32,7 @@ public class Protagonista {
         this.velocidad = velocidad;
         this.posicionX = posicionX;
         this.posicionY = posicionY;
-        this.imagenRutaPronta = "src/main/resources/com/desarrollo/imagenes/protagonista.png"; // Ruta de la imagen por defecto
+        this.mapa = mapa;
     }
 
     public String getImagenRutaPronta() {
@@ -104,23 +106,31 @@ public class Protagonista {
     
 
     public void moverArriba() {
-        posicionY--;
-        notifyObservers();
+        if (this.posicionY > 0) {
+            this.posicionY--;  // Mover arriba
+            notifyObservers();  // Actualizar la vista
+        }
     }
 
     public void moverAbajo() {
-        posicionY++;
-        notifyObservers();
+        if (this.posicionY < mapa.getFilas() - 1) {
+            this.posicionY++;  // Mover abajo
+            notifyObservers();  // Actualizar la vista
+        }
     }
 
     public void moverIzquierda() {
-        posicionX--;
-        notifyObservers();
+        if (this.posicionX > 0) {
+            this.posicionX--;  // Mover a la izquierda
+            notifyObservers();  // Actualizar la vista
+        }
     }
 
     public void moverDerecha() {
-        posicionX++;
-        notifyObservers();
+        if (this.posicionX < mapa.getColumnas() - 1) {
+            this.posicionX++;  // Mover a la derecha
+            notifyObservers();  // Actualizar la vista
+        }
     }
 
     // Observer pattern
