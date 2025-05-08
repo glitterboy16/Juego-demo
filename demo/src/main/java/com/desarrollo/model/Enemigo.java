@@ -28,7 +28,7 @@ public class Enemigo{
         this.enemigo = enemigo;
     }
     
-    public void moverAutomaticamente(){}
+    public void moverAutomaticamente(){/*AQUI VA EL MÉTODO DE MOVER AUTOMÁTICAMENTE */}
 
     private void cambiarImagen(String direccion) {
         // Ruta relativa al archivo de la imagen, ajústala si estás usando otro sistema de rutas
