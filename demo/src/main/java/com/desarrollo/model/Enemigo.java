@@ -1,6 +1,6 @@
 package com.desarrollo.model;
 
-public class Enemigo extends Personaje{
+public class Enemigo{
 
     private int percepcion;
     private Enemigo enemigo;
