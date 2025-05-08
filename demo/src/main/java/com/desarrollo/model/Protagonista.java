@@ -167,13 +167,18 @@ public class Protagonista {
     }*/
     /*nuevo para cargar las imagenes del prota */
 
-    
+    private void cambiarImagen(String direccion) {
+        // Ruta relativa al archivo de la imagen, ajústala si estás usando otro sistema de rutas
+        this.imagenRutaPronta = "/com/desarrollo/imagenes/personaje_" + direccion + ".png";
+    }
+
     
     /*nuevo */
     public void moverArriba() {
         int nuevaY = this.posicionY - 1; // Movimiento hacia arriba
         if (nuevaY >= 0 && mapa.esCeldaTransitable(nuevaY, posicionX)) {
-            this.posicionY = nuevaY;           
+            this.posicionY = nuevaY; 
+            cambiarImagen("arriba");          
             notifyObservers();  // Notificar a los observadores
             System.out.println("Movido hacia arriba a: (" + nuevaY + ", " + posicionX + ")");
         } else {
@@ -185,6 +190,7 @@ public class Protagonista {
         int nuevaY = this.posicionY + 1; // Movimiento hacia abajo
         if (nuevaY < mapa.getNumeroDeFilas() && mapa.esCeldaTransitable(nuevaY, posicionX)) {
             this.posicionY = nuevaY;
+            cambiarImagen("abajo");
             notifyObservers();  // Notificar a los observadores
             System.out.println("Movido hacia abajo a: (" + nuevaY + ", " + posicionX + ")");
         } else {
@@ -195,7 +201,8 @@ public class Protagonista {
     public void moverIzquierda() {
         int nuevaX = this.posicionX - 1; // Movimiento hacia la izquierda
         if (nuevaX >= 0 && mapa.esCeldaTransitable(posicionY, nuevaX)) {
-            this.posicionX = nuevaX;            
+            this.posicionX = nuevaX; 
+            cambiarImagen("izquierda");           
             notifyObservers();  // Notificar a los observadores
             System.out.println("Movido hacia la izquierda a: (" + posicionY + ", " + nuevaX + ")");
         } else {
@@ -206,7 +213,8 @@ public class Protagonista {
     public void moverDerecha() {
         int nuevaX = this.posicionX + 1; // Movimiento hacia la derecha
         if (nuevaX < mapa.getNumeroDeColumnas() && mapa.esCeldaTransitable(posicionY, nuevaX)) {
-            this.posicionX = nuevaX;           
+            this.posicionX = nuevaX;  
+            cambiarImagen("derecha");         
             notifyObservers();  // Notificar a los observadores
             System.out.println("Movido hacia la derecha a: (" + posicionY + ", " + nuevaX + ")");
         } else {
