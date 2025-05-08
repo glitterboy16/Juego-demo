@@ -1,10 +1,12 @@
 package com.desarrollo.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.desarrollo.SceneID;
 import com.desarrollo.SceneManager;
+import com.desarrollo.model.Mapa;
 import com.desarrollo.model.Protagonista;
 
 import javafx.fxml.FXML;
@@ -53,6 +55,7 @@ public class Vista2Controller implements Initializable {
     private final int MAX_PUNTOS = 100;
 
     private Protagonista protagonista;
+    private Mapa mapa;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -120,50 +123,64 @@ public class Vista2Controller implements Initializable {
 
     private void guardarInformacionPersonaje() {
         try {
+            // Verificar que el nombre no esté vacío
             if (nombre.getText().isEmpty()) {
                 System.out.println("Por favor, introduce un nombre para el personaje.");
                 return;
             }
     
+            // Verificar que se hayan distribuido todos los puntos
             if (getTotalPuntos() < MAX_PUNTOS) {
                 System.out.println("Debes distribuir exactamente " + MAX_PUNTOS + " puntos antes de continuar.");
                 return;
             }
     
-            // Crear el objeto Protagonista y asignarlo al campo (para el botón Continuar)
-            protagonista = new Protagonista(
-                nombre.getText(),
-                salud.getValue(),
-                fuerza.getValue(),
-                defensa.getValue(),
-                velocidad.getValue(),
-                0,
-                0
-            );
+            // Intentar cargar el mapa
+            try {
+                // Asegúrate de que la ruta es correcta y accesible
+                this.mapa = new Mapa("demo/ficheros/tablero.txt");  // Ruta del archivo del mapa
     
-            // Obtener el controlador del tablero
-            TableroController tableroController = (TableroController) SceneManager.getInstance().getController(SceneID.TABLERO);
+                // Crear el protagonista con los valores obtenidos
+                protagonista = new Protagonista(
+                    nombre.getText(),
+                    salud.getValue(),
+                    fuerza.getValue(),
+                    defensa.getValue(),
+                    velocidad.getValue(),
+                    1,
+                    1,
+                    this.mapa
+                );
     
-            // Enviar los datos al TableroController
-            tableroController.recibirDatosProtagonista(
-                nombre.getText(),
-                salud.getValue(),
-                fuerza.getValue(),
-                defensa.getValue(),
-                velocidad.getValue(),
-                "/com/desarrollo/imagenes/personaje_abajo.png",
-                0,
-                0
-            );
+                // Si todo está bien, enviar los datos al TableroController
+                TableroController tableroController = (TableroController) SceneManager.getInstance().getController(SceneID.TABLERO);
+                tableroController.recibirDatosProtagonista(
+                    nombre.getText(),
+                    salud.getValue(),
+                    fuerza.getValue(),
+                    defensa.getValue(),
+                    velocidad.getValue(),
+                    "/com/desarrollo/imagenes/personaje_abajo.png",  // Ruta de la imagen del personaje
+                    1,
+                    1
+                );
     
-            // Eliminar la escena secundaria
-            SceneManager.getInstance().removeScene(SceneID.SECONDARY);
+                // Eliminar la escena secundaria
+                SceneManager.getInstance().removeScene(SceneID.SECONDARY);
+                System.out.println("Información del personaje guardada correctamente.");
+            } catch (IOException e) {
+                // En caso de error al cargar el mapa
+                System.out.println("Error al cargar el mapa: " + e.getMessage());
+                e.printStackTrace();  // Para depuración
+            }
     
-            System.out.println("Información del personaje guardada correctamente.");
         } catch (Exception e) {
+            // Cualquier otro error que pueda ocurrir en el proceso
             System.out.println("Ocurrió un error al guardar la información del personaje: " + e.getMessage());
         }
     }
+    
+    
     public Protagonista getProtagonista() {
         return protagonista;
     }
