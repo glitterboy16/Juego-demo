@@ -18,7 +18,7 @@
          <StackPane layoutX="46.0" layoutY="38.0" prefHeight="502.0" prefWidth="554.0">
             <children>
                  <!-- Panel del Tablero -->
-                 <AnchorPane fx:id="tableroPanel" opacity="0.5" prefHeight="370.0" prefWidth="455.0">
+                 <AnchorPane fx:id="tableroPanel" prefHeight="370.0" prefWidth="455.0">
                   <children>
                      <AnchorPane fx:id="tablaroPanel2" prefHeight="502.0" prefWidth="554.0" />
                   </children>
