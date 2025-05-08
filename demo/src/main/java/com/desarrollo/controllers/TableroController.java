@@ -216,6 +216,8 @@ public void recibirDatosProtagonista(String nombre, int salud, int fuerza, int d
         if (protagonista != null) {
             AnchorPane.setLeftAnchor(imagenProta, protagonista.getPosicionX() * 35.0);
             AnchorPane.setTopAnchor(imagenProta, protagonista.getPosicionY() * 35.0);
+        
+            
         }
     }
 }

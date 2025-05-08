@@ -111,7 +111,7 @@ public class Protagonista {
     
 
     // Método para mover hacia arriba
-    public void moverArriba() {
+    /*public void moverArriba() {
         int nuevaPosX = this.posicionX;
         int nuevaPosY = this.posicionY - 1; // Movimiento hacia arriba
         System.out.println("Intentando mover a: (" + nuevaPosX + ", " + nuevaPosY + ")");
@@ -161,6 +161,54 @@ public class Protagonista {
         if (nuevaPosX < mapa.getNumeroDeColumnas() && mapa.esCeldaTransitable(nuevaPosX, nuevaPosY)) {
             this.posicionX = nuevaPosX; // Actualiza la posición si es transitable
             notifyObservers();  // Notificar a los observadores (si es necesario)
+        } else {
+            System.out.println("Movimiento no permitido hacia la derecha.");
+        }
+    }*/
+    /*nuevo para cargar las imagenes del prota */
+
+    
+    
+    /*nuevo */
+    public void moverArriba() {
+        int nuevaY = this.posicionY - 1; // Movimiento hacia arriba
+        if (nuevaY >= 0 && mapa.esCeldaTransitable(nuevaY, posicionX)) {
+            this.posicionY = nuevaY;           
+            notifyObservers();  // Notificar a los observadores
+            System.out.println("Movido hacia arriba a: (" + nuevaY + ", " + posicionX + ")");
+        } else {
+            System.out.println("Movimiento no permitido hacia arriba.");
+        }
+    }
+    
+    public void moverAbajo() {
+        int nuevaY = this.posicionY + 1; // Movimiento hacia abajo
+        if (nuevaY < mapa.getNumeroDeFilas() && mapa.esCeldaTransitable(nuevaY, posicionX)) {
+            this.posicionY = nuevaY;
+            notifyObservers();  // Notificar a los observadores
+            System.out.println("Movido hacia abajo a: (" + nuevaY + ", " + posicionX + ")");
+        } else {
+            System.out.println("Movimiento no permitido hacia abajo.");
+        }
+    }
+    
+    public void moverIzquierda() {
+        int nuevaX = this.posicionX - 1; // Movimiento hacia la izquierda
+        if (nuevaX >= 0 && mapa.esCeldaTransitable(posicionY, nuevaX)) {
+            this.posicionX = nuevaX;            
+            notifyObservers();  // Notificar a los observadores
+            System.out.println("Movido hacia la izquierda a: (" + posicionY + ", " + nuevaX + ")");
+        } else {
+            System.out.println("Movimiento no permitido hacia la izquierda.");
+        }
+    }
+    
+    public void moverDerecha() {
+        int nuevaX = this.posicionX + 1; // Movimiento hacia la derecha
+        if (nuevaX < mapa.getNumeroDeColumnas() && mapa.esCeldaTransitable(posicionY, nuevaX)) {
+            this.posicionX = nuevaX;           
+            notifyObservers();  // Notificar a los observadores
+            System.out.println("Movido hacia la derecha a: (" + posicionY + ", " + nuevaX + ")");
         } else {
             System.out.println("Movimiento no permitido hacia la derecha.");
         }

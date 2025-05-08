@@ -59,12 +59,20 @@ public class Mapa {
     }
 
     // Método para obtener el valor de la celda en (x, y)
-    public char getCelda(int x, int y) {
+    /*public char getCelda(int x, int y) {
         if (x < 0 || x >= mapa.length || y < 0 || y >= mapa[0].length) {
             return 'X';  // Si las coordenadas están fuera de los límites, consideramos que es un obstáculo
         }
         return mapa[x][y];
+    }*/
+
+    public char getCelda(int fila, int columna) {
+        if (fila < 0 || fila >= mapa.length || columna < 0 || columna >= mapa[0].length) {
+            return 'X';
+        }
+        return mapa[fila][columna];
     }
+    
     
 
     public boolean esCeldaTransitable(int x, int y) {
