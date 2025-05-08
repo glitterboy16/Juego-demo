@@ -1,9 +1,11 @@
 package com.desarrollo.controllers;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import com.desarrollo.SceneID;
 import com.desarrollo.SceneManager;
 import com.desarrollo.model.Protagonista;
-import com.desarrollo.model.Proveedor;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,9 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class Vista2Controller implements Initializable {
 
@@ -137,7 +136,9 @@ public class Vista2Controller implements Initializable {
                 salud.getValue(),
                 fuerza.getValue(),
                 defensa.getValue(),
-                velocidad.getValue()
+                velocidad.getValue(),
+                0,
+                0
             );
     
             // Obtener el controlador del tablero

@@ -1,11 +1,9 @@
 package com.desarrollo.model;
 
-import com.desarrollo.interfaces.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
+import com.desarrollo.interfaces.Observer;
 
 public class Protagonista {
     private String nombre;
@@ -13,19 +11,25 @@ public class Protagonista {
     private int fuerza;
     private int defensa;
     private int velocidad;
+    private int posicionX;
+    private int posicionY;
     private List<Observer> observers = new ArrayList<>();
     private String imagenRutaPronta; 
 
+   
+    
     public Protagonista() {
         // Constructor por defecto
     }
 
-    public Protagonista(String nombre, int salud, int fuerza, int defensa, int velocidad) {
+    public Protagonista(String nombre, int salud, int fuerza, int defensa, int velocidad, int posicionX, int posicionY) {
         this.nombre = nombre;
         this.salud = salud;
         this.fuerza = fuerza;
         this.defensa = defensa;
         this.velocidad = velocidad;
+        this.posicionX = posicionX;
+        this.posicionY = posicionY;
         this.imagenRutaPronta = "src/main/resources/com/desarrollo/imagenes/protagonista.png"; // Ruta de la imagen por defecto
     }
 
@@ -54,6 +58,14 @@ public class Protagonista {
         return velocidad;
     }
 
+    public int getPosicionX() {
+        return posicionX;
+    }
+
+    public int getPosicionY() {
+        return posicionY;
+    }
+
     // Setters
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -77,6 +89,37 @@ public class Protagonista {
 
     public void setVelocidad(int velocidad) {
         this.velocidad = velocidad;
+        notifyObservers();
+    }
+
+    public void setPosicionX(int posicionX) {
+        this.posicionX = posicionX;  // Ya no es necesario verificar límites aquí
+        notifyObservers();  // Notificar a los observadores cuando la posición cambia
+    }
+    
+    public void setPosicionY(int posicionY) {
+        this.posicionY = posicionY;  // Ya no es necesario verificar límites aquí
+        notifyObservers();  // Notificar a los observadores cuando la posición cambia
+    }
+    
+
+    public void moverArriba() {
+        posicionY--;
+        notifyObservers();
+    }
+
+    public void moverAbajo() {
+        posicionY++;
+        notifyObservers();
+    }
+
+    public void moverIzquierda() {
+        posicionX--;
+        notifyObservers();
+    }
+
+    public void moverDerecha() {
+        posicionX++;
         notifyObservers();
     }
 
