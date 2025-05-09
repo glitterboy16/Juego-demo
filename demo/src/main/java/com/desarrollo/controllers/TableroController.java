@@ -198,15 +198,15 @@ public void recibirDatosProtagonista(String nombre, int salud, int fuerza, int d
         });
         tableroPanel.requestFocus();
     });
-    agregarEnemigo(13, 1, "/com/desarrollo/imagenes/Enemigo1_abajo.png", 10);
-    agregarEnemigo(1, 13, "/com/desarrollo/imagenes/Enemigo2_abajo.png", 10);
-    agregarEnemigo(7, 6, "/com/desarrollo/imagenes/Enemigo3_abajo.png", 10);
-    agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10);
+    agregarEnemigo(13, 1, "/com/desarrollo/imagenes/Enemigo1_abajo.png", 10, 5);
+    agregarEnemigo(1, 13, "/com/desarrollo/imagenes/Enemigo2_abajo.png", 10, 5);
+    agregarEnemigo(7, 6, "/com/desarrollo/imagenes/Enemigo3_abajo.png", 10, 5);
+    agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5);
 
 }
 
-public void agregarEnemigo(int x, int y, String rutaImagen, int percepcion) {
-    enemigo = new Enemigo(percepcion, null); // Enemigo simple sin enlace
+public void agregarEnemigo(int x, int y, String rutaImagen, int percepcion, int velocidad) {
+    enemigo = new Enemigo(percepcion, 5); // Enemigo simple sin enlace
     Image imagen = new Image(getClass().getResource(rutaImagen).toExternalForm());
     
     imagenEnemigo = new ImageView(imagen);
