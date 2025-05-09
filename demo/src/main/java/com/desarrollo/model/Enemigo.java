@@ -4,7 +4,7 @@ public class Enemigo{
 
     private int percepcion;
     private Enemigo enemigo;
-
+    private int tipo;
     private String imagenRutaEnemigo;
     
     public Enemigo(int percepcion, Enemigo enemigo) {
@@ -32,12 +32,6 @@ public class Enemigo{
 
     private void cambiarImagen(String direccion) {
         // Ruta relativa al archivo de la imagen, ajústala si estás usando otro sistema de rutas
-        this.imagenRutaEnemigo = "/com/desarrollo/imagenes/Enemigo1_" + direccion + ".png";
-        this.imagenRutaEnemigo = "/com/desarrollo/imagenes/Enemigo2_" + direccion + ".png";
-        this.imagenRutaEnemigo = "/com/desarrollo/imagenes/Enemigo3_" + direccion + ".png";
-        this.imagenRutaEnemigo = "/com/desarrollo/imagenes/Enemigo4_" + direccion + ".png";
-
-
-
+        this.imagenRutaEnemigo = "/com/desarrollo/imagenes/Enemigo" + tipo + "_" + direccion + ".png";
     }
 }
