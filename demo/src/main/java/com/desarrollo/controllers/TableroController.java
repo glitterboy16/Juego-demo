@@ -1,5 +1,10 @@
 package com.desarrollo.controllers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.desarrollo.interfaces.Observer;
 import com.desarrollo.model.Enemigo;
 import com.desarrollo.model.Mapa;
@@ -195,7 +200,7 @@ public void recibirDatosProtagonista(String nombre, int salud, int fuerza, int d
             }
             // Actualizar la posición del protagonista en el tablero
             actualizarPosicionPersonaje();
-        });
+            moverEnemigos();        });
         tableroPanel.requestFocus();
     });
     agregarEnemigo(13, 1, "/com/desarrollo/imagenes/Enemigo1_abajo.png", 10, 5);
@@ -204,23 +209,42 @@ public void recibirDatosProtagonista(String nombre, int salud, int fuerza, int d
     agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5);
 
 }
+private List<Enemigo> enemigos = new ArrayList<>();
+private Map<Enemigo, ImageView> enemigosImagenes = new HashMap<>();
 
 public void agregarEnemigo(int x, int y, String rutaImagen, int percepcion, int velocidad) {
-    enemigo = new Enemigo(percepcion, 5); // Enemigo simple sin enlace
+    Enemigo nuevoEnemigo = new Enemigo(percepcion, velocidad);
+    nuevoEnemigo.setPosicion(x, y);
+
     Image imagen = new Image(getClass().getResource(rutaImagen).toExternalForm());
-    
-    imagenEnemigo = new ImageView(imagen);
+    ImageView imagenEnemigo = new ImageView(imagen);
     imagenEnemigo.setFitWidth(35);
     imagenEnemigo.setFitHeight(35);
 
-    // Posicionar al enemigo
     AnchorPane.setLeftAnchor(imagenEnemigo, x * 35.0);
     AnchorPane.setTopAnchor(imagenEnemigo, y * 35.0);
 
     tableroPanel.getChildren().add(imagenEnemigo);
-    imagenEnemigo.toFront();  // Asegúrate de que se vea sobre el fondo
+    imagenEnemigo.toFront();
+
+enemigos.add(nuevoEnemigo);
+enemigosImagenes.put(nuevoEnemigo, imagenEnemigo);
 }
 
+private void actualizarPosicionesEnemigos() {
+    for (Enemigo e : enemigos) {
+        ImageView img = enemigosImagenes.get(e);
+        AnchorPane.setLeftAnchor(img, e.getPosicionX() * 35.0);
+        AnchorPane.setTopAnchor(img, e.getPosicionY() * 35.0);
+    }
+}
+
+private void moverEnemigos() {
+    for (Enemigo e : enemigos) {
+        e.moverAutomaticamente(protagonista, mapa, enemigos);
+    }
+    actualizarPosicionesEnemigos();
+}
 
 
     @Override
