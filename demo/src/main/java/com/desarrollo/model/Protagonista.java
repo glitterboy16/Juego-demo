@@ -110,7 +110,7 @@ public class Protagonista {
     }
     
 
-    private void cambiarImagen(String direccion) {
+    public void cambiarImagen(String direccion) {
         // Ruta relativa al archivo de la imagen, ajústala si estás usando otro sistema de rutas
         this.imagenRutaPronta = "/com/desarrollo/imagenes/personaje_" + direccion + ".png";
     }

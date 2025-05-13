@@ -41,6 +41,7 @@ public class TableroController implements Observer {
     @FXML
     private StackPane datosStackPane;
 
+    // Datos del protagonista
     @FXML
     private Label Pnombre;
 
@@ -55,6 +56,22 @@ public class TableroController implements Observer {
 
     @FXML
     private Label Pvelocidad;
+
+    // Datos del enemigo
+        @FXML
+    private Label E1nombre;
+
+    @FXML
+    private Label E1salud;
+
+    @FXML
+    private Label E1fuerza;
+
+    @FXML
+    private Label E1defensa;
+
+    @FXML
+    private Label E1velocidad;
 
     private int protaX;
     private int protaY;
@@ -73,85 +90,117 @@ public class TableroController implements Observer {
     private Mapa mapa;
     private GridPane tablero;
 
-    @FXML
-    public void initialize() {
-        onChange();
+ @FXML
+public void initialize() {
+    onChange();
 
-        Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/fondos/Fondo_Tablero.png").toExternalForm());
-        imagenfondo.setImage(image);
-        imagenfondo.fitWidthProperty().bind(panelPrincipal.widthProperty());
-        imagenfondo.fitHeightProperty().bind(panelPrincipal.heightProperty());
-        imagenfondo.setPreserveRatio(false);
+    Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/fondos/Fondo_Tablero.png").toExternalForm());
+    imagenfondo.setImage(image);
+    imagenfondo.fitWidthProperty().bind(panelPrincipal.widthProperty());
+    imagenfondo.fitHeightProperty().bind(panelPrincipal.heightProperty());
+    imagenfondo.setPreserveRatio(false);
 
-        Image image2 = new Image(getClass().getResource("/com/desarrollo/imagenes/fondos/Fondo_Vbox.png").toExternalForm());
-        imagenfondoStackPane.setImage(image2);
-        imagenfondoStackPane.fitWidthProperty().bind(datosStackPane.widthProperty());
-        imagenfondoStackPane.fitHeightProperty().bind(datosStackPane.heightProperty());
-        imagenfondoStackPane.setPreserveRatio(false);
+    Image image2 = new Image(getClass().getResource("/com/desarrollo/imagenes/fondos/Fondo_Vbox.png").toExternalForm());
+    imagenfondoStackPane.setImage(image2);
+    imagenfondoStackPane.fitWidthProperty().bind(datosStackPane.widthProperty());
+    imagenfondoStackPane.fitHeightProperty().bind(datosStackPane.heightProperty());
+    imagenfondoStackPane.setPreserveRatio(false);
 
-        try {
-            mapa = new Mapa();
-            mapa.cargarDesdeArchivo("demo/ficheros/tablero.txt");
+    try {
+        mapa = new Mapa();
+        mapa.cargarDesdeArchivo("demo/ficheros/tablero.txt");
 
-            tablero = new GridPane();
-            tablero.setHgap(0);
-            tablero.setVgap(0);
+        tablero = new GridPane();
+        tablero.setHgap(0);
+        tablero.setVgap(0);
 
-            Image suelo = new Image(getClass().getResourceAsStream("/com/desarrollo/imagenes/S.jpg"));
-            Image pared = new Image(getClass().getResourceAsStream("/com/desarrollo/imagenes/P.jpg"));
+        Image suelo = new Image(getClass().getResourceAsStream("/com/desarrollo/imagenes/S.jpg"));
+        Image pared = new Image(getClass().getResourceAsStream("/com/desarrollo/imagenes/P.jpg"));
 
-            AnchorPane.setTopAnchor(tablero, 0.0);
-            AnchorPane.setBottomAnchor(tablero, 0.0);
-            AnchorPane.setLeftAnchor(tablero, 0.0);
-            AnchorPane.setRightAnchor(tablero, 0.0);
+        AnchorPane.setTopAnchor(tablero, 0.0);
+        AnchorPane.setBottomAnchor(tablero, 0.0);
+        AnchorPane.setLeftAnchor(tablero, 0.0);
+        AnchorPane.setRightAnchor(tablero, 0.0);
 
-            tableroPanel.widthProperty().addListener((obs, oldVal, newVal) -> actualizarTablero(suelo, pared));
-            tableroPanel.heightProperty().addListener((obs, oldVal, newVal) -> actualizarTablero(suelo, pared));
+        tableroPanel.widthProperty().addListener((obs, oldVal, newVal) -> actualizarTablero(suelo, pared));
+        tableroPanel.heightProperty().addListener((obs, oldVal, newVal) -> actualizarTablero(suelo, pared));
 
-            actualizarTablero(suelo, pared);
-            tableroPanel.getChildren().add(tablero);
+        actualizarTablero(suelo, pared);
+        tableroPanel.getChildren().add(tablero);
 
-            // Asegúrate de que el tableroPanel tenga el foco para capturar los eventos de teclado
-            tableroPanel.setFocusTraversable(true);
-            tableroPanel.requestFocus(); // Esto garantiza que el tablero capture las teclas
+        // Asegúrate de que el tableroPanel tenga el foco para capturar los eventos de teclado
+        tableroPanel.setFocusTraversable(true);
+        tableroPanel.requestFocus(); // Esto garantiza que el tablero capture las teclas
 
-            // Manejo de teclas
-            Platform.runLater(() -> {
-                Scene scene = tableroPanel.getScene();  // Obtén la escena del tablero
-                if (scene != null) {  // Verificar si la escena está cargada correctamente
-                    scene.setOnKeyPressed(event -> {  // Aquí se capturan los eventos de teclas
-                        switch (event.getCode()) {
-                            case W:
-                                protagonista.moverArriba();
-                                break;
-                            case S:
-                                protagonista.moverAbajo();
-                                break;
-                            case A:
-                                protagonista.moverIzquierda();
-                                break;
-                            case D:
-                                protagonista.moverDerecha();
-                                break;
-                            default:
-                                break;
+        // Manejo de teclas
+        Platform.runLater(() -> {
+            Scene scene = tableroPanel.getScene();  // Obtén la escena del tablero
+            if (scene != null) {  // Verificar si la escena está cargada correctamente
+                scene.setOnKeyPressed(event -> {  // Aquí se capturan los eventos de teclas
+                    int newX = protagonista.getPosicionX();
+                    int newY = protagonista.getPosicionY();
+                    String direccion = "";
+                    
+                    // Calcular la nueva posición según la tecla presionada
+                    switch (event.getCode()) {
+                        case W:
+                            newY -= 1;
+                            direccion = "arriba";
+                            break;
+                        case S:
+                            newY += 1;
+                            direccion = "abajo";
+                            break;
+                        case A:
+                            newX -= 1;
+                            direccion = "izquierda";
+                            break;
+                        case D:
+                            newX += 1;
+                            direccion = "derecha";
+                            break;
+                        default:
+                            return; // No hacer nada si la tecla no es válida
+                    }
+
+                    // Verificar si la nueva posición es válida
+                    if (newX >= 0 && newX < mapa.getNumeroDeColumnas() && 
+                        newY >= 0 && newY < mapa.getNumeroDeFilas() && 
+                        mapa.esCeldaTransitable(newY, newX)) {
+                        
+                        // Verificar si hay un enemigo en la nueva posición
+                        if (estaOcupadaPorEnemigo(newX, newY)) {
+                            Enemigo enemigo = getEnemigoEnPosicion(newX, newY);
+                            if (enemigo != null) {
+                                // Lógica de ataque del protagonista al enemigo
+                                System.out.println("¡Protagonista atacó al enemigo!");
+                                // Aquí puedes agregar daño, por ejemplo:
+                                // enemigo.recibirDaño(protagonista.getFuerza());
+                            }
+                        } else {
+                            // Si no hay enemigo, mover al protagonista
+                            protagonista.setPosicionX(newX);
+                            protagonista.setPosicionY(newY);
+                            protagonista.cambiarImagen(direccion); // Actualizar la dirección de la imagen
                         }
-                        // Después de mover al protagonista, actualizamos su posición en la interfaz
-                        actualizarPosicionPersonaje();
-                    });
-                    tableroPanel.requestFocus();  // Asegurarse de que el tablero tenga el foco para detectar teclas
-                } else {
-                    System.err.println("La escena no se ha cargado correctamente.");
-                }
-            });
-    
-        } catch (Exception e) {
-            // Manejo de excepciones para detectar errores durante la inicialización o el manejo de eventos
-            e.printStackTrace();
-            System.err.println("Error al recibir los datos del protagonista: " + e.getMessage());
-        }
-    }
+                    }
+                    
+                    // Actualizar la interfaz y mover enemigos
+                    actualizarPosicionPersonaje();
+                    moverEnemigos();
+                });
+                tableroPanel.requestFocus();  // Asegurarse de que el tablero tenga el foco para detectar teclas
+            } else {
+                System.err.println("La escena no se ha cargado correctamente.");
+            }
+        });
 
+    } catch (Exception e) {
+        // Manejo de excepciones para detectar errores durante la inicialización o el manejo de eventos
+        e.printStackTrace();
+        System.err.println("Error al recibir los datos del protagonista: " + e.getMessage());
+    }
+}
     private void actualizarTablero(Image suelo, Image pared) {
         tablero.getChildren().clear();
         double tam = 35;
@@ -175,39 +224,53 @@ public void recibirDatosProtagonista(String nombre, int salud, int fuerza, int d
     protagonista.suscribe(this);
     onChange();
 
-    // Crear la imagen del protagonista
     Image imagenProtagonista = new Image(getClass().getResource(rutaImagen).toExternalForm());
-    imagenProta = new ImageView(imagenProtagonista);  // Inicializar la variable imagenProta
+    imagenProta = new ImageView(imagenProtagonista);
     imagenProta.setFitWidth(35);
     imagenProta.setFitHeight(35);
 
-    // Añadir la imagen al tablero
     AnchorPane.setLeftAnchor(imagenProta, x * 35.0);
     AnchorPane.setTopAnchor(imagenProta, y * 35.0);
     tableroPanel.getChildren().add(imagenProta);
-    imagenProta.toFront();  // Asegurarse de que la imagen esté en la capa superior
+    imagenProta.toFront();
 
-    // Capturar eventos de teclas para mover al protagonista
     Platform.runLater(() -> {
         Scene scene = tableroPanel.getScene();
         scene.setOnKeyPressed(event -> {
+            int nuevoX = protagonista.getPosicionX();
+            int nuevoY = protagonista.getPosicionY();
+            String direccion = "";
             switch (event.getCode()) {
-                case W: protagonista.moverArriba(); break;
-                case S: protagonista.moverAbajo(); break;
-                case A: protagonista.moverIzquierda(); break;
-                case D: protagonista.moverDerecha(); break;
-                default: break;
+                case W: nuevoY -= 1; direccion = "arriba"; break;
+                case S: nuevoY += 1; direccion = "abajo"; break;
+                case A: nuevoX -= 1; direccion = "izquierda"; break;
+                case D: nuevoX += 1; direccion = "derecha"; break;
+                default: return;
             }
-            // Actualizar la posición del protagonista en el tablero
+            if (nuevoX >= 0 && nuevoX < mapa.getNumeroDeColumnas() && 
+                nuevoY >= 0 && nuevoY < mapa.getNumeroDeFilas() && 
+                mapa.esCeldaTransitable(nuevoY, nuevoX)) {
+                if (estaOcupadaPorEnemigo(nuevoX, nuevoY)) {
+                    Enemigo enemigo = getEnemigoEnPosicion(nuevoX, nuevoY);
+                    if (enemigo != null) {
+                        System.out.println("Protagonista ataca");
+                    }
+                } else {
+                    protagonista.setPosicionX(nuevoX);
+                    protagonista.setPosicionY(nuevoY);
+                    protagonista.cambiarImagen(direccion);
+                }
+            }
             actualizarPosicionPersonaje();
-            moverEnemigos();        });
+            moverEnemigos();
+        });
         tableroPanel.requestFocus();
     });
+    // Agregar enemigos como ya tienes
     agregarEnemigo(13, 1, "/com/desarrollo/imagenes/Enemigo1_abajo.png", 10, 5);
     agregarEnemigo(1, 13, "/com/desarrollo/imagenes/Enemigo2_abajo.png", 10, 5);
     agregarEnemigo(7, 6, "/com/desarrollo/imagenes/Enemigo3_abajo.png", 10, 5);
     agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5);
-
 }
 private List<Enemigo> enemigos = new ArrayList<>();
 private Map<Enemigo, ImageView> enemigosImagenes = new HashMap<>();
@@ -275,4 +338,22 @@ private void moverEnemigos() {
         }
         
     }
+
+    private boolean estaOcupadaPorEnemigo(int x, int y) {
+    for (Enemigo e : enemigos) {
+        if (e.getPosicionX() == x && e.getPosicionY() == y) {
+            return true;
+        }
+    }
+    return false;
+}
+
+private Enemigo getEnemigoEnPosicion(int x, int y) {
+    for (Enemigo e : enemigos) {
+        if (e.getPosicionX() == x && e.getPosicionY() == y) {
+            return e;
+        }
+    }
+    return null;
+}
 }
