@@ -46,7 +46,8 @@ public class Enemigo {
 
         int nextX = posicionX;
         int nextY = posicionY;
-
+        String direccion = "";
+        
         if (Math.abs(dx) > Math.abs(dy)) {
             nextX += Integer.compare(dx, 0);
         } else {
@@ -75,5 +76,6 @@ public class Enemigo {
         // Mover
         posicionX = nextX;
         posicionY = nextY;
+        cambiarImagen(direccion);
     }
 }
