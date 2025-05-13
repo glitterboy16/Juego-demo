@@ -18,8 +18,6 @@ public class Protagonista {
     private List<Observer> observers = new ArrayList<>();
     private String imagenRutaPronta; 
 
-   
-    
     public Protagonista() {
         // Constructor por defecto
     }
@@ -35,9 +33,9 @@ public class Protagonista {
         this.mapa = mapa;
 
         // Verificación de la celda en la posición inicial
-    char celdaInicio = mapa.getCelda(posicionX, posicionY);
-    System.out.println("Posición inicial del protagonista: (" + posicionX + ", " + posicionY + ")");
-    System.out.println("Celda en la posición inicial: " + celdaInicio);  // Debe ser 'S' si es transitable
+        char celdaInicio = mapa.getCelda(posicionX, posicionY);
+        System.out.println("Posición inicial del protagonista: (" + posicionX + ", " + posicionY + ")");
+        System.out.println("Celda en la posición inicial: " + celdaInicio);  // Debe ser 'S' si es transitable
     }
 
     public String getImagenRutaPronta() {
@@ -109,13 +107,11 @@ public class Protagonista {
         notifyObservers();  // Notificar a los observadores cuando la posición cambia
     }
     
-
     public void cambiarImagen(String direccion) {
         // Ruta relativa al archivo de la imagen, ajústala si estás usando otro sistema de rutas
         this.imagenRutaPronta = "/com/desarrollo/imagenes/personaje_" + direccion + ".png";
     }
 
-    
     /*nuevo */
     public void moverArriba() {
         int nuevaY = this.posicionY - 1; // Movimiento hacia arriba
@@ -164,6 +160,7 @@ public class Protagonista {
             System.out.println("Movimiento no permitido hacia la derecha.");
         }
     }
+
     // Observer pattern
     public void suscribe(Observer observer) {
         observers.add(observer);
