@@ -171,7 +171,16 @@ public class TableroController implements Observer {
                             if (estaOcupadaPorEnemigo(newX, newY)) {
                                 Enemigo enemigo = getEnemigoEnPosicion(newX, newY);
                                 if (enemigo != null) {
-                                    System.out.println("¡Protagonista atacó al enemigo!");
+                                    int daño = protagonista.getFuerza() - enemigo.getDefensa();
+                                    if (daño < 0) daño = 0; // El daño no puede ser negativo
+                                    enemigo.setSalud(enemigo.getSalud() - daño);
+                                    System.out.println("¡Protagonista atacó al enemigo! -" + daño + " salud");
+                                    if (enemigo.getSalud() <= 0) {
+                                        System.out.println("¡Enemigo derrotado!");
+                                        enemigos.remove(enemigo);
+                                        tableroPanel.getChildren().remove(enemigosImagenes.get(enemigo));
+                                        enemigosImagenes.remove(enemigo);
+                                    }
                                 }
                             } else {
                                 protagonista.setPosicionX(newX);
@@ -182,6 +191,7 @@ public class TableroController implements Observer {
                         
                         actualizarPosicionPersonaje();
                         moverEnemigos();
+                        onChange(); // Actualizar la interfaz después de cada acción
                     });
                     tableroPanel.requestFocus();
                 } else {
@@ -251,7 +261,16 @@ public class TableroController implements Observer {
                     if (estaOcupadaPorEnemigo(nuevoX, nuevoY)) {
                         Enemigo enemigo = getEnemigoEnPosicion(nuevoX, nuevoY);
                         if (enemigo != null) {
-                            System.out.println("Protagonista ataca");
+                            int daño = protagonista.getFuerza() - enemigo.getDefensa();
+                            if (daño < 0) daño = 0;
+                            enemigo.setSalud(enemigo.getSalud() - daño);
+                            System.out.println("¡Protagonista atacó al enemigo! -" + daño + " salud");
+                            if (enemigo.getSalud() <= 0) {
+                                System.out.println("¡Enemigo derrotado!");
+                                enemigos.remove(enemigo);
+                                tableroPanel.getChildren().remove(enemigosImagenes.get(enemigo));
+                                enemigosImagenes.remove(enemigo);
+                            }
                         }
                     } else {
                         protagonista.setPosicionX(nuevoX);
@@ -261,13 +280,14 @@ public class TableroController implements Observer {
                 }
                 actualizarPosicionPersonaje();
                 moverEnemigos();
+                onChange(); // Actualizar la interfaz después de cada acción
             });
             tableroPanel.requestFocus();
         });
 
-        agregarEnemigo(13, 1, "/com/desarrollo/imagenes/Enemigo1_abajo.png", 10, 5, "Enemigo 1", 100, 8, 5, 6);
-        agregarEnemigo(1, 13, "/com/desarrollo/imagenes/Enemigo2_abajo.png", 10, 5, "Enemigo 2", 100, 7, 4, 5);
-        agregarEnemigo(7, 6, "/com/desarrollo/imagenes/Enemigo3_abajo.png", 10, 5, "Enemigo 3", 100, 9, 6, 7);
+        agregarEnemigo(13, 1, "/com/desarrollo/imagenes/Enemigo1_abajo.png", 10, 5, "Enemigo 1", 25, 8, 5, 6);
+        agregarEnemigo(1, 13, "/com/desarrollo/imagenes/Enemigo2_abajo.png", 10, 5, "Enemigo 2", 25, 7, 4, 5);
+        agregarEnemigo(7, 6, "/com/desarrollo/imagenes/Enemigo3_abajo.png", 10, 5, "Enemigo 3", 25, 9, 6, 7);
         agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "Enemigo 4", 100, 10, 5, 8);
         inicializarEstadisticas();
     }

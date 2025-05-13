@@ -72,10 +72,7 @@ public class Enemigo {
     }
 
     public void moverAutomaticamente(Protagonista prota, Mapa mapa, List<Enemigo> enemigos) {
-        int distancia = Math.abs(prota.getPosicionX() - posicionX) + Math.abs(prota.getPosicionY() - posicionY);
-
-        if (distancia > percepcion) return;
-
+        // La comprobación de percepción ha sido eliminada para que los enemigos siempre intenten moverse
         int dx = prota.getPosicionX() - posicionX;
         int dy = prota.getPosicionY() - posicionY;
 
