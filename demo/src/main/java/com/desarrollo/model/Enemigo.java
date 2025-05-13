@@ -16,7 +16,7 @@ public class Enemigo {
     private int defensa;
     private int velocidadStat;
 
-    public Enemigo(int percepcion, int velocidad, String nombre, int salud, int fuerza, int defensa, int velocidadStat) {
+    public Enemigo(int percepcion, int velocidad, String nombre, int salud, int fuerza, int defensa, int velocidadStat, int tipo) {
         this.percepcion = percepcion;
         this.velocidad = velocidad;
         this.nombre = nombre;
@@ -24,10 +24,11 @@ public class Enemigo {
         this.fuerza = fuerza;
         this.defensa = defensa;
         this.velocidadStat = velocidadStat;
+        this.tipo = tipo;
     }
 
-    public Enemigo(int percepcion, int velocidad) {
-        this(percepcion, velocidad, "Enemigo", 100, 5, 5, 5);
+    public Enemigo(int percepcion, int velocidad, int tipo) {
+        this(percepcion, velocidad, "Enemigo", 100, 5, 5, 5, tipo);
     }
 
     public void setPosicion(int x, int y) {
@@ -66,8 +67,12 @@ public class Enemigo {
     public int getVelocidad() {
         return velocidadStat;
     }
+    
+    public String getImagenRutaEnemigo() {
+        return imagenRutaEnemigo;
+    }
 
-    private void cambiarImagen(String direccion) {
+    private void cambiarImagen(String direccion, int tipo) {
         this.imagenRutaEnemigo = "/com/desarrollo/imagenes/Enemigo" + tipo + "_" + direccion + ".png";
     }
 
@@ -79,21 +84,24 @@ public class Enemigo {
         int nextX = posicionX;
         int nextY = posicionY;
         String direccion = "";
-        
+
+        // Determinar la dirección según el movimiento
         if (Math.abs(dx) > Math.abs(dy)) {
             nextX += Integer.compare(dx, 0);
+            direccion = (dx > 0) ? "derecha" : "izquierda";
         } else {
             nextY += Integer.compare(dy, 0);
+            direccion = (dy > 0) ? "abajo" : "arriba";
         }
-
+        // Verificar si la siguiente posición es válida
         if (nextX < 0 || nextY < 0 || nextY >= mapa.getNumeroDeFilas() || nextX >= mapa.getNumeroDeColumnas()) return;
 
         if (!mapa.esCeldaTransitable(nextY, nextX)) return;
-
+        // Verificar colisión con otros enemigos
         for (Enemigo otro : enemigos) {
             if (otro != this && otro.getPosicionX() == nextX && otro.getPosicionY() == nextY) return;
         }
-
+        // Verificar si el protagonista está en la siguiente posición (ataque)
         if (prota.getPosicionX() == nextX && prota.getPosicionY() == nextY) {
             int daño = 5;
             prota.setSaludMax(prota.getSaludMax() - daño);
@@ -103,6 +111,6 @@ public class Enemigo {
 
         posicionX = nextX;
         posicionY = nextY;
-        cambiarImagen(direccion);
+        cambiarImagen(direccion, tipo);
     }
 }
