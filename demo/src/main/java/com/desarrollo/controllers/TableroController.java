@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.desarrollo.SceneManager;
+import com.desarrollo.SceneID;
 import com.desarrollo.interfaces.Observer;
 import com.desarrollo.model.Enemigo;
 import com.desarrollo.model.Mapa;
@@ -180,6 +182,11 @@ public class TableroController implements Observer {
                                         enemigos.remove(enemigo);
                                         tableroPanel.getChildren().remove(enemigosImagenes.get(enemigo));
                                         enemigosImagenes.remove(enemigo);
+                                        // Verificar si todos los enemigos han sido derrotados
+                                        if (enemigos.isEmpty()) {
+                                            SceneManager.getInstance().loadScene(SceneID.VISTAGANADOR);
+                                            return; // Salir del manejador de eventos después de cambiar la escena
+                                        }
                                     }
                                 }
                             } else {
@@ -270,6 +277,11 @@ public class TableroController implements Observer {
                                 enemigos.remove(enemigo);
                                 tableroPanel.getChildren().remove(enemigosImagenes.get(enemigo));
                                 enemigosImagenes.remove(enemigo);
+                                // Verificar si todos los enemigos han sido derrotados
+                                if (enemigos.isEmpty()) {
+                                    SceneManager.getInstance().loadScene(SceneID.VISTAGANADOR);
+                                    return; // Salir del manejador de eventos después de cambiar la escena
+                                }
                             }
                         }
                     } else {
