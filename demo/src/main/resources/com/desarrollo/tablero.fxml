@@ -17,7 +17,7 @@
    </ImageView>
    <AnchorPane prefHeight="600.0" prefWidth="900.0">
       <children>
-         <StackPane layoutX="46.0" layoutY="38.0" prefHeight="502.0" prefWidth="554.0">
+         <StackPane layoutX="44.0" layoutY="133.0" prefHeight="502.0" prefWidth="554.0">
             <children>
                <!-- Panel del Tablero -->
                <AnchorPane fx:id="tableroPanel" prefHeight="370.0" prefWidth="455.0">
@@ -27,7 +27,7 @@
                </AnchorPane>
             </children>
          </StackPane>
-         <StackPane fx:id="datosStackPane" layoutX="635.0" layoutY="31.0" prefHeight="519.0" prefWidth="244.0">
+         <StackPane fx:id="datosStackPane" layoutX="625.0" layoutY="14.0" prefHeight="519.0" prefWidth="244.0">
             <children>
                <ImageView fx:id="imagenfondoStackPane" fitHeight="520.0" fitWidth="236.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -36,29 +36,29 @@
                </ImageView>
                <AnchorPane fx:id="datosAnchorPane" prefHeight="519.0" prefWidth="244.0">
                   <children>
-                     <VBox spacing="10" alignment="TOP_CENTER" layoutX="10" layoutY="10">
+                     <VBox alignment="TOP_CENTER" layoutX="10" layoutY="10" spacing="10">
                         <!-- Protagonista -->
                         <HBox>
     <Label fx:id="Pnombre" text="Nombre Protagonista" textFill="WHITE" />
 </HBox>
 <HBox spacing="5">
     <Label text="Salud:" textFill="WHITE" />
-    <ProgressBar fx:id="PsaludBar" progress="1.0" prefWidth="100.0" />
+    <ProgressBar fx:id="PsaludBar" prefWidth="100.0" progress="1.0" />
     <Label fx:id="Psalud" text="100" textFill="WHITE" />
 </HBox>
 <HBox spacing="5">
     <Label text="Fuerza:" textFill="WHITE" />
-    <ProgressBar fx:id="PfuerzaBar" progress="0.5" prefWidth="100.0" />
+    <ProgressBar fx:id="PfuerzaBar" prefWidth="100.0" progress="0.5" />
     <Label fx:id="Pfuerza" text="10" textFill="WHITE" />
 </HBox>
 <HBox spacing="5">
     <Label text="Velocidad:" textFill="WHITE" />
-    <ProgressBar fx:id="PvelocidadBar" progress="0.5" prefWidth="100.0" />
+    <ProgressBar fx:id="PvelocidadBar" prefWidth="100.0" progress="0.5" />
     <Label fx:id="Pvelocidad" text="5" textFill="WHITE" />
 </HBox>
 <HBox spacing="5">
     <Label text="Defensa:" textFill="WHITE" />
-    <ProgressBar fx:id="PdefensaBar" progress="0.5" prefWidth="100.0" />
+    <ProgressBar fx:id="PdefensaBar" prefWidth="100.0" progress="0.5" />
     <Label fx:id="Pdefensa" text="8" textFill="WHITE" />
 </HBox>
 
@@ -68,7 +68,7 @@
                         </HBox>
                         <HBox spacing="5">
                            <Label text="Salud:" textFill="WHITE" />
-                           <ProgressBar fx:id="E1saludBar" progress="1.0" prefWidth="100.0" />
+                           <ProgressBar fx:id="E1saludBar" prefWidth="100.0" progress="1.0" />
                            <Label fx:id="E1salud" text="100" textFill="WHITE" />
                         </HBox>
                         <HBox spacing="5">
@@ -90,7 +90,7 @@
                         </HBox>
                         <HBox spacing="5">
                            <Label text="Salud:" textFill="WHITE" />
-                           <ProgressBar fx:id="E2saludBar" progress="1.0" prefWidth="100.0" />
+                           <ProgressBar fx:id="E2saludBar" prefWidth="100.0" progress="1.0" />
                            <Label fx:id="E2salud" text="100" textFill="WHITE" />
                         </HBox>
                         <HBox spacing="5">
@@ -112,7 +112,7 @@
                         </HBox>
                         <HBox spacing="5">
                            <Label text="Salud:" textFill="WHITE" />
-                           <ProgressBar fx:id="E3saludBar" progress="1.0" prefWidth="100.0" />
+                           <ProgressBar fx:id="E3saludBar" prefWidth="100.0" progress="1.0" />
                            <Label fx:id="E3salud" text="100" textFill="WHITE" />
                         </HBox>
                         <HBox spacing="5">
@@ -134,7 +134,7 @@
                         </HBox>
                         <HBox spacing="5">
                            <Label text="Salud:" textFill="WHITE" />
-                           <ProgressBar fx:id="E4saludBar" progress="1.0" prefWidth="100.0" />
+                           <ProgressBar fx:id="E4saludBar" prefWidth="100.0" progress="1.0" />
                            <Label fx:id="E4salud" text="100" textFill="WHITE" />
                         </HBox>
                         <HBox spacing="5">

@@ -1,14 +1,11 @@
 package com.desarrollo.controllers;
 
-import com.desarrollo.SceneID;
-import com.desarrollo.SceneManager;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class Vista4Controller {
 
@@ -19,13 +16,7 @@ public class Vista4Controller {
     private ImageView imagenfondo;
 
     @FXML
-    private Label info;
-
-    @FXML
-    private Button botonsi;
-
-    @FXML
-    private Button botonno;
+    private Button botonSalir;
 
     @FXML
     public void initialize() {
@@ -36,17 +27,10 @@ public class Vista4Controller {
         imagenfondo.fitHeightProperty().bind(panel.heightProperty());
         imagenfondo.setPreserveRatio(false); 
 
-        // Acción del botón "Sí"
-        botonsi.setOnAction(event -> {
-            SceneManager.getInstance().loadScene(SceneID.SECONDARY);
+        // Acción del botón "Salir"
+        botonSalir.setOnAction(event -> {
+            Stage stage = (Stage) botonSalir.getScene().getWindow();
+            stage.close();
         });
-
-        botonno.setOnAction(event ->{
-            SceneManager.getInstance().loadScene(SceneID.VISTAGANADOR);
-        });
-  
     }
 }
-
-
-
