@@ -7,7 +7,7 @@ import com.desarrollo.interfaces.Observer;
 
 public class Protagonista {
     private String nombre;
-    private int salud;
+    private int saludMax;
     private int fuerza;
     private int defensa;
     private int velocidad;
@@ -26,7 +26,7 @@ public class Protagonista {
 
     public Protagonista(String nombre, int salud, int fuerza, int defensa, int velocidad, int posicionX, int posicionY, Mapa mapa) {
         this.nombre = nombre;
-        this.salud = salud;
+        this.saludMax = salud;
         this.fuerza = fuerza;
         this.defensa = defensa;
         this.velocidad = velocidad;
@@ -49,8 +49,8 @@ public class Protagonista {
         return nombre;
     }
 
-    public int getSalud() {
-        return salud;
+    public int getSaludMax() {
+        return saludMax;
     }
 
     public int getFuerza() {
@@ -79,8 +79,8 @@ public class Protagonista {
         notifyObservers();
     }
 
-    public void setSalud(int salud) {
-        this.salud = salud;
+    public void setSaludMax(int salud) {
+        this.saludMax = salud;
         notifyObservers();
     }
 

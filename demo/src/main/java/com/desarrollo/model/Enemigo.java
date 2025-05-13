@@ -10,10 +10,24 @@ public class Enemigo {
     private int posicionX;
     private int posicionY;
     private String imagenRutaEnemigo;
+    private String nombre;
+    private int salud;
+    private int fuerza;
+    private int defensa;
+    private int velocidadStat;
 
-    public Enemigo(int percepcion, int velocidad) {
+    public Enemigo(int percepcion, int velocidad, String nombre, int salud, int fuerza, int defensa, int velocidadStat) {
         this.percepcion = percepcion;
         this.velocidad = velocidad;
+        this.nombre = nombre;
+        this.salud = salud;
+        this.fuerza = fuerza;
+        this.defensa = defensa;
+        this.velocidadStat = velocidadStat;
+    }
+
+    public Enemigo(int percepcion, int velocidad) {
+        this(percepcion, velocidad, "Enemigo", 100, 5, 5, 5);
     }
 
     public void setPosicion(int x, int y) {
@@ -29,16 +43,37 @@ public class Enemigo {
         return posicionY;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public int getSalud() {
+        return salud;
+    }
+
+    public void setSalud(int salud) {
+        this.salud = salud;
+    }
+
+    public int getFuerza() {
+        return fuerza;
+    }
+
+    public int getDefensa() {
+        return defensa;
+    }
+
+    public int getVelocidad() {
+        return velocidadStat;
+    }
+
     private void cambiarImagen(String direccion) {
-        // Ruta relativa al archivo de la imagen, ajústala si estás usando otro sistema de rutas
         this.imagenRutaEnemigo = "/com/desarrollo/imagenes/Enemigo" + tipo + "_" + direccion + ".png";
     }
 
     public void moverAutomaticamente(Protagonista prota, Mapa mapa, List<Enemigo> enemigos) {
-        // Calcular distancia Manhattan
         int distancia = Math.abs(prota.getPosicionX() - posicionX) + Math.abs(prota.getPosicionY() - posicionY);
 
-        // Solo se mueve si el protagonista está dentro de su rango de percepción
         if (distancia > percepcion) return;
 
         int dx = prota.getPosicionX() - posicionX;
@@ -54,26 +89,21 @@ public class Enemigo {
             nextY += Integer.compare(dy, 0);
         }
 
-        // Límites del mapa
         if (nextX < 0 || nextY < 0 || nextY >= mapa.getNumeroDeFilas() || nextX >= mapa.getNumeroDeColumnas()) return;
 
-        // Evitar paredes
         if (!mapa.esCeldaTransitable(nextY, nextX)) return;
 
-        // Evitar otros enemigos
         for (Enemigo otro : enemigos) {
             if (otro != this && otro.getPosicionX() == nextX && otro.getPosicionY() == nextY) return;
         }
 
-        // Atacar si está junto al protagonista
         if (prota.getPosicionX() == nextX && prota.getPosicionY() == nextY) {
             int daño = 5;
-            prota.setSalud(prota.getSalud() - daño);
+            prota.setSaludMax(prota.getSaludMax() - daño);
             System.out.println("¡Enemigo atacó al protagonista! -5 salud");
             return;
         }
 
-        // Mover
         posicionX = nextX;
         posicionY = nextY;
         cambiarImagen(direccion);
