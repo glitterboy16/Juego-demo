@@ -297,39 +297,46 @@ public class TableroController implements Observer {
             tableroPanel.requestFocus();
         });
 
-        agregarEnemigo(13, 1, "/com/desarrollo/imagenes/Enemigo1_abajo.png", 10, 5, "Enemigo 1", 25, 8, 5, 6);
-        agregarEnemigo(1, 13, "/com/desarrollo/imagenes/Enemigo2_abajo.png", 10, 5, "Enemigo 2", 25, 7, 4, 5);
-        agregarEnemigo(7, 6, "/com/desarrollo/imagenes/Enemigo3_abajo.png", 10, 5, "Enemigo 3", 25, 9, 6, 7);
-        agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "Enemigo 4", 100, 10, 5, 8);
+        agregarEnemigo(13, 1, "/com/desarrollo/imagenes/Enemigo1_abajo.png", 10, 5, "Enemigo 1", 25, 8, 5, 6, 1);
+agregarEnemigo(1, 13, "/com/desarrollo/imagenes/Enemigo2_abajo.png", 10, 5, "Enemigo 2", 25, 7, 4, 5, 2);
+agregarEnemigo(7, 6, "/com/desarrollo/imagenes/Enemigo3_abajo.png", 10, 5, "Enemigo 3", 25, 9, 6, 7, 3);
+agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "Enemigo 4", 100, 10, 5, 8, 4);
         inicializarEstadisticas();
     }
 
-    public void agregarEnemigo(int x, int y, String rutaImagen, int percepcion, int velocidad, String nombre, int salud, int fuerza, int defensa, int velocidadStat) {
-        Enemigo nuevoEnemigo = new Enemigo(percepcion, velocidad, nombre, salud, fuerza, defensa, velocidadStat);
-        nuevoEnemigo.setPosicion(x, y);
+    public void agregarEnemigo(int x, int y, String rutaImagen, int percepcion, int velocidad, String nombre, int salud, int fuerza, int defensa, int velocidadStat, int tipo) {
+    Enemigo nuevoEnemigo = new Enemigo(percepcion, velocidad, nombre, salud, fuerza, defensa, velocidadStat, tipo);
+    nuevoEnemigo.setPosicion(x, y);
 
-        Image imagen = new Image(getClass().getResource(rutaImagen).toExternalForm());
-        ImageView imagenEnemigo = new ImageView(imagen);
-        imagenEnemigo.setFitWidth(35);
-        imagenEnemigo.setFitHeight(35);
+    Image imagen = new Image(getClass().getResource(rutaImagen).toExternalForm());
+    ImageView imagenEnemigo = new ImageView(imagen);
+    imagenEnemigo.setFitWidth(35);
+    imagenEnemigo.setFitHeight(35);
 
-        AnchorPane.setLeftAnchor(imagenEnemigo, x * 35.0);
-        AnchorPane.setTopAnchor(imagenEnemigo, y * 35.0);
+    AnchorPane.setLeftAnchor(imagenEnemigo, x * 35.0);
+    AnchorPane.setTopAnchor(imagenEnemigo, y * 35.0);
 
-        tableroPanel.getChildren().add(imagenEnemigo);
-        imagenEnemigo.toFront();
+    tableroPanel.getChildren().add(imagenEnemigo);
+    imagenEnemigo.toFront();
 
-        enemigos.add(nuevoEnemigo);
-        enemigosImagenes.put(nuevoEnemigo, imagenEnemigo);
-    }
+    enemigos.add(nuevoEnemigo);
+    enemigosImagenes.put(nuevoEnemigo, imagenEnemigo);
+}
 
     private void actualizarPosicionesEnemigos() {
-        for (Enemigo e : enemigos) {
-            ImageView img = enemigosImagenes.get(e);
-            AnchorPane.setLeftAnchor(img, e.getPosicionX() * 35.0);
-            AnchorPane.setTopAnchor(img, e.getPosicionY() * 35.0);
+    for (Enemigo e : enemigos) {
+        ImageView img = enemigosImagenes.get(e);
+        AnchorPane.setLeftAnchor(img, e.getPosicionX() * 35.0);
+        AnchorPane.setTopAnchor(img, e.getPosicionY() * 35.0);
+        // Actualizar la imagen según la dirección
+        String imagenRuta = e.getImagenRutaEnemigo();
+        if (imagenRuta != null && !imagenRuta.isEmpty()) {
+            img.setImage(new Image(getClass().getResourceAsStream(imagenRuta)));
+        } else {
+            System.err.println("Ruta de imagen del enemigo es null o vacía para " + e.getNombre());
         }
     }
+}
 
     private void moverEnemigos() {
         for (Enemigo e : enemigos) {
