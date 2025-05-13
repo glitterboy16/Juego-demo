@@ -297,10 +297,17 @@ public class TableroController implements Observer {
             tableroPanel.requestFocus();
         });
 
+<<<<<<< HEAD
         agregarEnemigo(13, 1, "/com/desarrollo/imagenes/Enemigo1_abajo.png", 10, 5, "Enemigo 1", 25, 8, 5, 6, 1);
 agregarEnemigo(1, 13, "/com/desarrollo/imagenes/Enemigo2_abajo.png", 10, 5, "Enemigo 2", 25, 7, 4, 5, 2);
 agregarEnemigo(7, 6, "/com/desarrollo/imagenes/Enemigo3_abajo.png", 10, 5, "Enemigo 3", 25, 9, 6, 7, 3);
 agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "Enemigo 4", 100, 10, 5, 8, 4);
+=======
+        agregarEnemigo(13, 1, "/com/desarrollo/imagenes/Enemigo1_abajo.png", 10, 5, "Enemigo 1", 38, 8, 5, 6);
+        agregarEnemigo(1, 13, "/com/desarrollo/imagenes/Enemigo2_abajo.png", 10, 5, "Enemigo 2", 30, 7, 4, 5);
+        agregarEnemigo(7, 6, "/com/desarrollo/imagenes/Enemigo3_abajo.png", 10, 5, "Enemigo 3", 22, 9, 6, 7);
+        agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "Enemigo 4", 18, 10, 5, 8);
+>>>>>>> b57da75e73c09c0bad3b0baad5e972504e419fff
         inicializarEstadisticas();
     }
 
@@ -341,6 +348,17 @@ agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "En
     private void moverEnemigos() {
         for (Enemigo e : enemigos) {
             e.moverAutomaticamente(protagonista, mapa, enemigos);
+            // Verificar si el enemigo está adyacente al protagonista
+            if (Math.abs(e.getPosicionX() - protagonista.getPosicionX()) + Math.abs(e.getPosicionY() - protagonista.getPosicionY()) == 1) {
+                int daño = e.getFuerza() - protagonista.getDefensa();
+                if (daño < 0) daño = 0;
+                protagonista.setSaludMax(protagonista.getSaludMax() - daño);
+                System.out.println("¡Enemigo atacó al protagonista! -" + daño + " salud");
+                if (protagonista.getSaludMax() <= 0) {
+                    SceneManager.getInstance().loadScene(SceneID.VISTAGAMEOVER);
+                    return; // Salir del método después de cambiar la escena
+                }
+            }
         }
         actualizarPosicionesEnemigos();
         onChange();
