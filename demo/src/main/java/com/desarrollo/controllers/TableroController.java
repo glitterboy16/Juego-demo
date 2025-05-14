@@ -293,8 +293,8 @@ public class TableroController implements Observer {
 
         Image imagenProtagonista = new Image(getClass().getResource(rutaImagen).toExternalForm());
         imagenProta = new ImageView(imagenProtagonista);
-        imagenProta.setFitWidth(35);
-        imagenProta.setFitHeight(35);
+        imagenProta.setFitWidth(44);
+        imagenProta.setFitHeight(44);
 
         AnchorPane.setLeftAnchor(imagenProta, x * 35.0);
         AnchorPane.setTopAnchor(imagenProta, y * 35.0);
@@ -379,8 +379,8 @@ public class TableroController implements Observer {
 
     Image imagen = new Image(getClass().getResource(rutaImagen).toExternalForm());
     ImageView imagenEnemigo = new ImageView(imagen);
-    imagenEnemigo.setFitWidth(35);
-    imagenEnemigo.setFitHeight(35);
+    imagenEnemigo.setFitWidth(44);
+    imagenEnemigo.setFitHeight(44);
 
     AnchorPane.setLeftAnchor(imagenEnemigo, x * 35.0);
     AnchorPane.setTopAnchor(imagenEnemigo, y * 35.0);
@@ -414,24 +414,33 @@ public class TableroController implements Observer {
      * Mueve todos los enemigos automáticamente y verifica si atacan al protagonista.
      * Si el protagonista muere, cambia a la escena de "Game Over".
      */
-    private void moverEnemigos() {
-        for (Enemigo e : enemigos) {
-            e.moverAutomaticamente(protagonista, mapa, enemigos);
-            // Verificar si el enemigo está adyacente al protagonista
-            if (Math.abs(e.getPosicionX() - protagonista.getPosicionX()) + Math.abs(e.getPosicionY() - protagonista.getPosicionY()) == 1) {
+private void moverEnemigos() {
+    for (Enemigo e : enemigos) {
+        e.moverAutomaticamente(protagonista, mapa, enemigos);
+
+        int dx = e.getPosicionX() - protagonista.getPosicionX();
+        int dy = e.getPosicionY() - protagonista.getPosicionY();
+
+        if (Math.abs(dx) + Math.abs(dy) == 1) {
+            int px = protagonista.getPosicionX();
+            int py = protagonista.getPosicionY();
+
+            // Verifica si no hay una pared entre el enemigo y el protagonista
+            if (mapa.esCeldaTransitable(px, py)) { // Corregido para usar el método público
                 int daño = e.getFuerza() - protagonista.getDefensa();
                 if (daño < 0) daño = 0;
                 protagonista.setSaludMax(protagonista.getSaludMax() - daño);
                 System.out.println("¡Enemigo atacó al protagonista! -" + daño + " salud");
                 if (protagonista.getSaludMax() <= 0) {
                     SceneManager.getInstance().loadScene(SceneID.VISTAGAMEOVER);
-                    return; // Salir del método después de cambiar la escena
+                    return;
                 }
             }
         }
-        actualizarPosicionesEnemigos();
-        onChange();
     }
+    actualizarPosicionesEnemigos();
+    onChange();
+}
 
     /**
      * Actualiza la interfaz gráfica con los datos del protagonista y los enemigos

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -8,10 +9,17 @@
 <AnchorPane fx:id="panel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.desarrollo.controllers.Vista4Controller">
    <children>
       <ImageView fx:id="imagenfondo" fitHeight="400.0" fitWidth="587.0" pickOnBounds="true" preserveRatio="false" />
-      <Button fx:id="botonSalir1" layoutX="140.0" layoutY="302.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="120.0" text="SALIR" textFill="#131313">
+      <Button fx:id="botonSalir1" layoutX="116.0" layoutY="307.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="120.0" textFill="#131313">
          <font>
             <Font name="Consolas Bold" size="16.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="55.0" fitWidth="146.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imagenes/botones/boton4.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
    </children>
 </AnchorPane>

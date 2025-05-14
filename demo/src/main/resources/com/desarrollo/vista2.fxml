@@ -51,23 +51,37 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Slider fx:id="saludSlider" layoutX="118.0" layoutY="195.0" min="10" max="70" value="25" majorTickUnit="10" minorTickCount="5" showTickLabels="false" showTickMarks="false" prefWidth="150.0" />
-      <Slider fx:id="velocidadSlider" layoutX="118.0" layoutY="139.0" min="5" max="70" value="25" majorTickUnit="10" minorTickCount="5" showTickLabels="false" showTickMarks="false" prefWidth="150.0" />
-      <Slider fx:id="fuerzaSlider" layoutX="118.0" layoutY="252.0" min="5" max="70" value="25" majorTickUnit="10" minorTickCount="5" showTickLabels="false" showTickMarks="false" prefWidth="150.0" />
-      <Slider fx:id="defensaSlider" layoutX="118.0" layoutY="306.0" min="5" max="70" value="25" majorTickUnit="10" minorTickCount="5" showTickLabels="false" showTickMarks="false" prefWidth="150.0" />
+      <Slider fx:id="saludSlider" layoutX="118.0" layoutY="195.0" majorTickUnit="10" max="70" min="10" minorTickCount="5" prefWidth="150.0" showTickLabels="false" showTickMarks="false" value="25" />
+      <Slider fx:id="velocidadSlider" layoutX="118.0" layoutY="139.0" majorTickUnit="10" max="70" min="5" minorTickCount="5" prefWidth="150.0" showTickLabels="false" showTickMarks="false" value="25" />
+      <Slider fx:id="fuerzaSlider" layoutX="118.0" layoutY="252.0" majorTickUnit="10" max="70" min="5" minorTickCount="5" prefWidth="150.0" showTickLabels="false" showTickMarks="false" value="25" />
+      <Slider fx:id="defensaSlider" layoutX="118.0" layoutY="306.0" majorTickUnit="10" max="70" min="5" minorTickCount="5" prefWidth="150.0" showTickLabels="false" showTickMarks="false" value="25" />
       <Label fx:id="saludValueLabel" layoutX="280.0" layoutY="195.0" text="25" textFill="WHITE" />
       <Label fx:id="velocidadValueLabel" layoutX="280.0" layoutY="139.0" text="25" textFill="WHITE" />
       <Label fx:id="fuerzaValueLabel" layoutX="280.0" layoutY="252.0" text="25" textFill="WHITE" />
       <Label fx:id="defensaValueLabel" layoutX="280.0" layoutY="306.0" text="25" textFill="WHITE" />
-      <Button fx:id="botonContinuar" mnemonicParsing="false" prefHeight="26.0" prefWidth="163.0" text="Empezar el juego" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0">
+      <Button fx:id="botonContinuar" layoutX="488.0" layoutY="428.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="163.0" AnchorPane.bottomAnchor="52.39999999999998" AnchorPane.rightAnchor="48.799999999999955">
          <font>
             <Font name="Consolas Bold" size="12.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="55.0" fitWidth="146.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imagenes/botones/boton2.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
-      <Button fx:id="botonGuardar" layoutX="135.0" layoutY="376.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="163.0" text="Aceptar">
+      <Button fx:id="botonGuardar" layoutX="98.0" layoutY="378.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0">
          <font>
             <Font name="Consolas Bold" size="12.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="55.0" fitWidth="146.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@imagenes/botones/boton3.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
       <Label fx:id="puntosRestantesLabel" layoutX="118.0" layoutY="340.0" text="Puntos restantes: 100" textFill="WHITE">
          <font>

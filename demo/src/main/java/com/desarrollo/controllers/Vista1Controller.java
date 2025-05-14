@@ -53,12 +53,6 @@ public class Vista1Controller {
         iniciar.setPrefWidth(132.0);
         iniciar.setPrefHeight(25.0);
 
-        // Posición relativa del botón 
-        double posXRelativa = 53.0 / 600.0; // 53px / ancho total
-        double posYRelativa = 230.0 / 400.0; // 230px / alto total
-        
-        iniciar.layoutXProperty().bind(pane.widthProperty().multiply(posXRelativa));
-        iniciar.layoutYProperty().bind(pane.heightProperty().multiply(posYRelativa));
 
         // Configurar el evento del botón para cambiar a la escena secundaria
         iniciar.setOnAction(event -> {
