@@ -44,28 +44,20 @@ public class Vista2Controller implements Initializable {
     /*Al configurar estas barrar la puntuación entre todas será de 100. */
     @FXML
     private Slider saludSlider;
-    /*Barra para elegir los puntos de salud que tendrá el personaje */
     @FXML
     private Slider velocidadSlider;
-    /*Barra para elegir los puntos de salud que tendrá el personaje */
     @FXML
     private Slider fuerzaSlider;
-    /*Barra para elegir los puntos de salud que tendrá el personaje */
     @FXML
     private Slider defensaSlider;
-    /*Barra para elegir los puntos de salud que tendrá el personaje */
     @FXML
     private Label saludValueLabel;
-    /*Barra para elegir los puntose de salud que tendrá el personaje */
     @FXML
     private Label velocidadValueLabel;
-    /*Barra para elegir los puntos de salud que tendrá el personaje */
     @FXML
     private Label fuerzaValueLabel;
-    /*Barra para elegir los puntos de salud que tendrá el personaje */
     @FXML
     private Label defensaValueLabel;
-    /*Barra para elegir los puntos de salud que tendrá el personaje */
     @FXML
     private Button botonGuardar;
     /*Botón para guardar los datos del personaje creado. */
@@ -74,7 +66,6 @@ public class Vista2Controller implements Initializable {
     /*Botón que nos envía a la vista donde jugaremos. */
     @FXML
     private Label puntosRestantesLabel;
-    /*Este parámetro nos dirá los puntos restantes que faltan por asignar al jugador. */
     private final int MAX_PUNTOS = 100;
     private Protagonista protagonista;
     private Mapa mapa;
