@@ -7,6 +7,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+/**
+ * Controlador para la cuarta vista de la aplicación, que gestiona la pantalla de "Game Over".
+ * Esta clase se encarga de inicializar la vista, cargar la imagen de fondo y gestionar
+ * la acción del botón "Salir".
+ * 
+ * @author Ana Rubio
+ * @author María Teresa Calvo
+ * @author Ángel Andrés Villorina
+ * @version 1.0
+ */
 public class Vista4Controller {
 
     @FXML
@@ -18,6 +28,9 @@ public class Vista4Controller {
     @FXML
     private Button botonSalir1;
 
+    /**
+     * Inicializa la vista cargando la imagen de fondo y posicionando el botón de salir.
+     */
     @FXML
     public void initialize() {
         // Cargar imagen de fondo
