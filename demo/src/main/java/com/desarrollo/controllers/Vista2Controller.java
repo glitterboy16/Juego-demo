@@ -19,53 +19,73 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-public class Vista2Controller implements Initializable {
+/**
+ * Controlador de la vista de creación del protagonista del juego.
+ * Permite al usuario configurar atributos como salud, fuerza, defensa y velocidad,
+ * asegurando que el total no supere los 100 puntos.
+ * También permite guardar los datos e inicializar al protagonista.
+ * @author Ángel Andrés Villorina
+ * @author Ana Rubio
+ * @author María Teresa Calvo
+ * @version 1.0
+ */
 
+public class Vista2Controller implements Initializable {
+    
     @FXML
     private AnchorPane panel;
-
+    /** Panel principal que contiene los elementos de la interfaz. */
     @FXML
     private ImageView imagenfondo;
-
+    /** Imagen de fondo de la pantalla de registro del jugador. */
     @FXML
     private TextField nombre;
-
+    /*Campo a rellenar al crear el personaje */
+    /*Al configurar estas barrar la puntuación entre todas será de 100. */
     @FXML
     private Slider saludSlider;
-
+    /*Barra para elegir los puntos de salud que tendrá el personaje */
     @FXML
     private Slider velocidadSlider;
-
+    /*Barra para elegir los puntos de salud que tendrá el personaje */
     @FXML
     private Slider fuerzaSlider;
-
+    /*Barra para elegir los puntos de salud que tendrá el personaje */
     @FXML
     private Slider defensaSlider;
-
+    /*Barra para elegir los puntos de salud que tendrá el personaje */
     @FXML
     private Label saludValueLabel;
-
+    /*Barra para elegir los puntose de salud que tendrá el personaje */
     @FXML
     private Label velocidadValueLabel;
-
+    /*Barra para elegir los puntos de salud que tendrá el personaje */
     @FXML
     private Label fuerzaValueLabel;
-
+    /*Barra para elegir los puntos de salud que tendrá el personaje */
     @FXML
     private Label defensaValueLabel;
-
+    /*Barra para elegir los puntos de salud que tendrá el personaje */
     @FXML
     private Button botonGuardar;
-
+    /*Botón para guardar los datos del personaje creado. */
     @FXML
     private Button botonContinuar;
-
+    /*Botón que nos envía a la vista donde jugaremos. */
     @FXML
     private Label puntosRestantesLabel;
-
+    /*Este parámetro nos dirá los puntos restantes que faltan por asignar al jugador. */
     private final int MAX_PUNTOS = 100;
     private Protagonista protagonista;
     private Mapa mapa;
+
+    /**
+     * Inicializa los componentes de la vista.
+     * Carga la imagen de fondo, configura los sliders y establece los manejadores de eventos.
+     *
+     * @param location  La ubicación del archivo FXML.
+     * @param resources Recursos del archivo FXML.
+     */
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -88,6 +108,9 @@ public class Vista2Controller implements Initializable {
         });
     }
 
+    /**
+     * Configura los sliders con sus valores mínimos y etiquetas asociadas.
+     */
     private void configurarSliders() {
         configurarSlider(saludSlider, saludValueLabel, 10);
         configurarSlider(velocidadSlider, velocidadValueLabel, 5);
@@ -95,6 +118,13 @@ public class Vista2Controller implements Initializable {
         configurarSlider(defensaSlider, defensaValueLabel, 5);
     }
 
+    /**
+     * Configura un slider individualmente para ajustar sus valores y actualiza su etiqueta.
+     *
+     * @param slider   Slider a configurar.
+     * @param valueLabel Etiqueta que muestra el valor actual.
+     * @param minValue Valor mínimo permitido.
+     */
     private void configurarSlider(Slider slider, Label valueLabel, int minValue) {
         slider.setOnMouseReleased(event -> ajustarValorSlider(slider, valueLabel, minValue));
         valueLabel.setText(String.valueOf((int) slider.getValue())); // Valor inicial
@@ -114,12 +144,20 @@ public class Vista2Controller implements Initializable {
         valueLabel.setText(String.valueOf(value));
         actualizarLabel();
     }
-
+    
+    /**
+     * Calcula la suma total de puntos distribuidos entre los atributos.
+     *
+     * @return Total de puntos usados.
+     */
     private int getTotalPuntos() {
         return (int) saludSlider.getValue() + (int) velocidadSlider.getValue() +
                (int) fuerzaSlider.getValue() + (int) defensaSlider.getValue();
     }
 
+    /**
+     * Actualiza la etiqueta que indica los puntos restantes.
+     */
     private void actualizarLabel() {
         int puntosRestantes = MAX_PUNTOS - getTotalPuntos();
         if (puntosRestantesLabel != null) {
@@ -127,6 +165,25 @@ public class Vista2Controller implements Initializable {
         }
     }
 
+    /**
+     * Valida los datos introducidos por el usuario y guarda la información del protagonista.
+     * Crea una instancia de {@link Protagonista} y la pasa al controlador del tablero.
+     */
+    /**
+     * Guarda la información del personaje principal ingresada por el usuario.
+     * 
+     * Este método valida que el nombre del personaje no esté vacío y que la suma total de atributos
+     * (salud, velocidad, fuerza y defensa) sea exactamente igual al máximo permitido (100 puntos).
+     * 
+     * Si las validaciones son exitosas:
+     * - Crea un nuevo objeto `Mapa` a partir de un archivo de texto.
+     * - Crea una instancia de `Protagonista` con los datos proporcionados.
+     * - Envía los datos al `TableroController` para preparar la siguiente escena del juego.
+     * - Elimina la escena secundaria para liberar memoria.
+     * 
+     * En caso de error (nombre vacío, puntos mal distribuidos o problemas al cargar el mapa),
+     * se muestra un mensaje por consola.
+     */
     private void guardarInformacionPersonaje() {
         try {
             if (nombre.getText().isEmpty()) {
@@ -181,6 +238,11 @@ public class Vista2Controller implements Initializable {
         }
     }
 
+    /**
+     * Devuelve el protagonista creado.
+     *
+     * @return Instancia del protagonista configurado por el usuario.
+     */
     public Protagonista getProtagonista() {
         return protagonista;
     }
