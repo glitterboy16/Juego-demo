@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
 /**
  * Clase principal de la aplicación JavaFX.
@@ -29,7 +30,7 @@ public class App extends Application {
      * Este método es invocado para iniciar la aplicación.
      * Inicializa el {@link SceneManager}, configura el escenario principal y
      * define las escenas con sus respectivos diseños FXML y dimensiones.
-     * También inicializa la reproducción de música de fondo en bucle.
+     * También inicializa la reproducción de música de fondo en bucle y añade un icono.
      *
      * @param stage es el escenario principal de la aplicación.
      * @throws IOException si ocurre un error al cargar archivos FXML o recursos
@@ -89,6 +90,14 @@ public class App extends Application {
         sm.setScene(SceneID.TABLERO, "tablero", 1000, 750);
         sm.setScene(SceneID.VISTAGAMEOVER, "vista4", 1000, 750);
         sm.setScene(SceneID.VISTAGANADOR, "vista5", 1000, 750);
+
+        // Cargar y establecer el icono
+        try {
+            Image icono = new Image(getClass().getResourceAsStream("/com/desarrollo/imagenes/icono.png"));
+            stage.getIcons().add(icono);
+        } catch (Exception e) {
+            System.out.println("Error al cargar el icono: " + e.getMessage());
+        }
     }
 
     /**

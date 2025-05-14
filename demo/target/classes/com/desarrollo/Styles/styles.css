@@ -2,3 +2,8 @@
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }
+
+.fondo {
+    -fx-background-image: url('imagenes/fondo.png');
+    -fx-background-size: cover;
+}

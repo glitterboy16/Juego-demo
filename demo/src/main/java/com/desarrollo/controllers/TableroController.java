@@ -451,7 +451,7 @@ public void onChange() {
     for (int i = enemigos.size(); i < 4; i++) {
         switch (i) {
             case 0:
-                E1nombre.setText("");
+                E1nombre.setText("MUERTO");
                 E1saludBar.setProgress(0);
                 E1salud.setText("");
                 E1fuerza.setText("");
@@ -459,7 +459,7 @@ public void onChange() {
                 E1velocidad.setText("");
                 break;
             case 1:
-                E2nombre.setText("");
+                E2nombre.setText("MUERTO");
                 E2saludBar.setProgress(0);
                 E2salud.setText("");
                 E2fuerza.setText("");
@@ -467,7 +467,7 @@ public void onChange() {
                 E2velocidad.setText("");
                 break;
             case 2:
-                E3nombre.setText("");
+                E3nombre.setText("MUERTO");
                 E3saludBar.setProgress(0);
                 E3salud.setText("");
                 E3fuerza.setText("");
@@ -475,7 +475,7 @@ public void onChange() {
                 E3velocidad.setText("");
                 break;
             case 3:
-                E4nombre.setText("");
+                E4nombre.setText("MUERTO");
                 E4saludBar.setProgress(0);
                 E4salud.setText("");
                 E4fuerza.setText("");
