@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.desarrollo.SceneManager;
 import com.desarrollo.SceneID;
+import com.desarrollo.SceneManager;
 import com.desarrollo.interfaces.Observer;
 import com.desarrollo.model.Enemigo;
 import com.desarrollo.model.Mapa;
@@ -23,92 +23,120 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
-public class TableroController implements Observer {
+/**
+ * Controlador para la vista del tablero de juego, que gestiona la interfaz gráfica y
+ * la lógica de interacción entre el protagonista, los enemigos y el mapa.
+ * Implementa el patrón Observer para actualizar la interfaz cuando cambian los datos
+ * del protagonista o los enemigos.
+ *
+ * @author Ángel Andrés Villorina
+ * @author Ana Rubio
+ * @author María Teresa Calvo
+ * @version 1.0
+ */
 
+public class TableroController implements Observer {
+    /** Panel principal que contiene todos los elementos de la interfaz. */
     @FXML
     private AnchorPane panelPrincipal;
-
+    /** Imagen de fondo del panel principal. */
     @FXML
     private ImageView imagenfondo;
-
+    /** Imagen de fondo del StackPane que muestra los datos. */
     @FXML
     private ImageView imagenfondoStackPane;
-
+    /** Panel que contiene el tablero de juego. */
     @FXML
     private AnchorPane tableroPanel;
-
+    /** Segunda imagen del panel del tablero (no utilizada activamente). */
     @FXML
     private ImageView tableroPanel2;
-
+    /** StackPane que contiene los datos del protagonista y enemigos. */
     @FXML
     private StackPane datosStackPane;
 
-    // Datos del protagonista
+    /** Etiqueta para el nombre del protagonista. */
     @FXML
     private Label Pnombre;
-
+    /** Barra de progreso para la salud del protagonista. */
     @FXML
     private ProgressBar PsaludBar;
-
+    /** Etiqueta para la salud numérica del protagonista. */
     @FXML
     private Label Psalud;
-
+    /** Etiqueta para la fuerza del protagonista. */
     @FXML
     private Label Pfuerza;
-
+    /** Etiqueta para la defensa del protagonista. */
     @FXML
     private Label Pdefensa;
-
+    /** Etiqueta para la velocidad del protagonista. */
     @FXML
     private Label Pvelocidad;
 
-    // Datos de los enemigos
+    /** Etiquetas para los nombres de los enemigos (hasta 4). */
     @FXML
     private Label E1nombre, E2nombre, E3nombre, E4nombre;
-
+    /** Barras de progreso para la salud de los enemigos (hasta 4). */
     @FXML
     private ProgressBar E1saludBar, E2saludBar, E3saludBar, E4saludBar;
-
+    /** Etiquetas para la salud numérica de los enemigos (hasta 4). */
     @FXML
     private Label E1salud, E2salud, E3salud, E4salud;
-
+    /** Etiquetas para la fuerza de los enemigos (hasta 4). */
     @FXML
     private Label E1fuerza, E2fuerza, E3fuerza, E4fuerza;
-
+    /** Etiquetas para la defensa de los enemigos (hasta 4). */
     @FXML
     private Label E1defensa, E2defensa, E3defensa, E4defensa;
-
+    /** Etiquetas para la velocidad de los enemigos (hasta 4). */
     @FXML
     private Label E1velocidad, E2velocidad, E3velocidad, E4velocidad;
 
+    /** Coordenada X del protagonista en el tablero. */
     private int protaX;
+    /** Coordenada Y del protagonista en el tablero. */
     private int protaY;
 
+    /** Imagen del protagonista en el tablero. */
     @FXML
     private ImageView imagenProta;
 
+    /** Instancia de un enemigo (no utilizada activamente). */
     private Enemigo enemigo;
 
+    /** Imagen de un enemigo (no utilizada activamente). */
     @FXML
     private ImageView imagenEnemigo;
 
+    /** Instancia del protagonista del juego. */
     private Protagonista protagonista;
+    /** Mapa del juego que define las celdas transitables y no transitables. */
     private Mapa mapa;
+    /** GridPane que representa el tablero de juego. */
     private GridPane tablero;
 
+    /** Lista de enemigos presentes en el juego. */
     private List<Enemigo> enemigos = new ArrayList<>();
+    /** Mapa que asocia cada enemigo con su imagen en el tablero. */
     private Map<Enemigo, ImageView> enemigosImagenes = new HashMap<>();
 
+    /**
+     * Inicializa la interfaz gráfica del tablero, configurando las imágenes de fondo,
+     * el mapa, el tablero y los controles de teclado. También inicializa las estadísticas
+     * del protagonista y los enemigos.
+     */
     @FXML
     public void initialize() {
         onChange();
-
+        // Configurar imagen de fondo del panel principal
         Image image = new Image(getClass().getResource("/com/desarrollo/imagenes/fondos/Fondo_Tablero.png").toExternalForm());
         imagenfondo.setImage(image);
         imagenfondo.fitWidthProperty().bind(panelPrincipal.widthProperty());
         imagenfondo.fitHeightProperty().bind(panelPrincipal.heightProperty());
         imagenfondo.setPreserveRatio(false);
 
+        // Configurar imagen de fondo del StackPane de datos
         Image image2 = new Image(getClass().getResource("/com/desarrollo/imagenes/fondos/Fondo_Vbox.png").toExternalForm());
         imagenfondoStackPane.setImage(image2);
         imagenfondoStackPane.fitWidthProperty().bind(datosStackPane.widthProperty());
@@ -116,27 +144,33 @@ public class TableroController implements Observer {
         imagenfondoStackPane.setPreserveRatio(false);
 
         try {
+            // Inicializar y cargar el mapa
             mapa = new Mapa();
             mapa.cargarDesdeArchivo("demo/ficheros/tablero.txt");
 
+            // Configurar el tablero como un GridPane
             tablero = new GridPane();
             tablero.setHgap(0);
             tablero.setVgap(0);
 
+            // Anclar el tablero al panel
             AnchorPane.setTopAnchor(tablero, 0.0);
             AnchorPane.setBottomAnchor(tablero, 0.0);
             AnchorPane.setLeftAnchor(tablero, 0.0);
             AnchorPane.setRightAnchor(tablero, 0.0);
 
+            // Actualizar el tablero cuando cambie el tamaño del panel
             tableroPanel.widthProperty().addListener((obs, oldVal, newVal) -> actualizarTablero());
             tableroPanel.heightProperty().addListener((obs, oldVal, newVal) -> actualizarTablero());
 
             actualizarTablero();
             tableroPanel.getChildren().add(tablero);
 
+            // Configurar el foco para los eventos de teclado
             tableroPanel.setFocusTraversable(true);
             tableroPanel.requestFocus();
 
+            // Configurar los eventos de teclado
             Platform.runLater(() -> {
                 Scene scene = tableroPanel.getScene();
                 if (scene != null) {
@@ -145,6 +179,7 @@ public class TableroController implements Observer {
                         int newY = protagonista.getPosicionY();
                         String direccion = "";
                         
+                        // Determinar la nueva posición según la tecla presionada
                         switch (event.getCode()) {
                             case W:
                                 newY -= 1;
@@ -166,10 +201,12 @@ public class TableroController implements Observer {
                                 return;
                         }
 
+                        // Verificar si la nueva posición es válida
                         if (newX >= 0 && newX < mapa.getNumeroDeColumnas() && 
                             newY >= 0 && newY < mapa.getNumeroDeFilas() && 
                             mapa.esCeldaTransitable(newY, newX)) {
-                            
+
+                                // Verificar si hay un enemigo en la posición
                             if (estaOcupadaPorEnemigo(newX, newY)) {
                                 Enemigo enemigo = getEnemigoEnPosicion(newX, newY);
                                 if (enemigo != null) {
@@ -213,7 +250,10 @@ public class TableroController implements Observer {
             System.err.println("Error al inicializar: " + e.getMessage());
         }
     }
-
+    /**
+     * Actualiza el tablero gráfico, dibujando las celdas según el estado del mapa
+     * (suelo o pared).
+     */
     private void actualizarTablero() {
         Image suelo = new Image(getClass().getResourceAsStream("/com/desarrollo/imagenes/S.jpg"));
         Image pared = new Image(getClass().getResourceAsStream("/com/desarrollo/imagenes/P.jpg"));
@@ -233,6 +273,18 @@ public class TableroController implements Observer {
         }
     }
 
+    /**
+     * Inicializa los datos del protagonista y lo agrega al tablero.
+     *
+     * @param nombre      Nombre del protagonista.
+     * @param salud       Salud inicial del protagonista.
+     * @param fuerza      Fuerza del protagonista.
+     * @param defensa     Defensa del protagonista.
+     * @param velocidad   Velocidad del protagonista.
+     * @param rutaImagen  Ruta de la imagen del protagonista.
+     * @param y           Posición Y inicial en el tablero.
+     * @param x           Posición X inicial en el tablero.
+     */
     @FXML
     public void recibirDatosProtagonista(String nombre, int salud, int fuerza, int defensa, int velocidad, String rutaImagen, int y, int x) {
         protagonista = new Protagonista(nombre, salud, fuerza, defensa, velocidad, x, y, mapa);
@@ -249,6 +301,7 @@ public class TableroController implements Observer {
         tableroPanel.getChildren().add(imagenProta);
         imagenProta.toFront();
 
+        // Configurar eventos de teclado (duplicado, podría optimizarse)
         Platform.runLater(() -> {
             Scene scene = tableroPanel.getScene();
             scene.setOnKeyPressed(event -> {
@@ -296,21 +349,29 @@ public class TableroController implements Observer {
             });
             tableroPanel.requestFocus();
         });
-
-<<<<<<< HEAD
+        // Agregar enemigos al tablero
         agregarEnemigo(13, 1, "/com/desarrollo/imagenes/Enemigo1_abajo.png", 10, 5, "Enemigo 1", 25, 8, 5, 6, 1);
-agregarEnemigo(1, 13, "/com/desarrollo/imagenes/Enemigo2_abajo.png", 10, 5, "Enemigo 2", 25, 7, 4, 5, 2);
-agregarEnemigo(7, 6, "/com/desarrollo/imagenes/Enemigo3_abajo.png", 10, 5, "Enemigo 3", 25, 9, 6, 7, 3);
-agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "Enemigo 4", 100, 10, 5, 8, 4);
-=======
-        agregarEnemigo(13, 1, "/com/desarrollo/imagenes/Enemigo1_abajo.png", 10, 5, "Enemigo 1", 38, 8, 5, 6);
-        agregarEnemigo(1, 13, "/com/desarrollo/imagenes/Enemigo2_abajo.png", 10, 5, "Enemigo 2", 30, 7, 4, 5);
-        agregarEnemigo(7, 6, "/com/desarrollo/imagenes/Enemigo3_abajo.png", 10, 5, "Enemigo 3", 22, 9, 6, 7);
-        agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "Enemigo 4", 18, 10, 5, 8);
->>>>>>> b57da75e73c09c0bad3b0baad5e972504e419fff
+        agregarEnemigo(1, 13, "/com/desarrollo/imagenes/Enemigo2_abajo.png", 10, 5, "Enemigo 2", 25, 7, 4, 5, 2);
+        agregarEnemigo(7, 6, "/com/desarrollo/imagenes/Enemigo3_abajo.png", 10, 5, "Enemigo 3", 25, 9, 6, 7, 3);
+        agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "Enemigo 4", 100, 10, 5, 8, 4);
         inicializarEstadisticas();
     }
 
+     /**
+     * Agrega un enemigo al tablero con sus estadísticas e imagen.
+     *
+     * @param x            Posición X inicial del enemigo.
+     * @param y            Posición Y inicial del enemigo.
+     * @param rutaImagen   Ruta de la imagen del enemigo.
+     * @param percepcion   Percepción del enemigo.
+     * @param velocidad    Velocidad de movimiento del enemigo.
+     * @param nombre       Nombre del enemigo.
+     * @param salud        Salud inicial del enemigo.
+     * @param fuerza       Fuerza del enemigo.
+     * @param defensa      Defensa del enemigo.
+     * @param velocidadStat Velocidad estadística del enemigo.
+     * @param tipo         Tipo de enemigo.
+     */
     public void agregarEnemigo(int x, int y, String rutaImagen, int percepcion, int velocidad, String nombre, int salud, int fuerza, int defensa, int velocidadStat, int tipo) {
     Enemigo nuevoEnemigo = new Enemigo(percepcion, velocidad, nombre, salud, fuerza, defensa, velocidadStat, tipo);
     nuevoEnemigo.setPosicion(x, y);
@@ -330,6 +391,9 @@ agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "En
     enemigosImagenes.put(nuevoEnemigo, imagenEnemigo);
 }
 
+/**
+     * Actualiza las posiciones gráficas de los enemigos en el tablero.
+     */
     private void actualizarPosicionesEnemigos() {
     for (Enemigo e : enemigos) {
         ImageView img = enemigosImagenes.get(e);
@@ -345,6 +409,10 @@ agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "En
     }
 }
 
+    /**
+     * Mueve todos los enemigos automáticamente y verifica si atacan al protagonista.
+     * Si el protagonista muere, cambia a la escena de "Game Over".
+     */
     private void moverEnemigos() {
         for (Enemigo e : enemigos) {
             e.moverAutomaticamente(protagonista, mapa, enemigos);
@@ -364,6 +432,10 @@ agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "En
         onChange();
     }
 
+    /**
+     * Actualiza la interfaz gráfica con los datos del protagonista y los enemigos
+     * cuando cambian sus estados.
+     */
     @Override
     public void onChange() {
         if (protagonista != null) {
@@ -423,6 +495,10 @@ agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "En
         }
     }
 
+    /**
+     * Inicializa las etiquetas y barras de progreso con las estadísticas del
+     * protagonista y los enemigos.
+     */
     private void inicializarEstadisticas() {
         if (protagonista != null) {
             Pnombre.setText(protagonista.getNombre());
@@ -472,6 +548,9 @@ agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "En
         }
     }
 
+    /**
+     * Actualiza la posición gráfica del protagonista en el tablero.
+     */
     private void actualizarPosicionPersonaje() {
         if (protagonista != null) {
             AnchorPane.setLeftAnchor(imagenProta, protagonista.getPosicionX() * 35.0);
@@ -486,6 +565,13 @@ agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "En
         }
     }
 
+    /**
+     * Verifica si una celda está ocupada por un enemigo.
+     *
+     * @param x Posición X de la celda.
+     * @param y Posición Y de la celda.
+     * @return true si la celda está ocupada por un enemigo, false en caso contrario.
+     */
     private boolean estaOcupadaPorEnemigo(int x, int y) {
         for (Enemigo e : enemigos) {
             if (e.getPosicionX() == x && e.getPosicionY() == y) {
@@ -495,6 +581,13 @@ agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "En
         return false;
     }
 
+    /**
+     * Obtiene el enemigo ubicado en una posición específica.
+     *
+     * @param x Posición X de la celda.
+     * @param y Posición Y de la celda.
+     * @return El enemigo en la posición especificada, o null si no hay enemigo.
+     */
     private Enemigo getEnemigoEnPosicion(int x, int y) {
         for (Enemigo e : enemigos) {
             if (e.getPosicionX() == x && e.getPosicionY() == y) {
