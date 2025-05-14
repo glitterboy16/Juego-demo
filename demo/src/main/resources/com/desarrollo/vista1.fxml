@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.desarrollo.controllers.Vista1Controller">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.desarrollo.controllers.Vista1Controller">
    <children>
-      <ImageView fx:id="fondo1" fitHeight="400.0" fitWidth="600.0" layoutX="1.0" pickOnBounds="true" preserveRatio="false" />
+      <ImageView fx:id="fondo1" fitHeight="750.0" fitWidth="1015.0" pickOnBounds="true" preserveRatio="false" />
       <Button fx:id="iniciar" layoutX="171.0" layoutY="329.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0">
          <font>
             <Font name="Consolas Bold" size="21.0" />
