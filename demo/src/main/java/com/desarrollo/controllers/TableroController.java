@@ -354,6 +354,9 @@ public class TableroController implements Observer {
         agregarEnemigo(1, 13, "/com/desarrollo/imagenes/Enemigo2_abajo.png", 10, 5, "Enemigo 2", 25, 7, 4, 5, 2);
         agregarEnemigo(7, 6, "/com/desarrollo/imagenes/Enemigo3_abajo.png", 10, 5, "Enemigo 3", 25, 9, 6, 7, 3);
         agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "Enemigo 4", 100, 10, 5, 8, 4);
+        agregarEnemigo(1, 13, "/com/desarrollo/imagenes/Enemigo2_abajo.png", 10, 5, "Enemigo 2", 25, 7, 4, 5, 2);
+        agregarEnemigo(7, 6, "/com/desarrollo/imagenes/Enemigo3_abajo.png", 10, 5, "Enemigo 3", 25, 9, 6, 7, 3);
+        agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 10, 5, "Enemigo 4", 100, 10, 5, 8, 4);
         inicializarEstadisticas();
     }
 

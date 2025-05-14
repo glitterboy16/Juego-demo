@@ -16,7 +16,7 @@ public class Vista4Controller {
     private ImageView imagenfondo;
 
     @FXML
-    private Button botonSalir;
+    private Button botonSalir1;
 
     @FXML
     public void initialize() {
@@ -27,9 +27,18 @@ public class Vista4Controller {
         imagenfondo.fitHeightProperty().bind(panel.heightProperty());
         imagenfondo.setPreserveRatio(false); 
 
+        // Centrar el botón horizontalmente
+        botonSalir1.layoutXProperty().bind(
+        panel.widthProperty().subtract(botonSalir1.widthProperty()).divide(2)
+        );
+
+        // Colocar al fondo (por ejemplo, 50 píxeles desde el borde inferior)
+        botonSalir1.layoutYProperty().bind(
+            panel.heightProperty().subtract(botonSalir1.heightProperty()).subtract(50)
+        );
         // Acción del botón "Salir"
-        botonSalir.setOnAction(event -> {
-            Stage stage = (Stage) botonSalir.getScene().getWindow();
+        botonSalir1.setOnAction(event -> {
+            Stage stage = (Stage) botonSalir1.getScene().getWindow();
             stage.close();
         });
     }

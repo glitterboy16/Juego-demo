@@ -37,13 +37,13 @@
 }
 
 /* Botones SÍ/NO */
-#botonsi {
+#botonSalir1 {
     -fx-background-color: #5C0000;
     -fx-border-color: #3D0000;
     -fx-text-fill: #FFAAAA; /* Rojo claro para contraste */
 }
 
-#botonno {
+#botonSalir2 {
     -fx-background-color: #003D00;
     -fx-border-color: #002000;
     -fx-text-fill: #AAFFAA; /* Verde claro para contraste */
