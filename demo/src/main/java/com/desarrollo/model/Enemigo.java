@@ -59,7 +59,17 @@ public class Enemigo {
         this.tipo = tipo;
     }
 
-    
+    /**
+     * Crea un enemigo con estadísticas predeterminadas, usado para configuraciones básicas.
+     *
+     * @param percepcion Radio de percepción del enemigo.
+     * @param velocidad Velocidad de movimiento del enemigo.
+     * @param tipo      Tipo de enemigo (determina su imagen).
+     */
+    public Enemigo(int percepcion, int velocidad, int tipo) {
+        this(percepcion, velocidad, "Enemigo", 100, 5, 5, 5, tipo);
+    }
+
     /**
      * Establece la posición del enemigo en el tablero.
      *

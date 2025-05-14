@@ -301,59 +301,11 @@ public class TableroController implements Observer {
         tableroPanel.getChildren().add(imagenProta);
         imagenProta.toFront();
 
-        // Configurar eventos de teclado (duplicado, podría optimizarse)
-        Platform.runLater(() -> {
-            Scene scene = tableroPanel.getScene();
-            scene.setOnKeyPressed(event -> {
-                int nuevoX = protagonista.getPosicionX();
-                int nuevoY = protagonista.getPosicionY();
-                String direccion = "";
-                switch (event.getCode()) {
-                    case W: nuevoY -= 1; direccion = "arriba"; break;
-                    case S: nuevoY += 1; direccion = "abajo"; break;
-                    case A: nuevoX -= 1; direccion = "izquierda"; break;
-                    case D: nuevoX += 1; direccion = "derecha"; break;
-                    default: return;
-                }
-                if (nuevoX >= 0 && nuevoX < mapa.getNumeroDeColumnas() && 
-                    nuevoY >= 0 && nuevoY < mapa.getNumeroDeFilas() && 
-                    mapa.esCeldaTransitable(nuevoY, nuevoX)) {
-                    if (estaOcupadaPorEnemigo(nuevoX, nuevoY)) {
-                        Enemigo enemigo = getEnemigoEnPosicion(nuevoX, nuevoY);
-                        if (enemigo != null) {
-                            int daño = protagonista.getFuerza() - enemigo.getDefensa();
-                            if (daño < 0) daño = 0;
-                            enemigo.setSalud(enemigo.getSalud() - daño);
-                            System.out.println("¡Protagonista atacó al enemigo! -" + daño + " salud");
-                            if (enemigo.getSalud() <= 0) {
-                                System.out.println("¡Enemigo derrotado!");
-                                enemigos.remove(enemigo);
-                                tableroPanel.getChildren().remove(enemigosImagenes.get(enemigo));
-                                enemigosImagenes.remove(enemigo);
-                                // Verificar si todos los enemigos han sido derrotados
-                                if (enemigos.isEmpty()) {
-                                    SceneManager.getInstance().loadScene(SceneID.VISTAGANADOR);
-                                    return; // Salir del manejador de eventos después de cambiar la escena
-                                }
-                            }
-                        }
-                    } else {
-                        protagonista.setPosicionX(nuevoX);
-                        protagonista.setPosicionY(nuevoY);
-                        protagonista.cambiarImagen(direccion);
-                    }
-                }
-                actualizarPosicionPersonaje();
-                moverEnemigos();
-                onChange(); // Actualizar la interfaz después de cada acción
-            });
-            tableroPanel.requestFocus();
-        });
         // Agregar enemigos al tablero
         agregarEnemigo(13, 1, "/com/desarrollo/imagenes/Enemigo1_abajo.png", 15, 25, "Enemigo 1", 25, 8, 5, 6, 1);
         agregarEnemigo(1, 13, "/com/desarrollo/imagenes/Enemigo2_abajo.png", 25, 35, "Enemigo 2", 50, 7, 4, 5, 2);
         agregarEnemigo(7, 6, "/com/desarrollo/imagenes/Enemigo3_abajo.png", 10, 15, "Enemigo 3", 75, 9, 6, 7, 3);
-        agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 30, 20, "Enemigo 4", 100, 10, 5, 8, 4);
+        agregarEnemigo(13, 13, "/com/desarrollo/imagenes/Enemigo4_abajo.png", 30, 20, "Enemigo 4", 39, 10, 5, 8, 4);
         
         inicializarEstadisticas();
     }
@@ -415,30 +367,21 @@ public class TableroController implements Observer {
      * Si el protagonista muere, cambia a la escena de "Game Over".
      */
 private void moverEnemigos() {
-    for (Enemigo e : enemigos) {
-        e.moverAutomaticamente(protagonista, mapa, enemigos);
-
-        int dx = e.getPosicionX() - protagonista.getPosicionX();
-        int dy = e.getPosicionY() - protagonista.getPosicionY();
-
-        if (Math.abs(dx) + Math.abs(dy) == 1) {
-            int px = protagonista.getPosicionX();
-            int py = protagonista.getPosicionY();
-
-            // Verifica si no hay una pared entre el enemigo y el protagonista
-            if (mapa.esCeldaTransitable(px, py)) { // Corregido para usar el método público
+        for (Enemigo e : enemigos) {
+            e.moverAutomaticamente(protagonista, mapa, enemigos);
+            // Verificar si el enemigo está adyacente al protagonista
+            if (Math.abs(e.getPosicionX() - protagonista.getPosicionX()) + Math.abs(e.getPosicionY() - protagonista.getPosicionY()) == 1) {
                 int daño = e.getFuerza() - protagonista.getDefensa();
                 if (daño < 0) daño = 0;
                 protagonista.setSaludMax(protagonista.getSaludMax() - daño);
                 System.out.println("¡Enemigo atacó al protagonista! -" + daño + " salud");
                 if (protagonista.getSaludMax() <= 0) {
                     SceneManager.getInstance().loadScene(SceneID.VISTAGAMEOVER);
-                    return;
+                    return; // Salir del método después de cambiar la escena
                 }
             }
         }
-    }
-    actualizarPosicionesEnemigos();
+        actualizarPosicionesEnemigos();
     onChange();
 }
 
@@ -447,101 +390,101 @@ private void moverEnemigos() {
      * cuando cambian sus estados.
      */
     @Override
-    public void onChange() {
-        if (protagonista != null) {
-            Pnombre.setText(protagonista.getNombre());
-            double saludProgreso = protagonista.getSaludMax() / 100.0;
-            PsaludBar.setProgress(saludProgreso > 0 ? saludProgreso : 0); // Evita el rebote
-            Psalud.setText(String.valueOf(protagonista.getSaludMax()));
-            Pfuerza.setText(String.valueOf(protagonista.getFuerza()));
-            Pdefensa.setText(String.valueOf(protagonista.getDefensa()));
-            Pvelocidad.setText(String.valueOf(protagonista.getVelocidad()));
-        } else {
-            Pnombre.setText("Nombre: N/A");
-            PsaludBar.setProgress(0.0);
-            Psalud.setText("0");
-            Pfuerza.setText("0");
-            Pdefensa.setText("0");
-            Pvelocidad.setText("0");
-        }
+public void onChange() {
+    if (protagonista != null) {
+        Pnombre.setText(protagonista.getNombre());
+        double saludProgreso = protagonista.getSaludMax() / 100.0;
+        PsaludBar.setProgress(Math.max(0, saludProgreso)); // Evitar valores negativos
+        Psalud.setText(String.valueOf(Math.max(0, protagonista.getSaludMax()))); // Mostrar 0 si es negativo
+        Pfuerza.setText(String.valueOf(protagonista.getFuerza()));
+        Pdefensa.setText(String.valueOf(protagonista.getDefensa()));
+        Pvelocidad.setText(String.valueOf(protagonista.getVelocidad()));
+    } else {
+        Pnombre.setText("Nombre: N/A");
+        PsaludBar.setProgress(0.0);
+        Psalud.setText("0");
+        Pfuerza.setText("0");
+        Pdefensa.setText("0");
+        Pvelocidad.setText("0");
+    }
 
-        for (int i = 0; i < 4; i++) {
-            if(i < enemigos.size()){
-            Enemigo e = enemigos.get(i);
-            double saludEnemigoProgreso = e.getSalud() / 100.0;
-            switch (i) {
-                case 0:
-                    E1nombre.setText(e.getNombre());
-                    E1saludBar.setProgress(saludEnemigoProgreso > 0 ? saludEnemigoProgreso : 0); // Evita el rebote
-                    E1salud.setText(String.valueOf(e.getSalud()));
-                    E1fuerza.setText(String.valueOf(e.getFuerza()));
-                    E1defensa.setText(String.valueOf(e.getDefensa()));
-                    E1velocidad.setText(String.valueOf(e.getVelocidad()));
-                    break;
-                case 1:
-                    E2nombre.setText(e.getNombre());
-                    E2saludBar.setProgress(saludEnemigoProgreso > 0 ? saludEnemigoProgreso : 0); // Evita el rebote
-                    E2salud.setText(String.valueOf(e.getSalud()));
-                    E2fuerza.setText(String.valueOf(e.getFuerza()));
-                    E2defensa.setText(String.valueOf(e.getDefensa()));
-                    E2velocidad.setText(String.valueOf(e.getVelocidad()));
-                    break;
-                case 2:
-                    E3nombre.setText(e.getNombre());
-                    E3saludBar.setProgress(saludEnemigoProgreso > 0 ? saludEnemigoProgreso : 0); // Evita el rebote
-                    E3salud.setText(String.valueOf(e.getSalud()));
-                    E3fuerza.setText(String.valueOf(e.getFuerza()));
-                    E3defensa.setText(String.valueOf(e.getDefensa()));
-                    E3velocidad.setText(String.valueOf(e.getVelocidad()));
-                    break;
-                case 3:
-                    E4nombre.setText(e.getNombre());
-                    E4saludBar.setProgress(saludEnemigoProgreso > 0 ? saludEnemigoProgreso : 0); // Evita el rebote
-                    E4salud.setText(String.valueOf(e.getSalud()));
-                    E4fuerza.setText(String.valueOf(e.getFuerza()));
-                    E4defensa.setText(String.valueOf(e.getDefensa()));
-                    E4velocidad.setText(String.valueOf(e.getVelocidad()));
-                    break;
-            }
-        }else{
-            // Limpiar los campos de enemigos que ya no existen
-                switch (i) {
-                    case 0:
-                        E1nombre.setText("Enemigo 1");
-                        E1saludBar.setProgress(0.0);
-                        E1salud.setText("");
-                        E1fuerza.setText("");
-                        E1defensa.setText("");
-                        E1velocidad.setText("");
-                        break;
-                    case 1:
-                        E2nombre.setText("Enemigo 2");
-                        E2saludBar.setProgress(0.0);
-                        E2salud.setText("");
-                        E2fuerza.setText("");
-                        E2defensa.setText("");
-                        E2velocidad.setText("");
-                        break;
-                    case 2:
-                        E3nombre.setText("Enemigo 3");
-                        E3saludBar.setProgress(0.0);
-                        E3salud.setText("");
-                        E3fuerza.setText("");
-                        E3defensa.setText("");
-                        E3velocidad.setText("");
-                        break;
-                    case 3:
-                        E4nombre.setText("Enemigo 4");
-                        E4saludBar.setProgress(0.0);
-                        E4salud.setText("");
-                        E4fuerza.setText("");
-                        E4defensa.setText("");
-                        E4velocidad.setText("");
-                        break;
-                }
-            }
+    for (int i = 0; i < enemigos.size() && i < 4; i++) {
+        Enemigo e = enemigos.get(i);
+        double saludEnemigoProgreso = e.getSalud() / 100.0;
+        switch (i) {
+            case 0:
+                E1nombre.setText(e.getNombre());
+                E1saludBar.setProgress(Math.max(0, saludEnemigoProgreso));
+                E1salud.setText(String.valueOf(Math.max(0, e.getSalud())));
+                E1fuerza.setText(String.valueOf(e.getFuerza()));
+                E1defensa.setText(String.valueOf(e.getDefensa()));
+                E1velocidad.setText(String.valueOf(e.getVelocidad()));
+                break;
+            case 1:
+                E2nombre.setText(e.getNombre());
+                E2saludBar.setProgress(Math.max(0, saludEnemigoProgreso));
+                E2salud.setText(String.valueOf(Math.max(0, e.getSalud())));
+                E2fuerza.setText(String.valueOf(e.getFuerza()));
+                E2defensa.setText(String.valueOf(e.getDefensa()));
+                E2velocidad.setText(String.valueOf(e.getVelocidad()));
+                break;
+            case 2:
+                E3nombre.setText(e.getNombre());
+                E3saludBar.setProgress(Math.max(0, saludEnemigoProgreso));
+                E3salud.setText(String.valueOf(Math.max(0, e.getSalud())));
+                E3fuerza.setText(String.valueOf(e.getFuerza()));
+                E3defensa.setText(String.valueOf(e.getDefensa()));
+                E3velocidad.setText(String.valueOf(e.getVelocidad()));
+                break;
+            case 3:
+                E4nombre.setText(e.getNombre());
+                E4saludBar.setProgress(Math.max(0, saludEnemigoProgreso));
+                E4salud.setText(String.valueOf(Math.max(0, e.getSalud())));
+                E4fuerza.setText(String.valueOf(e.getFuerza()));
+                E4defensa.setText(String.valueOf(e.getDefensa()));
+                E4velocidad.setText(String.valueOf(e.getVelocidad()));
+                break;
         }
     }
+
+    // Limpiar etiquetas de enemigos eliminados
+    for (int i = enemigos.size(); i < 4; i++) {
+        switch (i) {
+            case 0:
+                E1nombre.setText("");
+                E1saludBar.setProgress(0);
+                E1salud.setText("");
+                E1fuerza.setText("");
+                E1defensa.setText("");
+                E1velocidad.setText("");
+                break;
+            case 1:
+                E2nombre.setText("");
+                E2saludBar.setProgress(0);
+                E2salud.setText("");
+                E2fuerza.setText("");
+                E2defensa.setText("");
+                E2velocidad.setText("");
+                break;
+            case 2:
+                E3nombre.setText("");
+                E3saludBar.setProgress(0);
+                E3salud.setText("");
+                E3fuerza.setText("");
+                E3defensa.setText("");
+                E3velocidad.setText("");
+                break;
+            case 3:
+                E4nombre.setText("");
+                E4saludBar.setProgress(0);
+                E4salud.setText("");
+                E4fuerza.setText("");
+                E4defensa.setText("");
+                E4velocidad.setText("");
+                break;
+        }
+    }
+}
 
     /**
      * Inicializa las etiquetas y barras de progreso con las estadísticas del
